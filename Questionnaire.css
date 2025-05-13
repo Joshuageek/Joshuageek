@@ -1,0 +1,121 @@
+.questionnaire-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.questionnaire-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Progress Bar */
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: #eee;
+  margin-bottom: 20px;
+  border-radius: 3px;
+}
+.progress {
+  height: 100%;
+  background: #f8bf2c;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.step {
+  position: relative;
+}
+
+.step-content {
+  padding: 20px;
+  animation: fadeIn 0.5s;
+}
+
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.navigation-buttons button {
+  background: #f8bf2c;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.navigation-buttons button:hover {
+  background: #e0ac2b;
+}
+
+label {
+  display: block;
+  margin-bottom: 15px;
+  color: #555;
+}
+
+input[type="text"],
+select,
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Radio group */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+}
+
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 15px;
+}
+
+legend {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Fade transition classes from react-transition-group */
+.fade-enter {
+  opacity: 0;
+  transform: translateX(20px);
+}
+.fade-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 500ms, transform 500ms;
+}
+.fade-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+.fade-exit-active {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 500ms, transform 500ms;
+}
+
+/* Simple keyframe animation for content */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <title>Swiftdoc</title>
+
+  <!-- Loading Bootstrap -->
+  <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+
+  <!-- Loading Template CSS -->
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/animate.css" rel="stylesheet">
+  <link href="css/style-magnific-popup.css" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+  <link href="css/icons-main.css" rel="stylesheet">
+  <link href="css/icons-helper.css" rel="stylesheet">
+
+  <!-- RS5.0 Main Stylesheet -->
+  <link rel="stylesheet" type="text/css" href="revolution/css/settings.css">
+  <!-- RS5.0 Layers and Navigation Styles -->
+  <link rel="stylesheet" type="text/css" href="revolution/css/layers.css">
+  <link rel="stylesheet" type="text/css" href="revolution/css/navigation.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Tangerine:400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lora:400,400italic,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Font Favicon -->
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <style>
+    .home-hero {
+      text-align: center;
+      padding: 50px 0;
+    }
+
+    .home-hero h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+
+    .hero-services {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .hero-services a {
+      flex: 1 1 calc(25% - 20px);
+      margin: 10px;
+      text-align: center;
+      padding: 20px;
+      border-radius: 10px;
+      transition: background-color 0.3s;
+      position: relative;
+    }
+
+    .hero-services .individual {
+      background-color: #A8C3A4;
+    }
+
+    .hero-services .teens {
+      background-color: #AFCBFF;
+    }
+
+    .hero-services .couples {
+      background-color: #D8C4E7;
+    }
+
+    .hero-services .medication {
+      background-color: #F5EBDD;
+    }
+
+    .hero-services a:hover {
+      background-color: #ffc107;
+    }
+
+    .hero__service-img-wrap {
+      height: 350px;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .hero__service-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-services h2 {
+      margin-top: 15px;
+      font-size: 1.5em;
+    }
+
+    .hero-services p {
+      margin-top: 10px;
+      font-size: 1em;
+    }
+
+    .hero-services .text-link {
+      margin-top: 15px;
+      font-size: 1.2em;
+      color: #333;
+      text-decoration: underline;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .services-section {
+      padding: 50px 0;
+      background-color: #f9f9f9;
+    }
+
+    .service-item {
+      margin-bottom: 30px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+
+    .service-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .service-item h3 {
+      color: #A8C3A4;
+      margin-bottom: 10px;
+    }
+
+    .compare-section {
+      padding: 50px 0;
+      background-color: white;
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .compare-table th, .compare-table td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .compare-table th {
+      background-color: #f2f2f2;
+    }
+
+    .compare-table .swift-doc {
+      color: #A8C3A4;
+      font-weight: bold;
+    }
+
+    /* Additional styles for other sections */
+    .footer {
+      background-color: #333;
+      color: white;
+      padding: 50px 0 20px;
+    }
+
+    .footer-bottom {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #444;
+    }
+
+    .footer_social {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer_social li {
+      display: inline-block;
+      margin-right: 15px;
+    }
+
+    .footer_social a {
+      color: white;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Loader -->
+  <div id="loader">
+    <div class="sk-three-bounce">
+      <div class="sk-child sk-bounce1"></div>
+      <div class="sk-child sk-bounce2"></div>
+      <div class="sk-child sk-bounce3"></div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-02">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="index.html" class="navbar-brand brand scrool" style="font-family: 'Montserrat', outfit; font-weight: bold; color: #A8C3A4; font-size: 24px;">SWIFT DOC</a>
+        </div>
+        <div id="navbar-collapse-02" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="selected"><a href="index.html">Home</a></li>
+            <li><a href="aboutt.html">About Us</a></li>
+            <li><a href="booking.html">Bookings</a></li>
+            <li><a href="#">For Clinicians</a></li>
+            <li><a href="login.html">Sign in</a></li>
+            <li><a href="question.html" class="purchase" id="signupButton">Find a Therapist</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <div id="hero-section" class="home-hero-section">
+    <div id="rev_slider_202_1_wrapper" class="rev_slider_wrapper fullscreen-container" style="background-color:#A8C3A4;padding:0px;">
+      <div id="rev_slider_202_1" class="rev_slider fullscreenbanner" style="display:none;" data-version="5.1.1RC">
+        <ul>
+          <li data-index="rs-672" data-transition="slidingoverlayhorizontal" data-slotamount="default" data-easein="default" data-easeout="default" data-masterspeed="default" data-thumb="http://placehold.it/150x100" data-rotate="0" data-saveperformance="off" data-title="Convenience" data-description="">
+            <img src="images/hero image.jpg" alt="" data-bgposition="top center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
+            <div class="tp-caption tp-shape tp-shapewrapper" id="slide-674-layer-1" data-x="center" data-hoffset="0" data-y="middle" data-voffset="0" data-width="full" data-height="full" data-whitespace="nowrap" data-transform_idle="o:1;" data-transform_in="opacity:0;s:1000;e:Power2.easeInOut;" data-transform_out="opacity:0;s:1000;s:1000;" data-start="0" data-basealign="slide" data-responsive_offset="off" data-responsive="off" style="z-index: 5;background-color:rgba(0, 0, 0, 0.35);border-color:rgba(0, 0, 0, 0);"></div>
+            <div class="tp-caption Concept-SubTitle tp-resizeme" id="slide-674-layer-15" data-x="center" data-hoffset="0" data-y="middle" data-voffset="-105" data-width="none" data-height="none" data-whitespace="nowrap" data-transform_idle="o:1;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;" data-transform_out="x:left(R);s:1000;e:Power3.easeIn;" data-start="1500" data-splitin="none" data-splitout="none" data-responsive_offset="on" style="z-index: 6; white-space: nowrap;font-style:italic;"><img src="images/logo.png" alt="" width="350" height="175" data-no-retina></div>
+            <div class="tp-caption Concept-Title tp-resizeme" id="slide-672-layer-2" data-x="center" data-hoffset="0" data-y="middle" data-voffset="50" data-fontsize="['70','70','50','40']" data-lineheight="['70','70','50','40']" data-width="['none','none','none','400']" data-height="none" data-whitespace="['nowrap','nowrap','nowrap','normal']" data-transform_idle="o:1;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;" data-transform_out="x:left(R);s:1000;e:Power3.easeIn;" data-start="1700" data-splitin="none" data-splitout="none" data-responsive_offset="on" style="z-index: 7; white-space: nowrap;text-align:center;">Redefining Health Care on Your terms</div>
+            <div class="tp-caption Dining-BtnLight rev-btn" id="slide-672-layer-7" data-x="center" data-hoffset="0" data-y="top" data-voffset="612" data-width="none" data-height="none" data-whitespace="nowrap" data-transform_idle="o:1;" data-transform_hover="o:1;rX:0;rY:0;rZ:0;z:0;s:300;e:Power1.easeInOut;" data-style_hover="c:rgba(255, 255, 255, 1.00);bg:rgba(255, 255, 255, 0.15);cursor:pointer;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:1000;e:Power3.easeInOut;" data-transform_out="auto:auto;s:2;" data-start="2100" data-splitin="none" data-splitout="none" data-actions='[{"event":"click","action":"startlayer","layer":"slide-672-layer-6","delay":""},{"event":"click","action":"scrollbelow","offset":"-76px"}]' data-responsive_offset="on" data-responsive="off" data-end="bytrigger" data-lasttriggerstate="reset" style="z-index: 9; white-space: nowrap;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;">Get started</div>
+          </li>
+          <li data-index="rs-674" data-transition="slidingoverlayhorizontal" data-slotamount="default" data-easein="default" data-easeout="default" data-masterspeed="default" data-thumb="http://placehold.it/150x100" data-rotate="0" data-saveperformance="off" data-title="Efficiency" data-description="">
+            <img src="images/v.jpg" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
+            <div class="tp-caption tp-shape tp-shapewrapper" id="slide-674-layer-1" data-x="center" data-hoffset="0" data-y="middle" data-voffset="0" data-width="full" data-height="full" data-whitespace="nowrap" data-transform_idle="o:1;" data-transform_in="opacity:0;s:1000;e:Power2.easeInOut;" data-transform_out="opacity:0;s:1000;s:1000;" data-start="bytrigger" data-basealign="slide" data-responsive_offset="off" data-responsive="off" data-end="bytrigger" data-lasttriggerstate="keep" style="z-index: 5;background-color:rgba(255, 255, 255, 0.35);border-color:rgba(0, 0, 0, 0);"></div>
+            <div class="tp-caption Concept-SubTitle tp-resizeme" id="slide-674-layer-16" data-x="center" data-hoffset="0" data-y="middle" data-voffset="-105" data-width="none" data-height="none" data-whitespace="nowrap" data-transform_idle="o:1;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;" data-transform_out="x:left(R);s:1000;e:Power3.easeIn;" data-start="1500" data-splitin="none" data-splitout="none" data-responsive_offset="on" style="z-index: 6; white-space: nowrap;font-style:italic;"><img src="images/logo.png" alt="" width="350" height="175" data-no-retina></div>
+            <div class="tp-caption Concept-Title tp-resizeme" id="slide-672-layer-3" data-x="center" data-hoffset="0" data-y="middle" data-voffset="50" data-fontsize="['70','70','50','40']" data-lineheight="['70','70','50','40']" data-width="['none','none','none','400']" data-height="none" data-whitespace="['nowrap','nowrap','nowrap','normal']" data-transform_idle="o:1;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;" data-transform_out="x:left(R);s:1000;e:Power3.easeIn;" data-start="1700" data-splitin="none" data-splitout="none" data-responsive_offset="on" style="z-index: 7; white-space: nowrap;text-align:center;">Ditch the queue!</div>
+            <div class="tp-caption Dining-BtnLight rev-btn" id="slide-672-layer-8" data-x="center" data-hoffset="0" data-y="top" data-voffset="612" data-width="none" data-height="none" data-whitespace="nowrap" data-transform_idle="o:1;" data-transform_hover="o:1;rX:0;rY:0;rZ:0;z:0;s:300;e:Power1.easeInOut;" data-style_hover="c:rgba(255, 255, 255, 1.00);bg:rgba(255, 255, 255, 0.15);cursor:pointer;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:1000;e:Power3.easeInOut;" data-transform_out="auto:auto;s:2;" data-start="2100" data-splitin="none" data-splitout="none" data-actions='[{"event":"click","action":"startlayer","layer":"slide-327-layer-3","delay":""},{"event":"click","action":"scrollbelow","offset":"-76px"}]' data-responsive_offset="on" data-responsive="off" data-end="bytrigger" data-lasttriggerstate="reset" style="z-index: 9; white-space: nowrap;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;">Get started</div>
+          </li>
+          <li data-index="rs-673" data-transition="slidingoverlayhorizontal" data-slotamount="default" data-easein="default" data-easeout="default" data-masterspeed="default" data-thumb="http://placehold.it/150x100" data-rotate="0" data-saveperformance="off" data-title="Specialists" data-description="">
+            <img src="images/two.jpg" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
+            <div class="tp-caption tp-shape tp-shapewrapper" id="slide-674-layer-11" data-x="center" data-hoffset="0" data-y="middle" data-voffset="0" data-width="full" data-height="full" data-whitespace="nowrap" data-transform_idle="o:1;" data-transform_in="opacity:0;s:1000;e:Power2.easeInOut;" data-transform_out="opacity:0;s:1000;s:1000;" data-start="bytrigger" data-basealign="slide" data-responsive_offset="off" data-responsive="off" data-end="bytrigger" data-lasttriggerstate="keep" style="z-index: 5;background-color:rgba(255, 255, 255, 0.35);border-color:rgba(0, 0, 0, 0);"></div>
+            <div class="tp-caption Concept-SubTitle tp-resizeme" id="slide-674-layer-17" data-x="center" data-hoffset="0" data-y="middle" data-voffset="-105" data-width="none" data-height="none" data-whitespace="nowrap" data-transform_idle="o:1;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;" data-transform_out="x:left(R);s:1000;e:Power3.easeIn;" data-start="1500" data-splitin="none" data-splitout="none" data-responsive_offset="on" style="z-index: 6; white-space: nowrap;font-style:italic;"><img src="images/logo.png" alt="" width="350" height="175" data-no-retina></div>
+            <div class="tp-caption Concept-Title tp-resizeme" id="slide-672-layer-14" data-x="center" data-hoffset="0" data-y="middle" data-voffset="50" data-fontsize="['70','70','50','40']" data-lineheight="['70','70','50','40']" data-width="['none','none','none','400']" data-height="none" data-whitespace="['nowrap','nowrap','nowrap','normal']" data-transform_idle="o:1;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;" data-transform_out="x:left(R);s:1000;e:Power3.easeIn;" data-start="1700" data-splitin="none" data-splitout="none" data-responsive_offset="on" style="z-index: 7; white-space: nowrap;text-align:center;">Broad Access to Specialists</div>
+            <div class="tp-caption Dining-BtnLight rev-btn" id="slide-672-layer-9" data-x="center" data-hoffset="0" data-y="top" data-voffset="612" data-width="none" data-height="none" data-whitespace="nowrap" data-transform_idle="o:1;" data-transform_hover="o:1;rX:0;rY:0;rZ:0;z:0;s:300;e:Power1.easeInOut;" data-style_hover="c:rgba(255, 255, 255, 1.00);bg:rgba(255, 255, 255, 0.15);cursor:pointer;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:1000;e:Power3.easeInOut;" data-transform_out="auto:auto;s:2;" data-start="2100" data-splitin="none" data-splitout="none" data-actions='[{"event":"click","action":"startlayer","layer":"slide-328-layer-3","delay":""},{"event":"click","action":"scrollbelow","offset":"-76px"}]' data-responsive_offset="on" data-responsive="off" data-end="bytrigger" data-lasttriggerstate="reset" style="z-index: 9; white-space: nowrap;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;">Get Started</div>
+          </li>
+        </ul>
+        <div class="tp-bannertimer tp-bottom" style="visibility: hidden !important;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Home Menu Section -->
+  <section class="section home-hero">
+    <div class="hero-space"></div>
+    <div class="section_content home-hero-space">
+      <h1>
+        <span class="exp--10">Space</span>
+        <span class="exp--20">to</span>
+        <span class="exp--30">figure</span>
+        <span class="exp--40">things</span>
+        <span class="exp--50">out</span>
+      </h1>
+      <p>Which category do you relate to?</p>
+      <div class="hero-services">
+        <a class="hero_service individual" href="#">
+          <div class="hero__service-img-wrap">
+            <img sizes="(max-width: 558px) 100vw, 558px" src="images/ind.jpg" alt="Individual" loading="lazy" class="hero__service-img">
+          </div>
+          <h2 class="heading-style-h3-2 margin-bottom margin-small">Individual</h2>
+          <p class="margin-bottom margin-xsmall">For ages 18+</p>
+          <div class="text-link hero">Select</div>
+        </a>
+        <a class="hero_service teens" href="#">
+          <div class="hero__service-img-wrap">
+            <img sizes="(max-width: 558px) 100vw, 558px" src="images/teen1.jpg" alt="Teens" loading="lazy" class="hero__service-img">
+          </div>
+          <h2 class="heading-style-h3-2 margin-bottom margin-small">Teens</h2>
+          <p class="margin-bottom margin-xsmall">For ages 13-17</p>
+          <div class="text-link hero">Select</div>
+        </a>
+        <a class="hero_service couples" href="#">
+          <div class="hero__service-img-wrap">
+            <img sizes="(max-width: 558px) 100vw, 558px" src="images/couple.jpg" alt="Couples" loading="lazy" class="hero__service-img">
+          </div>
+          <h2 class="heading-style-h3-2 margin-bottom margin-small">Couples</h2>
+          <p class="margin-bottom margin-xsmall">For partnerships</p>
+          <div class="text-link hero">Select</div>
+        </a>
+        <a class="hero_service medication" href="#">
+          <div class="hero__service-img-wrap">
+            <img sizes="(max-width: 558px) 100vw, 558px" src="images/med.jpg" alt="Medication" loading="lazy" class="hero__service-img">
+          </div>
+          <h2 class="heading-style-h3-2 margin-bottom margin-small">Medication</h2>
+          <p class="margin-bottom margin-xsmall">Psychiatry &amp; prescriptions</p>
+          <div class="text-link hero">Select</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services-section">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h2 class="section-title wow bounceIn">Our Services</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-sm-6">
+          <div class="service-item">
+            <h3>Virtual Consultations</h3>
+            <p>Connect with top therapists for expert advice at your fingertips. Schedule appointments that fit your schedule and receive professional guidance from the comfort of your home.</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="service-item">
+            <h3>Teletherapy and Counseling</h3>
+            <p>Get access to virtual counseling and therapy services for mental health issues. Our licensed therapists provide compassionate care through secure video, audio, or text-based sessions.</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="service-item">
+            <h3>Mental Health Screenings</h3>
+            <p>We offer digital tools for self-assessments and screenings to enable early detection of mental health concerns. These confidential assessments help identify potential issues and guide appropriate care.</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="service-item">
+            <h3>Prescription Deliveries</h3>
+            <p>Get your prescription delivered to ensure treatment adherence. Our medication management services make it convenient to receive necessary medications without the hassle of pharmacy visits.</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="service-item">
+            <h3>Remote Monitoring</h3>
+            <p>You're able to track your mental health progress using our remote tools. Monitor symptoms, mood changes, and treatment effectiveness with our user-friendly digital platform.</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="service-item">
+            <h3>Group Therapy Sessions</h3>
+            <p>Connect with other individuals facing similar challenges through our virtual group therapy and peer support sessions. Find community and shared understanding in a safe, moderated environment.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Compare Section -->
+  <section class="compare-section">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h2 class="section-title wow bounceIn">SwiftDoc vs Traditional Therapy</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>SwiftDoc</th>
+                <th>Traditional Therapy</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Scheduling</td>
+                <td class="swift-doc">Flexible scheduling options available 7 days a week</td>
+                <td>Limited to office hours, often requiring time off work</td>
+              </tr>
+              <tr>
+                <td>Convenience</td>
+                <td class="swift-doc">Convenient, on-your-time options from the comfort of your home</td>
+                <td>Requires commuting and waiting in offices</td>
+              </tr>
+              <tr>
+                <td>Cost</td>
+                <td class="swift-doc">Affordable subscription plans with transparent pricing</td>
+                <td>Often expensive with hidden fees and insurance complexities</td>
+              </tr>
+              <tr>
+                <td>Privacy</td>
+                <td class="swift-doc">Enhanced privacy with secure, encrypted sessions</td>
+                <td>Requires physical presence in visible locations</td>
+              </tr>
+              <tr>
+                <td>Therapists</td>
+                <td class="swift-doc">Diverse licensed therapists with specialized expertise</td>
+                <td>Limited options based on geographical location</td>
+              </tr>
+              <tr>
+                <td>Session Types</td>
+                <td class="swift-doc">Video, text, and audio options to suit your preferences</td>
+                <td>Limited to in-person visits only</td>
+              </tr>
+              <tr>
+                <td>Commute</td>
+                <td class="swift-doc">No commute or waiting - therapy at your fingertips</td>
+                <td>Time-consuming travel and waiting room delays</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="section-white small-padding-bottom">
+    <div class="container">
+      <div class="row margin-bottom-40">
+        <div class="col-md-12 text-center">
+          <div class="text-center">
+            <span class="comic-text wow fadeIn">How Swiftdoc works</span>
+            <h2 class="section-title wow bounceIn">Follow these steps to start your journey with us</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 wow bounceInUp">
+          <div class="blog-item">
+            <div class="popup-wrapper">
+              <div class="popup-gallery">
+                <a href="#" class="blog-item-pic"><img src="images/b.jpg" class="width-100" alt="pic"><span class="eye-wrapper"><i class="pe-7s-link eye-icon"></i></span></a>
+              </div>
+            </div>
+            <div class="blog-item-inner">
+              <h3 class="blog-title"><a href="#">Match with a Therapist</a></h3>
+              <p>Answer a few quick questions about your healthcare needs, and we’ll connect you to a qualified therapist who fits your preferences.</p>
+              <a href="questionnaire.html" class="btn btn-lg btn-yellow-small scrool">Questionnaire</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 wow bounceInUp">
+          <div class="blog-item">
+            <div class="popup-wrapper">
+              <div class="popup-gallery">
+                <a href="#" class="blog-item-pic"><img src="images/c.jpg" class="width-100" alt="pic"><span class="eye-wrapper"><i class="pe-7s-link eye-icon"></i></span></a>
+              </div>
+            </div>
+            <div class="blog-item-inner">
+              <h3 class="blog-title"><a href="#">Schedule Your Appointment</a></h3>
+              <p>Easily book your session, choose your appointments at a time that works for you.</p>
+              <a href="booking.html" class="btn btn-lg btn-yellow-small scrool">Book</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 wow bounceInUp">
+          <div class="blog-item">
+            <div class="popup-wrapper">
+              <div class="popup-gallery">
+                <a href="#" class="blog-item-pic"><img src="images/one1.jpg" class="width-100" alt="pic"><span class="eye-wrapper"><i class="pe-7s-link eye-icon"></i></span></a>
+              </div>
+            </div>
+            <div class="blog-item-inner">
+              <h3 class="blog-title"><a href="#">Get Started</a></h3>
+              <p>Join your appointment through a secure link. Get personalized care and ongoing support tailored to your needs.</p>
+              <a href="#" class="btn btn-lg btn-yellow-small scrool">Get Started</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonies Section -->
+  <section class="section-white no-padding-bottom">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <div class="text-center">
+            <span class="comic-text">Testimonies</span>
+            <h2 class="section-title no-margin">What our clients have to say</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <div id="rev_slider_108_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" data-alias="food-carousel80" style="margin:0px auto;padding:0px;margin-top:0px;margin-bottom:0px;">
+            <div id="rev_slider_108_1" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.0.7">
+              <ul>
+                <li data-index="rs-326" data-transition="fade" data-slotamount="7" data-easein="default" data-easeout="default" data-masterspeed="300" data-thumb="images/davis.jpg" data-rotate="0" data-saveperformance="off" data-title="Mugume Davis" data-description="">
+                  <img src="images/davis.jpg" alt="" data-bgposition="center center" data-bgfit="contain" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
+                  <div class="tp-caption FoodCarousel-Content tp-resizeme" id="slide-326-layer-3" data-x="center" data-hoffset="" data-y="center" data-voffset="" data-width="['420']" data-height="['420']" data-transform_idle="o:1;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:800;e:Power3.easeInOut;" data-transform_out="auto:auto;s:500;" data-start="bytrigger" data-splitin="none" data-splitout="none" data-responsive_offset="on" data-end="bytrigger" data-lasttriggerstate="reset" style="z-index: 5; min-width: 420px; max-width: 420px; white-space: normal;"><span class="foodcarousel-headline" style="color: #252525; font-weight:700; text-decoration: underline;">Profile</span><br>Mugume Davis<br>Lawyer<br>Business owner<br>Single father<br>PTSD<hr style="border-top: 1px solid #292e31;">Quis autem velis et reprehender etims quiste<br>voluptate velit esse quam nihil etsa illum sit sedit consequatur quias voluptas nets.</div>
+                  <div class="tp-caption FoodCarousel-Button rev-btn" id="slide-326-layer-1" data-x="center" data-hoffset="" data-y="bottom" data-voffset="50" data-width="['auto']" data-height="['auto']" data-transform_idle="o:1;" data-transform_hover="o:1;rX:0;rY:0;rZ:0;z:0;s:300;e:Power1.easeInOut;" data-style_hover="c:rgba(255, 255, 255, 1.00);bg:rgba(41, 46, 49, 1.00);cursor:pointer;" data-transform_in="opacity:0;s:300;e:Power3.easeInOut;" data-transform_out="opacity:0;s:300;s:300;" data-start="0" data-splitin="none" data-splitout="none" data-actions='[{"event":"click","action":"startlayer","layer":"slide-326-layer-3","delay":""},{"event":"click","action":"startlayer","layer":"slide-326-layer-5","delay":"200"},{"event":"click","action":"stoplayer","layer":"slide-326-layer-1","delay":""}]' data-responsive_offset="on" data-responsive="off" data-lasttriggerstate="reset" style="z-index: 6; white-space: nowrap;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;"><i class="pe-7s-note2" style="font-size: 21px; float: left;margin-top:-6px;margin-right:10px;"></i> View Testimony</div>
+                  <div class="tp-caption FoodCarousel-CloseButton rev-btn tp-resizeme" id="slide-326-layer-5" data-x="441" data-y="110" data-width="['auto']" data-height="['auto']" data-transform_idle="o:1;" data-transform_hover="o:1;rX:0;rY:0;rZ:0;z:0;s:300;e:Power1.easeInOut;" data-style_hover="c:rgba(255, 255, 255, 1.00);bg:rgba(41, 46, 49, 1.00);cursor:pointer;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:800;e:Power3.easeInOut;" data-transform_out="auto:auto;s:500;" data-start="bytrigger" data-splitin="none" data-splitout="none" data-actions='[{"event":"click","action":"stoplayer","layer":"slide-326-layer-3","delay":""},{"event":"click","action":"stoplayer","layer":"slide-326-layer-5","delay":""},{"event":"click","action":"startlayer","layer":"slide-326-layer-1","delay":""}]' data-responsive_offset="on" data-end="bytrigger" data-lasttriggerstate="reset" style="z-index: 7; white-space: nowrap;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;"><i class="fa fa-remove"></i></div>
+                </li>
+                <li data-index="rs-327" data-transition="fade" data-slotamount="7" data-easein="default" data-easeout="default" data-masterspeed="300" data-thumb="images/josh.jpg" data-rotate="0" data-saveperformance="off" data-title="Arinda Joshua" data-description="">
+                  <img src="images/josh.jpg" alt="" data-bgposition="center center" data-bgfit="contain" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
+                  <div class="tp-caption FoodCarousel-Content tp-resizeme" id="slide-327-layer-3" data-x="center" data-hoffset="" data-y="center" data-voffset="" data-width="['420']" data-height="['420']" data-transform_idle="o:1;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:800;e:Power3.easeInOut;" data-transform_out="auto:auto;s:500;" data-start="bytrigger" data-splitin="none" data-splitout="none" data-responsive_offset="on" data-end="bytrigger" data-lasttriggerstate="reset" style="z-index: 5; min-width: 420px; max-width: 420px; white-space: normal;"><span class="foodcarousel-headline" style="color: #252525; font-weight:700; text-decoration: underline;">Profile</span><br>Arinda Joshua<br>Student<br>Makerere University<br>OCD<hr style="border-top: 1px solid #292e31;">I find this easy to use. the fact that i can book at a time of my own convenience</div>
+                  <div class="tp-caption FoodCarousel-Button rev-btn" id="slide-327-layer-1" data-x="center" data-hoffset="" data-y="bottom" data-voffset="50" data-width="['auto']" data-height="['auto']" data-transform_idle="o:1;" data-transform_hover="o:1;rX:0;rY:0;rZ:0;z:0;s:300;e:Power1.easeInOut;" data-style_hover="c:rgba(255, 255, 255, 1.00);bg:rgba(41, 46, 49, 1.00);cursor:pointer;" data-transform_in="opacity:0;s:300;e:Power3.easeInOut;" data-transform_out="opacity:0;s:300;s:300;" data-start="0" data-splitin="none" data-splitout="none" data-actions='[{"event":"click","action":"startlayer","layer":"slide-327-layer-3","delay":""},{"event":"click","action":"startlayer","layer":"slide-327-layer-5","delay":"200"},{"event":"click","action":"stoplayer","layer":"slide-327-layer-1","delay":""}]' data-responsive_offset="on" data-responsive="off" data-lasttriggerstate="reset" style="z-index: 6; white-space: nowrap;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;"><i class="pe-7s-note2" style="font-size: 21px; float: left;margin-top:-6px;margin-right:10px;"></i> View Testimony</div>
+                  <div class="tp-caption FoodCarousel-CloseButton rev-btn tp-resizeme" id="slide-327-layer-5" data-x="441" data-y="110" data-width="['auto']" data-height="['auto']" data-transform_idle="o:1;" data-transform_hover="o:1;rX:0;rY:0;rZ:0;z:0;s:300;e:Power1.easeInOut;" data-style_hover="c:rgba(255, 255, 255, 1.00);bg:rgba(41, 46, 49, 1.00);cursor:pointer;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:800;e:Power3.easeInOut;" data-transform_out="auto:auto;s:500;" data-start="bytrigger" data-splitin="none" data-splitout="none" data-actions='[{"event":"click","action":"stoplayer","layer":"slide-327-layer-3","delay":""},{"event":"click","action":"stoplayer","layer":"slide-327-layer-5","delay":""},{"event":"click","action":"startlayer","layer":"slide-327-layer-1","delay":""}]' data-responsive_offset="on" data-lasttriggerstate="reset" style="z-index: 7; white-space: nowrap;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;"><i class="fa fa-remove"></i></div>
+                </li>
+              </ul>
+              <div class="tp-bannertimer tp-bottom" style="visibility: hidden !important;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="container">
+      <div class="row footer-top">
+        <div class="col-md-3 padding-bottom-50">
+          <h4>ABOUT US</h4>
+          <p>SwiftDoc was founded in 2013 to remove the traditional barriers to therapy and make mental health care more accessible to everyone. Today, it is the world’s largest therapy service — providing professional, affordable, and tailored therapy in a convenient online format.</p>
+          <a href="about.html" class="btn btn-lg btn-yellow-x-small scrool">OUR STORY</a>
+        </div>
+        <div class="col-md-3 padding-bottom-50">
+          <h4>LATEST SESSIONS</h4>
+          <ul class="footer-list">
+            <li class="first"><a href="#" target="_blank">Couples Counselling</a></li>
+            <li><a href="#" target="_blank">Child & Parent</a></li>
+            <li><a href="#" target="_blank">Anxiety and Panic Disorder</a></li>
+            <li><a href="#" target="_blank">Bipolar Disorder</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3 padding-bottom-50">
+          <h4>FEATURED PLATES</h4>
+          <ul class="footer-gallery">
+            <li class="popup-gallery">
+              <a class="popup2" href="images/two.jpg">
+                <img src="images/two.jpg" alt="popup">
+              </a>
+            </li>
+            <li class="popup-gallery">
+              <a class="popup2" href="images/one1.jpg">
+                <img src="images/one1.jpg" alt="instagram">
+              </a>
+            </li>
+            <li class="popup-gallery">
+              <a class="popup2" href="images/one.jpg">
+                <img src="images/one.jpg" alt="instagram">
+              </a>
+            </li>
+            <li class="popup-gallery">
+              <a class="popup2" href="images/12.avif">
+                <img src="images/12.avif" alt="instagram">
+              </a>
+            </li>
+            <li class="popup-gallery">
+              <a class="popup2" href="images/121.avif">
+                <img src="images/121.avif" alt="instagram">
+              </a>
+            </li>
+            <li class="popup-gallery">
+              <a class="popup2" href="images/34.jpg">
+                <img src="images/34.jpg" alt="instagram">
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-3 padding-bottom-50">
+          <h4>CONTACT DETAILS</h4>
+          <p>Quis autem velis eti reprehender etimes quiste volupta velit esse quam nihil.</p>
+          <p class="contact_info"><i class="fa fa-map-marker"></i>Kampala, Uganda</p>
+          <p class="contact_info"><i class="fa fa-phone"></i>+256781202892</p>
+          <p class="contact_info"><i class="fa fa-envelope-square"></i> <a href="mailto:hello@swiftdoc.health">hello@swiftdoc.health</a></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="footer-bottom">
+            <div class="col-md-5">
+              <div class="copyright">
+                <p>© 2025 swiftdoc. Designed by <a href="#" target="_blank">Mwenye256</a></p>
+              </div>
+            </div>
+            <div class="col-md-2 text-center">
+              <a href="#hero-section" class="scrool top-scroll"><i class="fa fa-angle-double-up"></i></a>
+            </div>
+            <div class="col-md-5">
+              <ul class="footer_social">
+                <li>Follow Us:</li>
+                <li><a href="https://x.com/swiftdocug?s=11"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="https://www.linkedin.com/company/swiftdochealth/"><i class="fa fa-linkedin"></i></a></li>
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="https://www.instagram.com/swiftdochealth?igsh=NjljcmpuMDNyaGE1"><i class="fa fa-instagram"></i></a></li>
+                <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load JS -->
+  <script src="js/jquery-1.11.3.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/bootstrap-select.js"></script>
+  <script src="js/bootstrap-switch.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/jquery.nav.js"></script>
+  <script src="js/jquery.scrollTo-min.js"></script>
+  <script src="js/SmoothScroll.js"></script>
+  <script src="js/wow.js"></script>
+  <script src="js/instafeed.js"></script>
+  <script src="js/instagram.js"></script>
+  <script type="text/javascript" src="revolution/js/jquery.themepunch.tools.min.js"></script>
+  <script type="text/javascript" src="revolution/js/jquery.themepunch.revolution.min.js"></script>
+  <script type="text/javascript" src="revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+  <script type="text/javascript" src="revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+  <script type="text/javascript" src="revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+  <script type="text/javascript" src="revolution/js/extensions/revolution.extension.actions.min.js"></script>
+  <script type="text/javascript" src="revolution/js/extensions/revolution.extension.carousel.min.js"></script>
+  <script src="js/custom.js"></script>
+  <script src="js/plugins.js"></script>
+
+  <script>
+    let currentStep = 1;
+    const totalSteps = 7;
+
+    function updateProgressBar() {
+      const progressPercent = (currentStep / totalSteps) * 100;
+      document.getElementById('progress-bar-fill').style.width = progressPercent + '%';
+    }
+
+    function showStep(step) {
+      document.querySelectorAll('.step-content').forEach(content => {
+        content.style.display = 'none';
+      });
+      document.getElementById(`step-${step}`).style.display = 'block';
+    }
+
+    function goNext() {
+      if (currentStep < totalSteps) {
+        currentStep++;
+        showStep(currentStep);
+        updateProgressBar();
+      }
+      if (currentStep === totalSteps) {
+        document.getElementById('nextButton').style.display = 'none';
+        document.getElementById('submitButton').style.display = 'block';
+      }
+      document.getElementById('backButton').style.display = 'block';
+    }
+
+    function goBack() {
+      if (currentStep > 1) {
+        currentStep--;
+        showStep(currentStep);
+        updateProgressBar();
+      }
+      if (currentStep === 1) {
+        document.getElementById('backButton').style.display = 'none';
+      }
+      document.getElementById('nextButton').style.display = 'block';
+      document.getElementById('submitButton').style.display = 'none';
+    }
+
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      alert("Thank you for completing the questionnaire!");
+    }
+
+    document.getElementById('questionnaire').addEventListener('submit', handleFormSubmit);
+
+    showStep(currentStep);
+    updateProgressBar();
+
+    document.querySelectorAll('input[name="attendedTherapy"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        if (this.value !== 'No') {
+          document.getElementById('previousTherapies').style.display = 'block';
+        } else {
+          document.getElementById('previousTherapies').style.display = 'none';
+        }
+      });
+    });
+
+    document.getElementById('healthConditions').addEventListener('change', function() {
+      if (this.value === 'Yes') {
+        document.getElementById('healthConditionsDetail').style.display = 'block';
+      } else {
+        document.getElementById('healthConditionsDetail').style.display = 'none';
+      }
+    });
+
+    document.getElementById('triggers').addEventListener('change', function() {
+      if (this.value === 'Yes') {
+        document.getElementById('triggersDetail').style.display = 'block';
+      } else {
+        document.getElementById('triggersDetail').style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
