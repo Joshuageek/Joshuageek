@@ -2,6 +2,7 @@
 session_start();
 require_once '../connection/db.php'; // Make sure your DB connection is valid
 
+// generate pwd - first time
 if (isset($_POST['first_pwd'])) {
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirmPassword'];
@@ -55,6 +56,7 @@ if (isset($_POST['first_pwd'])) {
 
 } 
 
+// login
 elseif(isset($_POST['login_btn'])){
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
@@ -101,6 +103,7 @@ elseif(isset($_POST['login_btn'])){
     }
 }
 
+// check email for forgotten pwd
 elseif(isset($_POST['check_email'])){
     $email = $_POST['email'] ?? '';
 
@@ -135,6 +138,7 @@ elseif(isset($_POST['check_email'])){
     }
 }
 
+// reset forgotten password
 elseif (isset($_POST['reset_pwd'])) {
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirmPassword'];
@@ -209,3 +213,43 @@ elseif (isset($_POST['reset_pwd'])) {
     }
 }
 
+// booking - form submission
+elseif (isset($_POST['booking_submittion'])) {
+    // Sanitize and validate input
+    $full_name = isset($_POST['register_names']) ? trim($_POST['register_names']) : '';
+    $phone = isset($_POST['register_phone']) ? trim($_POST['register_phone']) : '';
+    $booking_date = isset($_POST['register_date']) ? trim($_POST['register_date']) : '';
+    $email = isset($_POST['register_email']) ? trim($_POST['register_email']) : '';
+    $number_of_people = isset($_POST['register_ticket']) ? trim($_POST['register_ticket']) : '';
+    $booking_time = isset($_POST['register_time']) ? trim($_POST['register_time']) : '';
+
+    // Validate inputs
+    if (empty($full_name) || empty($phone) || empty($booking_date) || empty($email) || empty($number_of_people) || empty($booking_time)) {
+        header("Location: ../booking.php?status=error&message=All fields are required");
+        exit();
+    } 
+
+    try {
+        // Prepare and execute the query
+        $stmt = $conn->prepare("INSERT INTO booking_submissions (full_name, phone, booking_date, email, number_of_people, booking_time) VALUES (:full_name, :phone, :booking_date, :email, :number_of_people, :booking_time)");
+        $stmt->execute([
+            ':full_name' => $full_name,
+            ':phone' => $phone,
+            ':booking_date' => $booking_date,
+            ':email' => $email,
+            ':number_of_people' => $number_of_people,
+            ':booking_time' => $booking_time
+        ]);
+
+        // Success: Redirect to booking page
+        header("Location: ../booking.php?status=success&message=We received your message and you will hear from us soon. Thank You!");
+        exit();
+    } catch (PDOException $e) {
+        // Error: Redirect with error message
+        header("Location: ../booking.php?status=error&message=Database error: " . urlencode($e->getMessage()));
+        exit();
+    }
+} else {
+    header("Location: ../booking.php?status=error&message=Invalid request");
+    exit();
+}

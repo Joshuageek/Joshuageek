@@ -1,4 +1,7 @@
-<?php include('header.php');?>
+<?php 
+session_start();
+include('header.php');
+?>
 
     <style>
         .about-hero-section {
@@ -81,8 +84,8 @@
                     <span class="comic-text">Appointment</span>
                     <h2 class="section-title">Online Booking</h2>
                     <p>Whether you’re looking for someone to talk to or need ongoing support, we connect you with professional mental health services from the comfort of your home. No long waits, no high costs, just the help you need, when you need it. Step into a realm of convenience, expertise, and personalized care.</p>
-                    <p class="register_success_box" style="display:none;">We received your message and you'll hear from us soon. Thank You!</p>
-                    <form id="register-form" class="contact" action="php/register.php" method="post">
+                    <!-- <p class="register_success_box" style="display:none;">We received your message and you'll hear from us soon. Thank You!</p> -->
+                    <form action="php/auth.inc.php" method="post">
                         <div class="col-md-6">
                             <input class="register-input white-input" required name="register_names" placeholder="Full Name" type="text">
                             <input class="register-input white-input" required name="register_phone" placeholder="Phone Number" type="text">
@@ -106,7 +109,8 @@
                             <input class="register-input white-input" required name="register_time" placeholder="Booking Time" type="text">
                         </div>
                         <div class="col-md-12">
-                            <input value="Book Your Session" id="submit-button" class="register-submit" type="submit">
+                            <input value="Book Your Session" class="register-submit" name="booking_submittion" type="submit">
+                             <!-- <button type="submit" name="booking_submittion" class="btn btn-success">Book Your Session</button> -->
                         </div>
                     </form>
                 </div>

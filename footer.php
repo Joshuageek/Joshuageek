@@ -156,12 +156,47 @@
     <script type="text/javascript" src="revolution/js/extensions/revolution.extension.actions.min.js"></script>
     <script type="text/javascript" src="revolution/js/extensions/revolution.extension.carousel.min.js"></script>
 
+    <!-- sweet alerts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- begin custom script-->
     <script src="js/custom.js"></script>
     <script src="js/plugins.js"></script>
 
-    <!-- JavaScript for Questionnaire Form -->
+    <!-- global alert -->
     <script>
+    <?php
+if (isset($_GET['status']) && isset($_GET['message'])) {
+    $message = htmlspecialchars($_GET['message']);
+    if ($_GET['status'] === 'success') {
+        echo "Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: '$message',
+            confirmButtonColor: '#A8C3A4',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            window.history.replaceState({}, document.title, window.location.pathname);
+            const form = document.getElementById('register-form');
+            if (form) form.reset();
+        });";
+    } elseif ($_GET['status'] === 'error') {
+        echo "Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '$message',
+            confirmButtonColor: '#A8C3A4',
+            confirmButtonText: 'Try Again'
+        }).then(() => {
+            window.history.replaceState({}, document.title, window.location.pathname);
+        });";
+    }
+}
+?>
+    </script>
+
+    <!-- JavaScript for Questionnaire Form -->
+    <!-- <script>
       let currentStep = 1;
       const totalSteps = 7;
 
@@ -242,7 +277,7 @@
           document.getElementById('triggersDetail').style.display = 'none';
         }
       });
-    </script>
+    </script> -->
 
   </body>
 </html>

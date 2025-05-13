@@ -1,4 +1,7 @@
-<?php include('connection/db.php');?>
+<?php include('connection/db.php');
+
+$current_page = basename($_SERVER['PHP_SELF']);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,6 +35,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Font Favicon -->
   <link rel="shortcut icon" href="images/favicon.ico">
+
+  <!-- sweet alerts -->
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+
 
   <style>
     .home-hero {
@@ -314,7 +321,11 @@
     }
     
     .navbar-nav .active a {
-      color: #A8C3A4;
+      /* color: #A8C3A4; */
+      background: #7aca9e;
+      padding: .4em;
+      border-radius: .4em;
+      color: #fff;
     }
     
     /* Responsive Adjustments */
@@ -338,17 +349,17 @@
 <body>
   <!-- Fixed Navbar -->
   <header class="header">
-    <nav class="navbar">
-      <div class="container">
-        <a href="index.php" class="navbar-brand">SWIFT DOC</a>
-        <ul class="navbar-nav">
-          <li><a href="index.php">Home</a></li>
-          <li><a href="about.php">About Us</a></li>
-          <li><a href="booking.php">Bookings</a></li>
-          <li><a href="clinic.php">For Therapists</a></li>
-          <li><a href="login.php">Sign in</a></li>
-          <li><a href="question.php">Find a Therapist</a></li>
-        </ul>
-      </div>
-    </nav>
-  </header>
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.php" class="navbar-brand">SWIFT DOC</a>
+      <ul class="navbar-nav">
+        <li class="<?php echo $current_page == 'index.php' ? 'active' : ''; ?>"><a href="index.php">Home</a></li>
+        <li class="<?php echo $current_page == 'about.php' ? 'active' : ''; ?>"><a href="about.php">About Us</a></li>
+        <li class="<?php echo $current_page == 'booking.php' ? 'active' : ''; ?>"><a href="booking.php">Bookings</a></li>
+        <li class="<?php echo $current_page == 'clinic.php' ? 'active' : ''; ?>"><a href="clinic.php">For Therapists</a></li>
+        <li class="<?php echo $current_page == 'login.php' ? 'active' : ''; ?>"><a href="login.php">Sign in</a></li>
+        <li class="<?php echo $current_page == 'question.php' ? 'active' : ''; ?>"><a href="question.php">Find a Therapist</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
