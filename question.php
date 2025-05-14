@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SwiftDoc Health - Teletherapy Questionnaire</title>
+    <title>Luna Health - Teletherapy Questionnaire</title>
     <link rel="shortcut icon" href="images/favicon.ico">
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
@@ -19,7 +19,7 @@
     <div class="questionnaire-container">
       <div class="progress-bar" id="progressBar"></div>
       <div class="form-header">
-        <h2>SwiftDoc Health - Teletherapy Questionnaire</h2>
+        <h2>Luna Health - Teletherapy Questionnaire</h2>
       </div>
       <form id="questionnaireForm" action="php/question.inc.php" method="POST">
         <input type="hidden" id="current_page" name="current_page" value="0">
@@ -429,7 +429,7 @@
 
           <div class="form-page" id="page19">
             <div class="form-group">
-              <label>How did you hear about SwiftDoc Health?</label>
+              <label>How did you hear about Luna Health?</label>
               <div class="option-group">
                 <input type="radio" id="sourceSocial" name="source" value="social-media" required />
                 <label for="sourceSocial">Social media</label>

@@ -7,7 +7,7 @@
           <!--begin col-md-3 -->
           <div class="col-md-3 padding-bottom-50">
             <h4>ABOUT US</h4>
-            <p>SwiftDoc was founded in 2013 to remove the traditional barriers to therapy and make mental health care more accessible to everyone. </p>
+            <p>Luna was founded in 2013 to remove the traditional barriers to therapy and make mental health care more accessible to everyone. </p>
             <a href="about.php" class="btn btn-lg btn-yellow-x-small scrool">OUR STORY</a>
           </div>
           <!--end col-md-3 -->
@@ -62,10 +62,10 @@
           <!--begin col-md-3 -->
           <div class="col-md-3 padding-bottom-50">
             <h4>CONTACT DETAILS</h4>
-            <p>Swiftdoc is committed to making high-quality mental health support accessible to all, with the help of caring and committed mental health providers.</p>
+            <p>Luna is committed to making high-quality mental health support accessible to all, with the help of caring and committed mental health providers.</p>
             <p class="contact_info"><i class="fa fa-map-marker"></i>Kampala, Uganda</p>
             <p class="contact_info"><i class="fa fa-phone"></i>+256781202892</p>
-            <p class="contact_info"><i class="fa fa-envelope-square"></i> <a href="mailto:hello@swiftdoc.health">hello@swiftdoc.health</a></p>
+            <p class="contact_info"><i class="fa fa-envelope-square"></i> <a href="mailto:hello@Luna.health">hello@luna.health</a></p>
           </div>
           <!--end col-md-3 -->
         </div>
@@ -78,7 +78,7 @@
             <div class="col-md-5">
               <!--begin copyright -->
               <div class="copyright ">
-                <p>© 2025 swiftdoc. Designed by <a href="#" target="_blank">Mwenye256</a></p>
+                <p>© 2025 Luna. Designed by <a href="#" target="_blank">Mwenye256</a></p>
               </div>
               <!--end copyright -->
             </div>

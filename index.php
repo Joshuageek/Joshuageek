@@ -1,10 +1,13 @@
-<?php include('header.php');?>
+<?php 
+include('header.php');
+
+?>
 <!-- Hero Section --> 
 <section id="hero-section">   
   <div class="container">     
     <div class="row align-items-center">       
       <!-- Content Column -->    
-      <div class="col-md-6 content-column">         
+      <div class="col-md-6 content-column">
         <h1>Your Mental Wellness Journey Starts Here</h1>         
         <p class="subtitle"><h4>Connect with licensed therapists in minutes. Accessible, confidential support designed for young adults.</h4></p>                  
         <div class="button-group">           
@@ -628,12 +631,12 @@
 
   <section class="compare-section">
     <div class="container">
-      <h2>SwiftDoc vs. In-person therapy</h2>
+      <h2>Luna vs. In-person therapy</h2>
       <table class="compare-table">
         <thead>
           <tr>
             <th></th>
-            <th>SwiftDoc</th>
+            <th>Luna</th>
             <th>In-person Therapy</th>
           </tr>
         </thead>
@@ -686,7 +689,7 @@
       <div class="col-md-12 text-center">
         <div class="text-center">
           <span class="comic-text wow fadeIn"></span>
-          <h1 class="section-title wow bounceIn">How Swiftdoc works</h1>
+          <h1 class="section-title wow bounceIn">How Luna works</h1>
         </div>
       </div>
     </div>
@@ -818,7 +821,7 @@
                           <li data-index="rs-331" data-transition="fade" data-slotamount="7" data-easein="default" data-easeout="default" data-masterspeed="300">
                               <div class="testimonial-card">
                                   <div class="quote-icon">"</div>
-                                  <p class="testimonial-text">The idea that SwiftDoc Health could bring help straight to us, no matter where we are, is really comforting.</p>
+                                  <p class="testimonial-text">The idea that Luna Health could bring help straight to us, no matter where we are, is really comforting.</p>
                                   <div class="testimonial-author">
                                       <h4>Kenneth M</h4>
                                       <p>Bugolobi</p>

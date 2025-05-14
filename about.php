@@ -283,7 +283,7 @@
     <section class="hero-section">
       <div class="container">
         <div class="hero-content">
-          <h1>About SwiftDoc</h1>
+          <h1>About Luna</h1>
           <p>
             Transforming mental health care through innovation and compassion
           </p>
@@ -376,16 +376,16 @@
         <h2 class="section-title">Discover Our Story</h2>
         <div class="story-container">
           <div class="story-content">
-            <h3>SwiftDoc Teletherapy</h3>
+            <h3>Luna Teletherapy</h3>
             <p>
-              SwiftDoc Teletherapy was born out of something deeply personal.
+              Luna Teletherapy was born out of something deeply personal.
               I've been through my own struggles with mental health, moments
               when I felt overwhelmed, anxious, and alone. And during those
               times, finding someone to talk to felt like another mountain to
               climb.
             </p>
             <p>
-              That's why I started SwiftDoc. It's not just a platform, it's a
+              That's why I started Luna. It's not just a platform, it's a
               passion project, created with empathy and the understanding that
               sometimes, all we really need is a safe space to be heard.
             </p>
@@ -415,7 +415,7 @@
             </div>
             <p>
               <strong>Founder's Note</strong><br />
-              I created SwiftDoc because I needed something like it too. If
+              I created Luna because I needed something like it too. If
               you're here reading this, know that you're already taking a brave
               step, and we're here to walk the rest with you.
             </p>

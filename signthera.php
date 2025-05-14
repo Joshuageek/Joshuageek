@@ -483,7 +483,7 @@
         <div class="consent-section">
           <div class="consent-item">
             <input type="checkbox" id="consent-verification" name="consent-verification" required>
-            <label for="consent-verification">I consent to SwiftDoc verifying my credentials</label>
+            <label for="consent-verification">I consent to Luna verifying my credentials</label>
           </div>
           <div class="consent-item">
             <input type="checkbox" id="consent-data" name="consent-data" required>

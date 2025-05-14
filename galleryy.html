@@ -1,576 +1,642 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Join Our Therapist Network | Swiftdoc</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    /* Global Styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: 'Montserrat', sans-serif;
-      line-height: 1.6;
-      color: #333;
-    }
-    
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 15px;
-    }
-    
-    /* Navbar */
-    .navbar {
-      background-color: #fff;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      padding: 15px 0;
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
-    }
-    
-    .navbar .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .navbar-brand {
-      font-size: 24px;
-      font-weight: 700;
-      color: #A8C3A4;
-      text-decoration: none;
-    }
-    
-    .navbar-nav {
-      display: flex;
-      list-style: none;
-    }
-    
-    .navbar-nav li {
-      margin-left: 20px;
-    }
-    
-    .navbar-nav a {
-      text-decoration: none;
-      color: #333;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-    
-    .navbar-nav a:hover {
-      color: #A8C3A4;
-    }
-    
-    /* Hero Section */
-    #hero-section {
-      background-color: #F5F7FF;
-      padding: 120px 0 80px;
-      text-align: center;
-    }
-    
-    .hero-content h1 {
-      font-size: 2.8rem;
-      color: #A8C3A4;
-      margin-bottom: 20px;
-    }
-    
-    .hero-content p {
-      font-size: 1.1rem;
-      color: #5F6C7B;
-      max-width: 700px;
-      margin: 0 auto 30px;
-    }
-    
-    .btn {
-      display: inline-block;
-      padding: 12px 30px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s;
-      margin: 5px;
-    }
-    
-    .btn-primary {
-      background-color: #A8C3A4;
-      color: white;
-    }
-    
-    .btn-secondary {
-      background-color: transparent;
-      color: #A8C3A4;
-      border: 2px solid #A8C3A4;
-    }
-    
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-    
-    /* Benefits Section */
-    .benefits-section {
-      padding: 80px 0;
-      background-color: #fff;
-    }
-    
-    .section-title {
-      text-align: center;
-      margin-bottom: 50px;
-      font-size: 2.2rem;
-      color: #333;
-    }
-    
-    .benefits-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-    }
-    
-    .benefit-card {
-      background: #f9f9f9;
-      border-radius: 10px;
-      padding: 30px;
-      text-align: center;
-      transition: transform 0.3s;
-    }
-    
-    .benefit-card:hover {
-      transform: translateY(-5px);
-    }
-    
-    .benefit-card i {
-      font-size: 2.5rem;
-      color: #A8C3A4;
-      margin-bottom: 20px;
-    }
-    
-    .benefit-card h3 {
-      margin-bottom: 15px;
-      color: #333;
-    }
-    
-    /* Earnings Section */
-    .earnings-section {
-      padding: 80px 0;
-      background-color: #f5f5f5;
-    }
-    
-    .earnings-card {
-      background: white;
-      border-radius: 10px;
-      padding: 40px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-      text-align: center;
-      max-width: 500px;
-      margin: 0 auto;
-    }
-    
-    .earnings-card h2 {
-      font-size: 2.5rem;
-      color: #A8C3A4;
-      margin-bottom: 20px;
-    }
-    
-    .earnings-card p {
-      margin-bottom: 30px;
-    }
-    
-    /* Requirements Section */
-    .requirements-section {
-      padding: 80px 0;
-      background-color: #fff;
-    }
-    
-    .requirements-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 30px;
-    }
-    
-    .requirements-card {
-      flex: 1 1 300px;
-      background: #f9f9f9;
-      border-radius: 10px;
-      padding: 30px;
-    }
-    
-    .requirements-card h3 {
-      margin-bottom: 20px;
-      color: #A8C3A4;
-    }
-    
-    .requirements-list {
-      list-style: none;
-    }
-    
-    .requirements-list li {
-      margin-bottom: 10px;
-      padding-left: 25px;
-      position: relative;
-    }
-    
-    .requirements-list li:before {
-      content: "•";
-      color: #A8C3A4;
-      font-size: 1.5rem;
-      position: absolute;
-      left: 0;
-      top: -5px;
-    }
-    
-    /* How It Works Section */
-    .how-it-works-section {
-      padding: 80px 0;
-      background-color: #f5f5f5;
-    }
-    
-    .steps-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-    }
-    
-    .step-card {
-      background: white;
-      border-radius: 10px;
-      padding: 30px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-      text-align: center;
-    }
-    
-    .step-card i {
-      font-size: 2.5rem;
-      color: #A8C3A4;
-      margin-bottom: 20px;
-    }
-    
-    /* Testimonials Section */
-    .testimonials-section {
-      padding: 80px 0;
-      background-color: #fff;
-    }
-    
-    .testimonial-card {
-      background: #f9f9f9;
-      border-radius: 10px;
-      padding: 30px;
-      margin-bottom: 30px;
-    }
-    
-    .testimonial-header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    
-    .testimonial-avatar {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background-color: #ddd;
-      margin-right: 15px;
-    }
-    
-    .testimonial-author {
-      font-weight: 600;
-    }
-    
-    .testimonial-role {
-      color: #777;
-      font-size: 0.9rem;
-    }
-    
-    /* CTA Section */
-    .cta-section {
-      padding: 80px 0;
-      background-color: #A8C3A4;
-      color: white;
-      text-align: center;
-    }
-    
-    .cta-section h2 {
-      font-size: 2.2rem;
-      margin-bottom: 30px;
-    }
-    
-    /* Footer */
-    .footer {
-      background-color: #333;
-      color: white;
-      padding: 50px 0 20px;
-    }
-    
-    .footer-top {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-      margin-bottom: 30px;
-    }
-    
-    .footer-column h4 {
-      margin-bottom: 20px;
-      font-size: 1.2rem;
-    }
-    
-    .footer-links {
-      list-style: none;
-    }
-    
-    .footer-links li {
-      margin-bottom: 10px;
-    }
-    
-    .footer-links a {
-      color: #ccc;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    
-    .footer-links a:hover {
-      color: white;
-    }
-    
-    .footer-bottom {
-      text-align: center;
-      padding-top: 20px;
-      border-top: 1px solid #444;
-      margin-top: 30px;
-    }
-    
-    .social-links {
-      display: flex;
-      justify-content: center;
-      list-style: none;
-      margin: 20px 0;
-    }
-    
-    .social-links li {
-      margin: 0 10px;
-    }
-    
-    .social-links a {
-      color: white;
-      font-size: 1.2rem;
-    }
-    
-    /* Responsive Adjustments */
-    @media (max-width: 768px) {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join Our Therapist Network | Luna</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Global Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Montserrat", sans-serif;
+        line-height: 1.6;
+        color: #333;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+      }
+
+      /* Navbar */
+      .navbar {
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 15px 0;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+      }
+
       .navbar .container {
-        flex-direction: column;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
-      
+
+      .navbar-brand {
+        font-size: 24px;
+        font-weight: 700;
+        color: #a8c3a4;
+        text-decoration: none;
+      }
+
       .navbar-nav {
-        margin-top: 15px;
+        display: flex;
+        list-style: none;
       }
-      
+
+      .navbar-nav li {
+        margin-left: 20px;
+      }
+
+      .navbar-nav a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .navbar-nav a:hover {
+        color: #a8c3a4;
+      }
+
+      /* Hero Section */
+      #hero-section {
+        background-color: #f5f7ff;
+        padding: 120px 0 80px;
+        text-align: center;
+      }
+
       .hero-content h1 {
-        font-size: 2rem;
+        font-size: 2.8rem;
+        color: #a8c3a4;
+        margin-bottom: 20px;
       }
-      
+
+      .hero-content p {
+        font-size: 1.1rem;
+        color: #5f6c7b;
+        max-width: 700px;
+        margin: 0 auto 30px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 12px 30px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s;
+        margin: 5px;
+      }
+
+      .btn-primary {
+        background-color: #a8c3a4;
+        color: white;
+      }
+
+      .btn-secondary {
+        background-color: transparent;
+        color: #a8c3a4;
+        border: 2px solid #a8c3a4;
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Benefits Section */
+      .benefits-section {
+        padding: 80px 0;
+        background-color: #fff;
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 50px;
+        font-size: 2.2rem;
+        color: #333;
+      }
+
+      .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+      }
+
+      .benefit-card {
+        background: #f9f9f9;
+        border-radius: 10px;
+        padding: 30px;
+        text-align: center;
+        transition: transform 0.3s;
+      }
+
+      .benefit-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .benefit-card i {
+        font-size: 2.5rem;
+        color: #a8c3a4;
+        margin-bottom: 20px;
+      }
+
+      .benefit-card h3 {
+        margin-bottom: 15px;
+        color: #333;
+      }
+
+      /* Earnings Section */
+      .earnings-section {
+        padding: 80px 0;
+        background-color: #f5f5f5;
+      }
+
+      .earnings-card {
+        background: white;
+        border-radius: 10px;
+        padding: 40px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        text-align: center;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .earnings-card h2 {
+        font-size: 2.5rem;
+        color: #a8c3a4;
+        margin-bottom: 20px;
+      }
+
+      .earnings-card p {
+        margin-bottom: 30px;
+      }
+
+      /* Requirements Section */
+      .requirements-section {
+        padding: 80px 0;
+        background-color: #fff;
+      }
+
+      .requirements-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+      }
+
+      .requirements-card {
+        flex: 1 1 300px;
+        background: #f9f9f9;
+        border-radius: 10px;
+        padding: 30px;
+      }
+
+      .requirements-card h3 {
+        margin-bottom: 20px;
+        color: #a8c3a4;
+      }
+
+      .requirements-list {
+        list-style: none;
+      }
+
+      .requirements-list li {
+        margin-bottom: 10px;
+        padding-left: 25px;
+        position: relative;
+      }
+
+      .requirements-list li:before {
+        content: "•";
+        color: #a8c3a4;
+        font-size: 1.5rem;
+        position: absolute;
+        left: 0;
+        top: -5px;
+      }
+
+      /* How It Works Section */
+      .how-it-works-section {
+        padding: 80px 0;
+        background-color: #f5f5f5;
+      }
+
       .steps-container {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
       }
-    }
-  </style>
-</head>
-<body>
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="container">
-      <a href="#" class="navbar-brand">SWIFT DOC</a>
-      <ul class="navbar-nav">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About Us</a></li>
-        <li  class="selected"><a href="#">For Therapists</a></li>
-        <li><a href="#">How It Works</a></li>
-     
-      </ul>
-    </div>
-  </nav>
 
-  <!-- Hero Section -->
-  <section id="hero-section">
-    <div class="container">
-      <div class="hero-content">
-        <h1>Join Our Network of Therapists</h1>
-        <p>Experience the benefits of private practice without the challenges. Make your own schedule and let us handle insurance billing, marketing, and admin costs.</p>
-        <div class="hero-buttons">
-          <a href="#apply" class="btn btn-primary">Apply Now</a>
-          <a href="#learn-more" class="btn btn-secondary">Learn More</a>
-        </div>
-      </div>
-    </div>
-  </section>
+      .step-card {
+        background: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        text-align: center;
+      }
 
-  <!-- Benefits Section -->
-  <section class="benefits-section">
-    <div class="container">
-      <h2 class="section-title">Benefits of Swiftdoc</h2>
-      <div class="benefits-grid">
-        <div class="benefit-card">
-          <i class="fa fa-dollar"></i>
-          <h3>Competitive Pay</h3>
-          <p>Earn up to $67.90 per hour for live sessions via video, audio, or chat.</p>
-        </div>
-        <div class="benefit-card">
-          <i class="fa fa-bonus"></i>
-          <h3>No Overhead</h3>
-          <p>We handle insurance claims, check coverage, and manage administrative costs.</p>
-        </div>
-        <div class="benefit-card">
-          <i class="fa fa-flex"></i>
-          <h3>Flexibility</h3>
-          <p>Choose your time commitment and set a schedule that works for you.</p>
-        </div>
-        <div class="benefit-card">
-          <i class="fa fa-support"></i>
-          </div>
-      </div>
-    </div>
-  </section>
+      .step-card i {
+        font-size: 2.5rem;
+        color: #a8c3a4;
+        margin-bottom: 20px;
+      }
 
-  <!-- Earnings Section -->
-  <section class="earnings-section">
-    <div class="container">
-      <div class="earnings-card">
-        <h2>$155,200</h2>
-        <p>Estimated annual earnings based on average hours worked by our therapists.</p>
-        <a href="#earnings-details" class="btn btn-primary">Learn About Earnings</a>
-      </div>
-    </div>
-  </section>
+      /* Testimonials Section */
+      .testimonials-section {
+        padding: 80px 0;
+        background-color: #fff;
+      }
 
-  <!-- Requirements Section -->
-  <section class="requirements-section">
-    <div class="container">
-      <h2 class="section-title">Requirements</h2>
-      <div class="requirements-container">
-        <div class="requirements-card">
-          <h3>Therapist Requirements</h3>
-          <ul class="requirements-list">
-            <li>An active, independent US state board-approved clinical license</li>
-            <li>Individual professional malpractice liability insurance policy</li>
-            <li>Submission of a fully completed, signed CAQH application</li>
-            <li>Individual NPI number</li>
-            <li>Reliable internet connection</li>
-            <li>Background check (conducted by a third party)</li>
-            <li>Current residence in the USA</li>
-          </ul>
-        </div>
-        <div class="requirements-card">
-          <h3>Associate Therapist Requirements</h3>
-          <ul class="requirements-list">
-            <li>An active, associate clinical license</li>
-            <li>Master's Degree in social work, counseling, or behavioral science</li>
-            <li>A supervising clinician and/or organization</li>
-            <li>Individual professional malpractice liability insurance policy</li>
-            <li>Reliable internet connection</li>
-            <li>Background check (conducted by a third party)</li>
-            <li>Current residence in the USA</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+      .testimonial-card {
+        background: #f9f9f9;
+        border-radius: 10px;
+        padding: 30px;
+        margin-bottom: 30px;
+      }
 
-  <!-- How It Works Section -->
-  <section class="how-it-works-section">
-    <div class="container">
-      <h2 class="section-title">How to Get Started</h2>
-      <div class="steps-container">
-        <div class="step-card">
-          <i class="fa fa-training"></i>
-          <h3>Complete Training</h3>
-          <p>Access live, asynchronous, and self-guided training resources.</p>
-        </div>
-        <div class="step-card">
-          <i class="fa fa-clients"></i>
-          <h3>Receive Clients</h3>
-          <p>Set your hours and maximum caseload, and check in on clients daily.</p>
-        </div>
-        <div class="step-card">
-          <i class="fa fa-support"></i>
-          <h3>Ongoing Support</h3>
-          <p>Join our supportive clinical community and access resources.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+      .testimonial-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
 
-  <!-- Testimonials Section -->
-  <section class="testimonials-section">
-    <div class="container">
-      <h2 class="section-title">What Our Therapists Say</h2>
-      <div class="testimonial-card">
-        <div class="testimonial-header">
-          <div class="testimonial-avatar"></div>
-          <div>
-            <div class="testimonial-author">Trevor Barger, LPC</div>
-            <div class="testimonial-role">Swiftdoc Therapist since 2022</div>
-          </div>
-        </div>
-        <p>"The best part about Swiftdoc is that I can set my hours to be as flexible as I need. I also choose how many clients I work with on the platform at any time. The design makes it so much easier to get notes completed, often being able to complete them right after the session ends."</p>
-      </div>
-      <!-- More testimonials can be added here -->
-    </div>
-  </section>
+      .testimonial-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: #ddd;
+        margin-right: 15px;
+      }
 
-  <!-- CTA Section -->
-  <section class="cta-section">
-    <div class="container">
-      <h2>Ready to join our network?</h2>
-      <a href="#apply" class="btn btn-lg" style="background-color: white; color: #A8C3A4; padding: 15px 40px; font-size: 1.2rem;">Apply Now</a>
-    </div>
-  </section>
+      .testimonial-author {
+        font-weight: 600;
+      }
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-top">
-        <div class="footer-column">
-          <h4>About Us</h4>
-          <p>Swiftdoc is committed to making high-quality mental health support accessible to all, with the help of caring and committed mental health providers.</p>
-        </div>
-        <div class="footer-column">
-          <h4>Quick Links</h4>
-          <ul class="footer-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">For Therapists</a></li>
-            <li><a href="#">How It Works</a></li>
-          </ul>
-        </div>
-        <div class="footer-column">
-          <h4>Contact</h4>
-          <ul class="footer-links">
-            <li>Kampala, Uganda</li>
-            <li>+256781202892</li>
-            <li><a href="mailto:hello@swiftdoc.health">hello@swiftdoc.health</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <ul class="social-links">
-          <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-          <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-          <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-          <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+      .testimonial-role {
+        color: #777;
+        font-size: 0.9rem;
+      }
+
+      /* CTA Section */
+      .cta-section {
+        padding: 80px 0;
+        background-color: #a8c3a4;
+        color: white;
+        text-align: center;
+      }
+
+      .cta-section h2 {
+        font-size: 2.2rem;
+        margin-bottom: 30px;
+      }
+
+      /* Footer */
+      .footer {
+        background-color: #333;
+        color: white;
+        padding: 50px 0 20px;
+      }
+
+      .footer-top {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-bottom: 30px;
+      }
+
+      .footer-column h4 {
+        margin-bottom: 20px;
+        font-size: 1.2rem;
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 10px;
+      }
+
+      .footer-links a {
+        color: #ccc;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .footer-links a:hover {
+        color: white;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 20px;
+        border-top: 1px solid #444;
+        margin-top: 30px;
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        margin: 20px 0;
+      }
+
+      .social-links li {
+        margin: 0 10px;
+      }
+
+      .social-links a {
+        color: white;
+        font-size: 1.2rem;
+      }
+
+      /* Responsive Adjustments */
+      @media (max-width: 768px) {
+        .navbar .container {
+          flex-direction: column;
+        }
+
+        .navbar-nav {
+          margin-top: 15px;
+        }
+
+        .hero-content h1 {
+          font-size: 2rem;
+        }
+
+        .steps-container {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="container">
+        <a href="#" class="navbar-brand">SWIFT DOC</a>
+        <ul class="navbar-nav">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About Us</a></li>
+          <li class="selected"><a href="#">For Therapists</a></li>
+          <li><a href="#">How It Works</a></li>
         </ul>
-        <p>&copy; 2025 Swiftdoc. All rights reserved.</p>
       </div>
-    </div>
-  </footer>
+    </nav>
 
-  <!-- Font Awesome for icons -->
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-</body>
+    <!-- Hero Section -->
+    <section id="hero-section">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Join Our Network of Therapists</h1>
+          <p>
+            Experience the benefits of private practice without the challenges.
+            Make your own schedule and let us handle insurance billing,
+            marketing, and admin costs.
+          </p>
+          <div class="hero-buttons">
+            <a href="#apply" class="btn btn-primary">Apply Now</a>
+            <a href="#learn-more" class="btn btn-secondary">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+      <div class="container">
+        <h2 class="section-title">Benefits of Luna</h2>
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <i class="fa fa-dollar"></i>
+            <h3>Competitive Pay</h3>
+            <p>
+              Earn up to $67.90 per hour for live sessions via video, audio, or
+              chat.
+            </p>
+          </div>
+          <div class="benefit-card">
+            <i class="fa fa-bonus"></i>
+            <h3>No Overhead</h3>
+            <p>
+              We handle insurance claims, check coverage, and manage
+              administrative costs.
+            </p>
+          </div>
+          <div class="benefit-card">
+            <i class="fa fa-flex"></i>
+            <h3>Flexibility</h3>
+            <p>
+              Choose your time commitment and set a schedule that works for you.
+            </p>
+          </div>
+          <div class="benefit-card">
+            <i class="fa fa-support"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Earnings Section -->
+    <section class="earnings-section">
+      <div class="container">
+        <div class="earnings-card">
+          <h2>$155,200</h2>
+          <p>
+            Estimated annual earnings based on average hours worked by our
+            therapists.
+          </p>
+          <a href="#earnings-details" class="btn btn-primary"
+            >Learn About Earnings</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- Requirements Section -->
+    <section class="requirements-section">
+      <div class="container">
+        <h2 class="section-title">Requirements</h2>
+        <div class="requirements-container">
+          <div class="requirements-card">
+            <h3>Therapist Requirements</h3>
+            <ul class="requirements-list">
+              <li>
+                An active, independent US state board-approved clinical license
+              </li>
+              <li>
+                Individual professional malpractice liability insurance policy
+              </li>
+              <li>Submission of a fully completed, signed CAQH application</li>
+              <li>Individual NPI number</li>
+              <li>Reliable internet connection</li>
+              <li>Background check (conducted by a third party)</li>
+              <li>Current residence in the USA</li>
+            </ul>
+          </div>
+          <div class="requirements-card">
+            <h3>Associate Therapist Requirements</h3>
+            <ul class="requirements-list">
+              <li>An active, associate clinical license</li>
+              <li>
+                Master's Degree in social work, counseling, or behavioral
+                science
+              </li>
+              <li>A supervising clinician and/or organization</li>
+              <li>
+                Individual professional malpractice liability insurance policy
+              </li>
+              <li>Reliable internet connection</li>
+              <li>Background check (conducted by a third party)</li>
+              <li>Current residence in the USA</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works-section">
+      <div class="container">
+        <h2 class="section-title">How to Get Started</h2>
+        <div class="steps-container">
+          <div class="step-card">
+            <i class="fa fa-training"></i>
+            <h3>Complete Training</h3>
+            <p>
+              Access live, asynchronous, and self-guided training resources.
+            </p>
+          </div>
+          <div class="step-card">
+            <i class="fa fa-clients"></i>
+            <h3>Receive Clients</h3>
+            <p>
+              Set your hours and maximum caseload, and check in on clients
+              daily.
+            </p>
+          </div>
+          <div class="step-card">
+            <i class="fa fa-support"></i>
+            <h3>Ongoing Support</h3>
+            <p>Join our supportive clinical community and access resources.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+      <div class="container">
+        <h2 class="section-title">What Our Therapists Say</h2>
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <div class="testimonial-avatar"></div>
+            <div>
+              <div class="testimonial-author">Trevor Barger, LPC</div>
+              <div class="testimonial-role">Luna Therapist since 2022</div>
+            </div>
+          </div>
+          <p>
+            "The best part about Luna is that I can set my hours to be as
+            flexible as I need. I also choose how many clients I work with on
+            the platform at any time. The design makes it so much easier to get
+            notes completed, often being able to complete them right after the
+            session ends."
+          </p>
+        </div>
+        <!-- More testimonials can be added here -->
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <h2>Ready to join our network?</h2>
+        <a
+          href="#apply"
+          class="btn btn-lg"
+          style="
+            background-color: white;
+            color: #a8c3a4;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+          "
+          >Apply Now</a
+        >
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-column">
+            <h4>About Us</h4>
+            <p>
+              Luna is committed to making high-quality mental health support
+              accessible to all, with the help of caring and committed mental
+              health providers.
+            </p>
+          </div>
+          <div class="footer-column">
+            <h4>Quick Links</h4>
+            <ul class="footer-links">
+              <li><a href="#">Home</a></li>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">For Therapists</a></li>
+              <li><a href="#">How It Works</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h4>Contact</h4>
+            <ul class="footer-links">
+              <li>Kampala, Uganda</li>
+              <li>+256781202892</li>
+              <li>
+                <a href="mailto:hello@Luna.health">hello@Luna.health</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <ul class="social-links">
+            <li>
+              <a href="#"><i class="fa fa-twitter"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fa fa-linkedin"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fa fa-facebook"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fa fa-instagram"></i></a>
+            </li>
+          </ul>
+          <p>&copy; 2025 Luna. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
