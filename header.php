@@ -1,6 +1,15 @@
-<?php include('connection/db.php');
+<?php 
+session_start();
+include('connection/db.php');
+
+//available user:: (users - clients), therapists, admin
+$user_id = $_SESSION['user_id'] ?? null;
 
 $current_page = basename($_SERVER['PHP_SELF']);
+function isActive($page) {
+  global $current_page;
+  return $current_page === $page ? 'active' : '';
+}
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +19,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="keywords" content="">
   <meta name="description" content="">
-  <title>Swiftdoc</title>
+  <title>Luna</title>
 
   <!-- Loading Bootstrap -->
   <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -344,6 +353,13 @@ $current_page = basename($_SERVER['PHP_SELF']);
         margin: 5px 0;
       }
     }
+    .logout a{
+     color: red !important;
+    }
+
+    .logout a:hover{
+     color: #d64540 !important;
+    }
   </style>
 </head>
 <body>
@@ -351,14 +367,19 @@ $current_page = basename($_SERVER['PHP_SELF']);
   <header class="header">
   <nav class="navbar">
     <div class="container">
-      <a href="index.php" class="navbar-brand">SWIFT DOC</a>
+      <a href="index.php" class="navbar-brand">LUNA</a>
       <ul class="navbar-nav">
-        <li class="<?php echo $current_page == 'index.php' ? 'active' : ''; ?>"><a href="index.php">Home</a></li>
-        <li class="<?php echo $current_page == 'about.php' ? 'active' : ''; ?>"><a href="about.php">About Us</a></li>
-        <li class="<?php echo $current_page == 'booking.php' ? 'active' : ''; ?>"><a href="booking.php">Bookings</a></li>
-        <li class="<?php echo $current_page == 'clinic.php' ? 'active' : ''; ?>"><a href="clinic.php">For Therapists</a></li>
-        <li class="<?php echo $current_page == 'login.php' ? 'active' : ''; ?>"><a href="login.php">Sign in</a></li>
-        <li class="<?php echo $current_page == 'question.php' ? 'active' : ''; ?>"><a href="question.php">Find a Therapist</a></li>
+        <li class="<?= isActive('index.php') ?>"><a href="index.php">Home</a></li>
+        <li class="<?= isActive('about.php') ?>"><a href="about.php">About Us</a></li>
+        <li class="<?= isActive('clinic.php') ?>"><a href="clinic.php">For Therapists</a></li>
+
+        <?php if ($user_id): ?>
+          <li class="<?= isActive('booking.php') ?>"><a href="booking.php">Bookings</a></li>
+          <li class="logout"><a href="logout.php">Sign Out</a></li>
+        <?php else: ?>
+          <li class="<?= isActive('login.php') ?>"><a href="login.php">Sign in</a></li>
+          <li class="<?= isActive('question.php') ?>"><a href="question.php">Find a Therapist</a></li>
+        <?php endif; ?>
       </ul>
     </div>
   </nav>

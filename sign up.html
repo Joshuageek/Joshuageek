@@ -1,41 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-
-    <title>Swiftdoc - Sign Up</title>
+    <title>Luna - Sign Up</title>
 
     <!-- Loading Bootstrap -->
-    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet" />
 
     <!-- Loading Template CSS -->
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/animate.css" rel="stylesheet">
-    <link href="css/style-magnific-popup.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/animate.css" rel="stylesheet" />
+    <link href="css/style-magnific-popup.css" rel="stylesheet" />
 
     <!-- Fonts -->
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/icons-main.css" rel="stylesheet">
-    <link href="css/icons-helper.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/icons-main.css" rel="stylesheet" />
+    <link href="css/icons-helper.css" rel="stylesheet" />
 
     <!-- RS5.0 Main Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="revolution/css/settings.css">
+    <link rel="stylesheet" type="text/css" href="revolution/css/settings.css" />
 
     <!-- RS5.0 Layers and Navigation Styles -->
-    <link rel="stylesheet" type="text/css" href="revolution/css/layers.css">
-    <link rel="stylesheet" type="text/css" href="revolution/css/navigation.css">
+    <link rel="stylesheet" type="text/css" href="revolution/css/layers.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="revolution/css/navigation.css"
+    />
 
     <!-- Google Fonts -->
-    <link href='https://fonts.googleapis.com/css?family=Tangerine:400,700' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Lora:400,400italic,700' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link
+      href="https://fonts.googleapis.com/css?family=Tangerine:400,700"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lora:400,400italic,700"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+      rel="stylesheet"
+      type="text/css"
+    />
 
     <!-- Font Favicon -->
-    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="shortcut icon" href="images/favicon.ico" />
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
     <!--[if lt IE 9]>
@@ -45,157 +60,169 @@
 
     <!--headerIncludes-->
     <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-        }
+      body {
+        font-family: "Montserrat", sans-serif;
+      }
 
-        .form-container {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+      .form-container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
 
-        .form-container h2 {
-            margin-bottom: 20px;
-            font-size: 24px;
-            color: #333;
-        }
+      .form-container h2 {
+        margin-bottom: 20px;
+        font-size: 24px;
+        color: #333;
+      }
 
-        .form-container .form-group {
-            margin-bottom: 15px;
-        }
+      .form-container .form-group {
+        margin-bottom: 15px;
+      }
 
-        .form-container .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-        }
+      .form-container .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+      }
 
-        .form-container .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
+      .form-container .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
 
-        .form-container .form-group input[type="submit"] {
-            background-color: #f8bf2c;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+      .form-container .form-group input[type="submit"] {
+        background-color: #f8bf2c;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
 
-        .form-container .form-group input[type="submit"]:hover {
-            background-color: #e0ac2b;
-        }
+      .form-container .form-group input[type="submit"]:hover {
+        background-color: #e0ac2b;
+      }
 
-        .form-container .form-group .login-link {
-            display: block;
-            margin-top: 20px;
-            color: #555;
-            text-decoration: none;
-        }
+      .form-container .form-group .login-link {
+        display: block;
+        margin-top: 20px;
+        color: #555;
+        text-decoration: none;
+      }
 
-        .form-container .form-group .login-link:hover {
-            color: #f8bf2c;
-            text-decoration: underline;
-        }
+      .form-container .form-group .login-link:hover {
+        color: #f8bf2c;
+        text-decoration: underline;
+      }
     </style>
-
-</head>
-<body>
-
+  </head>
+  <body>
     <!--begin loader -->
     <div id="loader">
-        <div class="sk-three-bounce">
-            <div class="sk-child sk-bounce1"></div>
-            <div class="sk-child sk-bounce2"></div>
-            <div class="sk-child sk-bounce3"></div>
-        </div>
+      <div class="sk-three-bounce">
+        <div class="sk-child sk-bounce1"></div>
+        <div class="sk-child sk-bounce2"></div>
+        <div class="sk-child sk-bounce3"></div>
+      </div>
     </div>
     <!--end loader -->
 
     <!--begin header -->
     <header class="header">
+      <!--begin nav -->
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <!--begin container -->
+        <div class="container">
+          <!--begin navbar -->
+          <div class="navbar-header">
+            <button
+              data-target="#navbar-collapse-02"
+              data-toggle="collapse"
+              class="navbar-toggle"
+              type="button"
+            >
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a href="index.html" class="navbar-brand brand scrool"
+              ><img src="images/logo.ng" alt="Swift Doc" class="width-100"
+            /></a>
+          </div>
 
-        <!--begin nav -->
-        <nav class="navbar navbar-default navbar-fixed-top">
+          <div id="navbar-collapse-02" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="menu.html">Menu</a></li>
+              <li><a href="reservations.html">Reservations</a></li>
+              <li><a href="gallery.html">Gallery</a></li>
+              <li><a href="contact.html">Contact</a></li>
 
-            <!--begin container -->
-            <div class="container">
+              <li class="social">
+                <a href="#" class="first"><i class="fa fa-twitter"></i></a>
+              </li>
+              <li class="social">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+              </li>
+              <li class="social">
+                <a href="#" class="last"><i class="fa fa-instagram"></i></a>
+              </li>
 
-                <!--begin navbar -->
-                <div class="navbar-header">
-                    <button data-target="#navbar-collapse-02" data-toggle="collapse" class="navbar-toggle" type="button">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a href="index.html" class="navbar-brand brand scrool"><img src="images/logo.ng" alt="Swift Doc" class="width-100"></a>
-                </div>
-
-                <div id="navbar-collapse-02" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="menu.html">Menu</a></li>
-                        <li><a href="reservations.html">Reservations</a></li>
-                        <li><a href="gallery.html">Gallery</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-
-                        <li class="social"><a href="#" class="first"><i class="fa fa-twitter"></i></a></li>
-                        <li class="social"><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li class="social"><a href="#" class="last"><i class="fa fa-instagram"></i></a></li>
-
-                        <li><a href="#" class="purchase">Get Started</a></li>
-                    </ul>
-                </div>
-                <!--end navbar -->
-
-            </div>
-            <!--end container -->
-
-        </nav>
-        <!--end nav -->
-
+              <li><a href="#" class="purchase">Get Started</a></li>
+            </ul>
+          </div>
+          <!--end navbar -->
+        </div>
+        <!--end container -->
+      </nav>
+      <!--end nav -->
     </header>
     <!--end header -->
 
     <!--begin signup-section -->
     <section class="signup-section">
-        <div class="form-container">
-            <h2>Sign Up</h2>
-            <form action="#" method="post">
-                <div class="form-group">
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <div class="form-group">
-                    <label for="confirm-password">Confirm Password:</label>
-                    <input type="password" id="confirm-password" name="confirm-password" required>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Sign Up">
-                </div>
-                <div class="form-group">
-                    <a href="login.html" class="login-link">Already have an account? Login</a>
-                </div>
-            </form>
-        </div>
+      <div class="form-container">
+        <h2>Sign Up</h2>
+        <form action="#" method="post">
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required />
+          </div>
+          <div class="form-group">
+            <label for="confirm-password">Confirm Password:</label>
+            <input
+              type="password"
+              id="confirm-password"
+              name="confirm-password"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input type="submit" value="Sign Up" />
+          </div>
+          <div class="form-group">
+            <a href="login.html" class="login-link"
+              >Already have an account? Login</a
+            >
+          </div>
+        </form>
+      </div>
     </section>
     <!--end signup-section -->
 
@@ -213,18 +240,38 @@
     <script src="js/instagram.js"></script>
 
     <!-- RS5.0 Core JS Files -->
-    <script type="text/javascript" src="revolution/js/jquery.themepunch.tools.min.js"></script>
-    <script type="text/javascript" src="revolution/js/jquery.themepunch.revolution.min.js"></script>
+    <script
+      type="text/javascript"
+      src="revolution/js/jquery.themepunch.tools.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="revolution/js/jquery.themepunch.revolution.min.js"
+    ></script>
 
-    <script type="text/javascript" src="revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
-    <script type="text/javascript" src="revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
-    <script type="text/javascript" src="revolution/js/extensions/revolution.extension.navigation.min.js"></script>
-    <script type="text/javascript" src="revolution/js/extensions/revolution.extension.actions.min.js"></script>
-    <script type="text/javascript" src="revolution/js/extensions/revolution.extension.carousel.min.js"></script>
+    <script
+      type="text/javascript"
+      src="revolution/js/extensions/revolution.extension.slideanims.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="revolution/js/extensions/revolution.extension.layeranimation.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="revolution/js/extensions/revolution.extension.navigation.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="revolution/js/extensions/revolution.extension.actions.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="revolution/js/extensions/revolution.extension.carousel.min.js"
+    ></script>
 
     <!-- begin custom script-->
     <script src="js/custom.js"></script>
     <script src="js/plugins.js"></script>
-
-</body>
+  </body>
 </html>

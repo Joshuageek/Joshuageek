@@ -244,7 +244,7 @@
         <h1>Join Our Network of Therapists</h1>
         <p>Experience the benefits of private practice without the challenges. Make your own schedule and let us handle insurance billing, marketing, and admin costs.</p>
         <div class="hero-buttons">
-          <a href="mailto:hello@swiftdoc.health" class="btn btn-primary">Apply Now</a>
+          <a href="mailto:hello@luna.health" class="btn btn-primary">Apply Now</a>
           <a href="signthera.php" class="btn btn-secondary">Sign Up</a>
         </div>
       </div>
@@ -254,7 +254,7 @@
   <!-- Benefits Section -->
   <section class="benefits-section">
     <div class="container">
-      <h2 class="section-title">Benefits of Swiftdoc</h2>
+      <h2 class="section-title">Benefits of Luna</h2>
       <div class="benefits-grid">
         <div class="benefit-card">
           <i class="fa fa-dollar"></i>
@@ -336,7 +336,7 @@
                   <li>Desktop or laptop computer with a reliable internet connection and a webcam</li>
                   <li>Current residence in the EAST AFRICA</li>
               </ul>
-              <p><em>Note: Unfortunately, if you are an intern or require supervision to provide therapy services, you are currently ineligible to be a provider at SwiftDoc. Therapists are not SwiftDoc employees, but independent providers.</em></p>
+              <p><em>Note: Unfortunately, if you are an intern or require supervision to provide therapy services, you are currently ineligible to be a provider at Luna. Therapists are not Luna employees, but independent providers.</em></p>
           </div>
           <div class="requirements-card">
               <div class="">
@@ -391,7 +391,7 @@
           <div class="step-card">
               <i class="fas fa-laptop-code"></i>
               <h3>Onboarding</h3>
-              <p>Receive training on using the SwiftDoc platform.</p>
+              <p>Receive training on using the Luna platform.</p>
           </div>
           <div class="step-card">
               <i class="fas fa-comments"></i>
@@ -456,10 +456,10 @@
           <div class="testimonial-avatar"></div>
           <div>
             <div class="testimonial-author">Trevor Atwine, LPC</div>
-            <div class="testimonial-role">Swiftdoc Therapist since 2025</div>
+            <div class="testimonial-role">Luna Therapist since 2025</div>
           </div>
         </div>
-        <p>"The best part about Swiftdoc is that I can set my hours to be as flexible as I need. I also choose how many clients I work with on the platform at any time. The design makes it so much easier to get notes completed, often being able to complete them right after the session ends."</p>
+        <p>"The best part about Luna is that I can set my hours to be as flexible as I need. I also choose how many clients I work with on the platform at any time. The design makes it so much easier to get notes completed, often being able to complete them right after the session ends."</p>
       </div>
       <!-- More testimonials can be added here -->
        
@@ -470,7 +470,7 @@
   <section class="cta-section">
     <div class="container">
       <h2>Ready to join our network?</h2>
-      <a href="mailto:hello@swiftdoc.health" class="btn btn-lg" style="background-color: white; color: #A8C3A4; padding: 15px 40px; font-size: 1.2rem;">Apply Now</a>
+      <a href="mailto:hello@luna.health" class="btn btn-lg" style="background-color: white; color: #A8C3A4; padding: 15px 40px; font-size: 1.2rem;">Apply Now</a>
     </div>
   </section>
 
