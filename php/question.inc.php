@@ -148,15 +148,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_GET['action'])) {
 
         // Insert user data
         $stmt = $conn->prepare(
-            "INSERT INTO users (full_name, email, age, gender, location, created_on)
-             VALUES (?, ?, ?, ?, ?, NOW())"
+            "INSERT INTO users (full_name, email, age, gender, location, role, created_on)
+             VALUES (?, ?, ?, ?, ?, ?, NOW())"
         );
         $stmt->execute([
             $postData['fullName'],
             $postData['email'],
             $postData['age'],
             $postData['gender'],
-            $postData['location']
+            $postData['location'],
+            'client'
         ]);
         $userId = $conn->lastInsertId();
 
