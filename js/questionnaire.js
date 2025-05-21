@@ -12,8 +12,6 @@ const currentPageInput = document.querySelector("#current_page");
 
 // State
 let currentPage = 0;
-let isEmailValid = false;
-let isEmailChecking = false;
 
 // Conditional Fields Configuration
 const CONDITIONAL_FIELDS_CONFIG = [
@@ -47,7 +45,6 @@ function loadProgress() {
     if (progress.formData) {
       Object.entries(progress.formData).forEach(([key, value]) => {
         let inputName = key;
-        // Only append [] for checkbox arrays
         if (Array.isArray(value)) {
           inputName = key.endsWith("[]") ? key : key + "[]";
         }
@@ -65,11 +62,6 @@ function loadProgress() {
     }
 
     updateConditionalFields();
-    // Check email validity if on email page
-    const emailInput = form.querySelector('input[name="email"]');
-    if (emailInput && emailInput.value) {
-      checkEmail(emailInput.value);
-    }
   } catch (error) {
     console.error("Error loading saved progress:", error);
     localStorage.removeItem(STORAGE_KEY);
@@ -78,25 +70,10 @@ function loadProgress() {
 
 // Set up event listeners
 function setupEventListeners() {
-  // Button clicks using event delegation
   document.addEventListener("click", handleButtonClick);
-
-  // Form submission
   form.addEventListener("submit", handleFormSubmit);
-
-  // Save progress on input changes
   form.addEventListener("input", debounce(saveProgress, 300));
   form.addEventListener("change", saveProgress);
-
-  // Email real-time validation
-  const emailInput = form.querySelector('input[name="email"]');
-  if (emailInput) {
-    emailInput.addEventListener(
-      "input",
-      debounce(() => checkEmail(emailInput.value), 500)
-    );
-    emailInput.addEventListener("blur", () => checkEmail(emailInput.value));
-  }
 }
 
 // Handle button clicks
@@ -107,76 +84,6 @@ function handleButtonClick(e) {
   } else if (e.target.classList.contains("btn-prev")) {
     e.preventDefault();
     prevPage();
-  }
-}
-
-// Check email existence via AJAX
-async function checkEmail(email) {
-  if (!email || isEmailChecking) return;
-
-  const emailInput = form.querySelector('input[name="email"]');
-  const group = emailInput.closest(".form-group");
-  const errorMessage = group.querySelector(".error-message");
-  const nextButton = pages[currentPage].querySelector(".btn-next");
-
-  // Reset previous state
-  group.classList.remove("error", "success");
-  errorMessage.style.display = "none";
-  if (nextButton) nextButton.disabled = false;
-  isEmailValid = false;
-
-  if (!isValidEmail(email)) {
-    group.classList.add("error");
-    errorMessage.textContent = "Please enter a valid email address";
-    errorMessage.style.display = "block";
-    if (nextButton) nextButton.disabled = true;
-    return;
-  }
-
-  isEmailChecking = true;
-
-  try {
-    const response = await fetch("php/question.inc.php?action=check_email", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "X-Requested-With": "XMLHttpRequest",
-      },
-      body: `email=${encodeURIComponent(email)}`,
-    });
-
-    const data = await response.json();
-
-    if (data.success && data.exists) {
-      group.classList.add("error");
-      errorMessage.textContent =
-        "This email is already registered. Please use a different email.";
-      errorMessage.style.display = "block";
-      if (nextButton) nextButton.disabled = true;
-      isEmailValid = false;
-    } else if (data.success) {
-      group.classList.add("success");
-      errorMessage.textContent = "Email is available!";
-      errorMessage.style.display = "block";
-      if (nextButton) nextButton.disabled = false;
-      isEmailValid = true;
-    } else {
-      group.classList.add("error");
-      errorMessage.textContent =
-        data.message || "Error checking email. Please try again.";
-      errorMessage.style.display = "block";
-      if (nextButton) nextButton.disabled = true;
-      isEmailValid = false;
-    }
-  } catch (error) {
-    console.error("Email check error:", error);
-    group.classList.add("error");
-    errorMessage.textContent = "Network error. Please try again.";
-    errorMessage.style.display = "block";
-    if (nextButton) nextButton.disabled = true;
-    isEmailValid = false;
-  } finally {
-    isEmailChecking = false;
   }
 }
 
@@ -288,7 +195,6 @@ function updateProgressBar() {
 function saveProgress() {
   const formDataObj = {};
 
-  // Collect all inputs
   form.querySelectorAll("input, select, textarea").forEach((input) => {
     const name = input.name;
     if (!name) return;
@@ -320,7 +226,6 @@ function validateCurrentPage() {
   const currentPageEl = pages[currentPage];
   let isValid = true;
 
-  // Reset errors
   currentPageEl
     .querySelectorAll(".error")
     .forEach((el) => el.classList.remove("error"));
@@ -332,7 +237,6 @@ function validateCurrentPage() {
     el.textContent = "";
   });
 
-  // Validate required fields
   currentPageEl.querySelectorAll("[required]").forEach((input) => {
     const group = input.closest(".form-group");
     const errorMessage = group ? group.querySelector(".error-message") : null;
@@ -353,22 +257,9 @@ function validateCurrentPage() {
     } else if (!input.value.trim()) {
       markAsInvalid(group, errorMessage, "This field is required");
       isValid = false;
-    } else if (input.type === "email" && !isValidEmail(input.value)) {
-      markAsInvalid(group, errorMessage, "Please enter a valid email address");
-      isValid = false;
-    } else if (input.name === "email" && !isEmailValid) {
-      markAsInvalid(group, errorMessage, "This email is already registered");
-      isValid = false;
-    } else if (
-      input.type === "number" &&
-      (isNaN(input.value) || input.value < 18 || input.value > 120)
-    ) {
-      markAsInvalid(group, errorMessage, "Please enter a valid age (18-120)");
-      isValid = false;
     }
   });
 
-  // Validate conditional "other" fields
   CONDITIONAL_FIELDS_CONFIG.forEach((config) => {
     const { trigger, target, value } = config;
     const triggerEl = currentPageEl.querySelector(trigger);
@@ -400,7 +291,6 @@ function validateCurrentPage() {
     }
   });
 
-  // Validate required checkbox groups
   ["therapyReasons[]", "therapyGoals[]", "therapyInterest[]"].forEach(
     (name) => {
       const checkboxes = currentPageEl.querySelectorAll(`[name="${name}"]`);
@@ -426,11 +316,6 @@ function markAsInvalid(group, errorMessage, message) {
     errorMessage.textContent = message;
     errorMessage.style.display = "block";
   }
-}
-
-// Email validation helper
-function isValidEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 // Debounce helper function
@@ -480,7 +365,7 @@ async function handleFormSubmit(e) {
       );
     });
 
-    const response = await fetch(form.action, {
+    const response = await fetch("php/question.inc.php", {
       method: "POST",
       body: formData,
       headers: {
@@ -489,10 +374,11 @@ async function handleFormSubmit(e) {
     });
 
     const responseText = await response.text();
+    console.log("Raw server response:", responseText);
     let data;
     try {
       data = JSON.parse(responseText);
-      console.log("Server response:", data);
+      console.log("Parsed server response:", data);
     } catch {
       throw new Error(`Invalid server response: ${responseText}`);
     }
@@ -507,7 +393,7 @@ async function handleFormSubmit(e) {
     if (data.success) {
       console.log("Form submitted successfully, clearing localStorage");
       localStorage.removeItem(STORAGE_KEY);
-      window.location.href = data.redirect || "paywall/paywall.php";
+      window.location.href = data.redirect || "../paywall/paywall.php";
     } else {
       showError(data.message || "Failed to submit form. Please try again.");
     }

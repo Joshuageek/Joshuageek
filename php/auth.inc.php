@@ -4,9 +4,137 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 session_start();
 require_once '../connection/db.php'; // Make sure your DB connection is valid
+require_once '../php/functions.php';
+
+    // create account
+    if (isset($_POST['create_account'])) {
+        $email = $_POST['email'] ?? '';
+        $password = $_POST['password'] ?? '';
+        $confirmPassword = $_POST['confirmPassword'] ?? '';
+
+        // Check for empty fields
+        if (empty($email) || empty($password) || empty($confirmPassword)) {
+            $_SESSION['error'] = 'Please fill in all fields.';
+            header("Location: ../signup.php");
+            exit();
+        }
+
+        // Validate email format
+        if (!is_valid_email($email)) {
+            $_SESSION['error'] = 'Please enter a valid email address.';
+            header("Location: ../signup.php");
+            exit();
+        }
+
+        // Check if email already exists
+        if (email_exists($email)) {
+            $_SESSION['error'] = 'Email already exists.';
+            header("Location: ../signup.php");
+            exit();
+        }
+
+        // Password length check
+        if (strlen($password) < 8) {
+            $_SESSION['error'] = 'Password must be at least 8 characters.';
+            header("Location: ../signup.php");
+            exit();
+        }
+
+        // Password strength check (letters and numbers)
+        if (!preg_match('/[A-Za-z]/', $password) || !preg_match('/[0-9]/', $password)) {
+            $_SESSION['error'] = 'Password must include both letters and numbers.';
+            header("Location: ../signup.php");
+            exit();
+        }
+
+        // Confirm passwords match
+        if ($password !== $confirmPassword) {
+            $_SESSION['error'] = 'Passwords do not match.';
+            header("Location: ../signup.php");
+            exit();
+        }
+
+        // Hash the password before storing
+        $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
+
+        try {
+            $sql = "INSERT INTO users (email, password) VALUES (?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$email, $hashedPwd]);
+
+            $user_id = $conn->lastInsertId();
+
+            // Set session variables
+            $_SESSION['user_id'] = $user_id;
+            $_SESSION['user_email'] = $email;
+
+            $_SESSION['success'] = 'Account created successfully! Please complete the questionnaire.';
+            header("Location: ../question.php");
+            exit();
+        } catch (PDOException $e) {
+            $_SESSION['error'] = 'Database error. Please try again later.';
+            header("Location: ../signup.php");
+            exit();
+        }
+    }
+
+    // login
+    elseif(isset($_POST['login_btn'])){
+        $email = $_POST['email'] ?? '';
+        $password = $_POST['password'] ?? '';
+
+        // Check if email format is valid
+        if (!is_valid_email($email)) {
+            $_SESSION['error'] = 'Please enter a valid email address.';
+            header("Location: ../login.php");
+            exit();
+        }
+
+        // Check if email exists in database before password verification
+        if (!email_exists($email)) {
+            $_SESSION['error'] = 'No account found with that email.';
+            header("Location: ../login.php");
+            exit();
+        }
+
+        if (empty($password)) {
+            $_SESSION['error'] = 'Please enter your password.';
+            header("Location: ../login.php");
+            exit();
+        }
+
+        try {
+            $sql = "SELECT * FROM users WHERE email = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$email]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($user && password_verify($password, $user['password'])) {
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_email'] = $user['email'];
+                $_SESSION['success'] = 'Login successful!';
+
+                // Redirect based on questionnaire completion
+                if (!has_completed_questionnaire($user['id'])) {
+                    header("Location: ../question.php");
+                } else {
+                    header("Location: ../index.php");
+                }
+                exit();
+            } else {
+                $_SESSION['error'] = 'Incorrect password.';
+                header("Location: ../login.php");
+                exit();
+            }
+        } catch (PDOException $e) {
+            $_SESSION['error'] = 'Database error. Please try again later.';
+            header("Location: ../login.php");
+            exit();
+        }
+    }
 
     // generate pwd - first time
-    if (isset($_POST['first_pwd'])) {
+    elseif (isset($_POST['first_pwd'])) {
         $password = $_POST['password'];
         $confirmPassword = $_POST['confirmPassword'];
 
@@ -58,53 +186,6 @@ require_once '../connection/db.php'; // Make sure your DB connection is valid
         }
 
     } 
-
-    // login
-    elseif(isset($_POST['login_btn'])){
-        $email = $_POST['email'] ?? '';
-        $password = $_POST['password'] ?? '';
-
-        // Check for empty fields
-        if (empty($email) || empty($password)) {
-            $_SESSION['error'] = 'Please enter both email and password.';
-            header("Location: ../login.php");
-            exit();
-        }
-
-        try {
-            $sql = "SELECT * FROM users WHERE email = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute([$email]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($user) {
-                // Verify password
-                if (password_verify($password, $user['password'])) {
-                    // Set session variables
-                    $_SESSION['user_id'] = $user['id'];
-                    $_SESSION['user_email'] = $user['email'];
-                    $_SESSION['success'] = 'Login successful!';
-
-                    // Redirect to protected page
-                    header("Location: ../index.php");
-                    exit();
-                } else {
-                    $_SESSION['error'] = 'Incorrect password.';
-                    header("Location: ../login.php");
-                    exit();
-                }
-            } else {
-                $_SESSION['error'] = 'No account found with that email.';
-                header("Location: ../login.php");
-                exit();
-            }
-
-        } catch (PDOException $e) {
-            $_SESSION['error'] = 'Database error. Please try again later.';
-            header("Location: ../login.php");
-            exit();
-        }
-    }
 
     // check email for forgotten pwd
     elseif(isset($_POST['check_email'])){

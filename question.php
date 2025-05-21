@@ -35,18 +35,6 @@
             </div>
           </div>
 
-          <div class="form-page" id="page2">
-            <div class="form-group">
-              <label for="email">Email Address</label>
-              <input type="email" id="email" name="email" required />
-              <div class="error-message">Please enter a valid email address</div>
-            </div>
-            <div class="button-group">
-              <button type="button" class="btn btn-prev">Previous</button>
-              <button type="button" class="btn btn-next">Next</button>
-            </div>
-          </div>
-
           <div class="form-page" id="page3">
             <div class="form-group">
               <label for="age">Age:</label>
