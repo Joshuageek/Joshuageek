@@ -1,7 +1,7 @@
 
 <?php
 session_start();
-
+$config = include './php/config.php';
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +9,7 @@ session_start();
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Luna - Reset Password</title>
+    <title>Luna - Login</title>
     <link rel="shortcut icon" href="images/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet'>
@@ -117,7 +117,7 @@ session_start();
         
         .login-extras {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             gap: 0.75rem;
             margin-top: 1.5rem;
             text-align: center;
@@ -144,17 +144,15 @@ session_start();
             margin-bottom: 1.5rem;
         }
 
-        .google-btn {
-        margin-top: 10px;
-        background: white;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 8px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        font-weight: 600;
+        .google-btn{
+            width: 100%;
+            background-color: #4285F4;
+            color: #fff;
+            padding: 0.75rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
         .google-btn:hover {
@@ -204,22 +202,25 @@ session_start();
 
         <div class="divider">or</div>
 
-        <div id="g_id_onload"
-         data-client_id="YOUR_GOOGLE_CLIENT_ID"
-         data-context="signup"
-         data-ux_mode="redirect"
-         data-login_uri="php/google_auth_handler.php"
-         data-auto_prompt="false">
-    </div>
+       <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
+            <div id="g_id_onload"
+                data-client_id="<?php echo htmlspecialchars($config['google_client_id']); ?>"
+                data-context="signup"
+                data-ux_mode="popup"
+                data-callback="handleCredentialResponse"
+                data-auto_prompt="false">
+            </div>
 
-    <div class="g_id_signin"
-         data-type="standard"
-         data-shape="rectangular"
-         data-theme="outline"
-         data-text="signup_with"
-         data-size="large"
-         data-logo_alignment="left">
-    </div>
+            <div class="g_id_signin"
+                data-type="standard"
+                data-shape="rectangular"
+                data-theme="outline"
+                data-text="signup_with"
+                data-size="large"
+                data-logo_alignment="right">
+            </div>
+        </div>
+
         
         <div class="login-extras">
             <a href="forgot_pwd.php"><i class="fas fa-key me-1"></i> Forgot Password?</a>
@@ -240,6 +241,28 @@ document.getElementById('togglePassword').addEventListener('click', function () 
     this.classList.toggle('fa-eye');
     this.classList.toggle('fa-eye-slash');
 });
+
+function handleCredentialResponse(response) {
+    const idToken = response.credential;
+
+    // Send the ID token to your server via POST
+    fetch('php/google_auth_handler.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'credential=' + encodeURIComponent(idToken)
+    })
+    .then(res => {
+        if (res.redirected) {
+            window.location.href = res.url; // Redirect to question or index page
+        } else {
+            return res.text(); // For debugging or error display
+        }
+    })
+    .catch(err => {
+        console.error('Login error:', err);
+        alert('Login failed. Please try again.');
+    });
+}
 </script>
 
 </script>
