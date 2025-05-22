@@ -81,7 +81,7 @@ session_start();
     
     .form-control:focus {
         border-color: var(--primary-color);
-        box-shadow: 0 0 0 0.25rem rgba(157, 194, 151, 0.25);
+        box-shadow: 0 0 0 0.25rem #9dc297;
     }
     
     .form-floating label {
@@ -142,6 +142,14 @@ session_start();
         border-radius: var(--border-radius);
         margin-bottom: 1.5rem;
     }
+    .forgot-pwd {
+        text-decoration: none;
+        color: #9dc297;
+    }
+
+    .forgot-pwd:hover {
+        text-decoration: underline;
+    }
     
     @media (max-width: 576px) {
         .login-container {
@@ -177,6 +185,7 @@ session_start();
         </div>
 
         <button type="submit" class="btn btn-login w-100" name="check_email">Submit Email</button>
+        <a href="login.php" class="mt-2 d-block forgot-pwd">Back to login</a>
     </form>
 </div>
 
