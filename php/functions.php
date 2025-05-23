@@ -44,3 +44,21 @@
             exit;
         }
     }
+
+    function get_user_role($user_id) {
+        global $conn;
+        $stmt = $conn->prepare("SELECT role FROM users WHERE id = ?");
+        $stmt->execute([$user_id]);
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
+        return $result->role;
+    }
+
+    function admin_email($email) {
+        
+        $admin_email = [
+            'admin@gmail.com',
+            'superadmin@gmail.com'
+        ];
+
+        return in_array($email, $admin_email);
+    }

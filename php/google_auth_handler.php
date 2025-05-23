@@ -42,8 +42,8 @@ if ($payload) {
             $_SESSION['success'] = "Welcome back, $name!";
         } else {
             // New user → Register them
-            $stmt = $conn->prepare("INSERT INTO users (email, password, google_id, name, created_on) VALUES (?, ?, ?, ?, NOW())");
-            $stmt->execute([$email, null, $google_id, $name]);
+            $stmt = $conn->prepare("INSERT INTO users (email, password, google_id, created_on) VALUES (?, ?, ?, NOW())");
+            $stmt->execute([$email, null, $google_id]);
 
             $user_id = $conn->lastInsertId();
             $_SESSION['user_id'] = $user_id;
@@ -53,7 +53,7 @@ if ($payload) {
 
         // Redirect based on whether they completed the questionnaire
         $uid = $_SESSION['user_id'];
-        if (!has_completed_questionnaire($uid)) {
+        if (!has_completed_questionnaire($uid) && get_user_role($uid) != 'admin' && get_user_role($uid) != 'therapist') {
             header("Location: ../question.php");
         } else {
             header("Location: ../index.php");

@@ -176,7 +176,7 @@ $config = include './php/config.php';
 <div class="login-container">
     <div class="text-center mb-4">
         <img src="images/logo.png" alt="Luna Logo" class="img-fluid" style="max-width: 150px;">
-        <h5 class="mt-3">Login In</h5>
+        <h5 class="mt-3">LogIn</h5>
     </div>
 
     <!-- Show messages -->
