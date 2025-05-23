@@ -14,7 +14,7 @@ session_start();
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <style>
+<style>
     :root {
         --primary-color: #9dc297;
         --primary-hover: #A8C3A4;
@@ -49,6 +49,16 @@ session_start();
     
     .login-container:hover {
         box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    }
+
+    .toggle-password {
+      position: absolute;
+      top: 50%;
+      right: 1rem;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: grey;
+      z-index: 10;
     }
     
     .login-container h5 {
@@ -171,14 +181,16 @@ session_start();
     <?php endif; ?>
 
     <form action="php/auth.inc.php" method="POST">
-        <div class="form-floating mb-3">
-            <input type="password" class="form-control" id="password" name="password" placeholder="New Password" required>
+        <div class="form-floating mb-3 position-relative">
+            <input type="password" class="form-control password-input" id="password" name="password" placeholder="New Password" required>
             <label for="password">New Password</label>
+            <i class="fa fa-eye toggle-password"></i>
         </div>
 
-        <div class="form-floating mb-3">
-            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+        <div class="form-floating mb-3 position-relative">
+            <input type="password" class="form-control password-input" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
             <label for="confirmPassword">Confirm Password</label>
+            <i class="fa fa-eye toggle-password"></i>
         </div>
 
         <button type="submit" class="btn btn-login w-100" name="reset_pwd">Reset Password</button>
@@ -186,5 +198,16 @@ session_start();
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.querySelectorAll('.toggle-password').forEach(icon => {
+    icon.addEventListener('click', function () {
+      const input = this.closest('.form-floating').querySelector('input');
+      const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+      input.setAttribute('type', type);
+      this.classList.toggle('fa-eye');
+      this.classList.toggle('fa-eye-slash');
+    });
+  });
+</script>
 </body>
 </html>

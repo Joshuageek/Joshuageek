@@ -1,6 +1,6 @@
 <?php 
 session_start();
-include('connection/db.php');
+// include('connection/db.php');
 
 //available user:: (users - clients), therapists, admin
 $user_id = $_SESSION['user_id'] ?? null;
@@ -372,13 +372,14 @@ function isActive($page) {
         <li class="<?= isActive('index.php') ?>"><a href="index.php">Home</a></li>
         <li class="<?= isActive('about.php') ?>"><a href="about.php">About Us</a></li>
         <li class="<?= isActive('clinic.php') ?>"><a href="clinic.php">For Therapists</a></li>
+        <li class="<?= isActive('dashboard.php') ?>"><a href="admin/dashboard.php">Admin Panel</a></li>
 
         <?php if ($user_id): ?>
           <li class="<?= isActive('booking.php') ?>"><a href="booking.php">Bookings</a></li>
           <li class="logout"><a href="logout.php">Sign Out</a></li>
         <?php else: ?>
           <li class="<?= isActive('login.php') ?>"><a href="login.php">Sign in</a></li>
-          <li class="<?= isActive('question.php') ?>"><a href="question.php">Find a Therapist</a></li>
+          <!-- <li class="<?= isActive('question.php') ?>"><a href="question.php">Find a Therapist</a></li> -->
         <?php endif; ?>
       </ul>
     </div>

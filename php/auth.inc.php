@@ -69,7 +69,15 @@ require_once '../php/functions.php';
             $_SESSION['user_email'] = $email;
 
             $_SESSION['success'] = 'Account created successfully! Please complete the questionnaire.';
-            header("Location: ../question.php");
+
+            if (!admin_email($email)) {
+                header("Location: ../question.php");
+            } else {
+                $sql = 'UPDATE users SET role = ? WHERE id = ?';
+                $stmt = $conn->prepare($sql);
+                $stmt->execute(['admin', $user_id]);
+                header("Location: ../index.php");
+            }
             exit();
         } catch (PDOException $e) {
             $_SESSION['error'] = 'Database error. Please try again later.';
@@ -115,7 +123,7 @@ require_once '../php/functions.php';
                 $_SESSION['success'] = 'Login successful!';
 
                 // Redirect based on questionnaire completion
-                if (!has_completed_questionnaire($user['id'])) {
+                if (!has_completed_questionnaire($user['id']) && get_user_role($user['id']) != 'admin' && get_user_role($user['id']) != 'therapist') {
                     header("Location: ../question.php");
                 } else {
                     header("Location: ../index.php");
@@ -334,146 +342,3 @@ require_once '../php/functions.php';
             exit();
         }
     }
-
-    elseif (isset($_POST['therapist-signup'])) {
-        
-        // Initialize error array
-        $errors = [];
-        
-        // Validate required fields
-        $requiredFields = [
-            'full-name', 'email', 'phone', 'location', 'id-upload', 
-            'specialization', 'license-upload', 'cv-upload', 'languages',
-            'internet', 'video', 'teletherapy', 'consent-verification', 'consent-data'
-        ];
-        
-        foreach ($requiredFields as $field) {
-            if (empty($_POST[$field])) {
-                $errors[] = ucfirst(str_replace('-', ' ', $field)) . " is required";
-            }
-        }
-        
-        // Validate email
-        if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-            $errors[] = "Invalid email format";
-        }
-        
-        // Validate phone (Uganda format)
-        if (!preg_match('/^\+256\d{9}$/', str_replace(' ', '', $_POST['phone']))) {
-            $errors[] = "Phone number must start with +256 followed by 9 digits";
-        }
-        
-        // Check for errors
-        if (!empty($errors)) {
-            $_SESSION['form_errors'] = $errors;
-            $_SESSION['form_data'] = $_POST;
-            header("Location: ../signthera.php");
-            exit();
-        }
-        
-        try {
-            // Begin transaction
-            $conn->beginTransaction();
-            
-            // Insert into users table
-            $userSql = "INSERT INTO users (full_name, email, phone, location, role, created_on) 
-                        VALUES (:full_name, :email, :phone, :location, 'therapist', NOW())";
-            
-            $userStmt = $conn->prepare($userSql);
-            $userStmt->execute([
-                ':full_name' => $_POST['full-name'],
-                ':email' => $_POST['email'],
-                ':phone' => $_POST['phone'],
-                ':location' => $_POST['location']
-            ]);
-            
-            // Get the last inserted user ID
-            $userId = $conn->lastInsertId();
-            
-            // Handle file uploads
-            $idUploadPath = handleFileUpload('id-upload', $userId, 'id');
-            $licenseUploadPath = handleFileUpload('license-upload', $userId, 'license');
-            $cvUploadPath = handleFileUpload('cv-upload', $userId, 'cv');
-            
-            // Prepare languages data
-            $languages = [];
-            if ($_POST['languages'] === 'other' && !empty($_POST['other-language'])) {
-                $languages[] = $_POST['other-language'];
-            } else {
-                $languages[] = $_POST['languages'];
-            }
-            $languagesJson = json_encode($languages);
-            
-            // Insert into therapists table
-            $therapistSql = "INSERT INTO therapists (
-                user_id, id_upload, specialization, other_specialization, 
-                license_upload, licensing_body, cv_upload, languages, other_language,
-                internet_connection, video_conferencing, teletherapy_experience,
-                consent_verification, consent_data, created_at
-            ) VALUES (
-                :user_id, :id_upload, :specialization, :other_specialization,
-                :license_upload, :licensing_body, :cv_upload, :languages, :other_language,
-                :internet_connection, :video_conferencing, :teletherapy_experience,
-                :consent_verification, :consent_data, NOW()
-            )";
-            
-            $therapistStmt = $conn->prepare($therapistSql);
-            $therapistStmt->execute([
-                ':user_id' => $userId,
-                ':id_upload' => $idUploadPath,
-                ':specialization' => $_POST['specialization'],
-                ':other_specialization' => ($_POST['specialization'] === 'other') ? $_POST['other-specialization'] : null,
-                ':license_upload' => $licenseUploadPath,
-                ':licensing_body' => $_POST['licensing-body'] ?? null,
-                ':cv_upload' => $cvUploadPath,
-                ':languages' => $languagesJson,
-                ':other_language' => ($_POST['languages'] === 'other') ? $_POST['other-language'] : null,
-                ':internet_connection' => $_POST['internet'],
-                ':video_conferencing' => $_POST['video'],
-                ':teletherapy_experience' => $_POST['teletherapy'],
-                ':consent_verification' => isset($_POST['consent-verification']) ? 1 : 0,
-                ':consent_data' => isset($_POST['consent-data']) ? 1 : 0
-            ]);
-            
-            // Commit transaction
-            $conn->commit();
-            
-            // Redirect to success page
-            $_SESSION['signup_success'] = true;
-            header("Location: ../new-pwd.php");
-            exit();
-            
-        } catch (PDOException $e) {
-            // Roll back transaction on error
-            $conn->rollBack();
-            
-            $_SESSION['form_errors'] = ["An error occurred: " . $e->getMessage()];
-            $_SESSION['form_data'] = $_POST;
-            header("Location: ../signthera.php");
-            exit();
-        }
-    }
-
-// Function to handle file uploads
-function handleFileUpload($fieldName, $userId, $type) {
-    if (isset($_FILES[$fieldName]) && $_FILES[$fieldName]['error'] === UPLOAD_ERR_OK) {
-        $uploadDir = '../uploads/therapists/' . $userId . '/';
-        
-        // Create directory if it doesn't exist
-        if (!file_exists($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
-        }
-        
-        // Get file info
-        $fileExt = pathinfo($_FILES[$fieldName]['name'], PATHINFO_EXTENSION);
-        $fileName = $type . '_' . time() . '.' . $fileExt;
-        $filePath = $uploadDir . $fileName;
-        
-        // Move the file
-        if (move_uploaded_file($_FILES[$fieldName]['tmp_name'], $filePath)) {
-            return $filePath;
-        }
-    }
-    
-    throw new Exception("Failed to upload {$fieldName} file");
-}

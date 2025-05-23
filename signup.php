@@ -105,7 +105,7 @@ $config = include './php/config.php';
 <div class="login-container">
   <div class="text-center mb-4">
     <img src="images/logo.png" alt="Luna Logo" class="img-fluid" style="max-width: 150px;">
-    <h5 class="mt-3">Sign Up</h5>
+    <h5 class="mt-3 fw-bold">Sign Up</h5>
   </div>
 
   <?php if (isset($_SESSION['error'])): ?>
