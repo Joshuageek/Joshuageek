@@ -8,7 +8,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // Database configuration
-$dbPath = __DIR__ . '/../connection/db.php';
+$dbPath = __DIR__ . '/../config/db.php';
 if (!file_exists($dbPath)) {
     error_log("Database configuration not found at: $dbPath");
     sendJsonResponse([

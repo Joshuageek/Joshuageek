@@ -7,7 +7,14 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
-// Now you can access env variables via getenv() or $_ENV or $_SERVER
+$local_server = [
+    'host' => 'localhost',
+    'user' => 'root',
+    'password' => '',
+    'dbname' => $_ENV['DB_NAME'],
+];
+
 return [
     'google_client_id' => $_ENV['GOGGLE_CLEINT_ID'],
+    'local_server' => $local_server
 ];

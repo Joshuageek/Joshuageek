@@ -1,6 +1,14 @@
 <?php 
 session_start();
-// include('connection/db.php');
+require 'config/db.php';
+
+function get_user_role($user_id) {
+  global $conn;
+  $stmt = $conn->prepare("SELECT role FROM users WHERE id = ?");
+  $stmt->execute([$user_id]);
+  $result = $stmt->fetch(PDO::FETCH_OBJ);
+  return $result->role ?? null;
+}
 
 //available user:: (users - clients), therapists, admin
 $user_id = $_SESSION['user_id'] ?? null;
@@ -372,7 +380,10 @@ function isActive($page) {
         <li class="<?= isActive('index.php') ?>"><a href="index.php">Home</a></li>
         <li class="<?= isActive('about.php') ?>"><a href="about.php">About Us</a></li>
         <li class="<?= isActive('clinic.php') ?>"><a href="clinic.php">For Therapists</a></li>
-        <li class="<?= isActive('dashboard.php') ?>"><a href="admin/dashboard.php">Admin Panel</a></li>
+
+        <?php if (get_user_role($user_id) === 'admin'):?>
+          <li class="<?= isActive('dashboard.php') ?>"><a href="admin/dashboard.php">Dashboard</a></li>
+        <?php endif; ?>
 
         <?php if ($user_id): ?>
           <li class="<?= isActive('booking.php') ?>"><a href="booking.php">Bookings</a></li>

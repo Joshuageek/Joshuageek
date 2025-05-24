@@ -1,6 +1,6 @@
 <?php
 
-    require_once('../connection/db.php');
+    require_once('../config/db.php');
 
     function is_valid_email($email) {
         return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
@@ -50,7 +50,7 @@
         $stmt = $conn->prepare("SELECT role FROM users WHERE id = ?");
         $stmt->execute([$user_id]);
         $result = $stmt->fetch(PDO::FETCH_OBJ);
-        return $result->role;
+        return $result->role ?? null;
     }
 
     function admin_email($email) {

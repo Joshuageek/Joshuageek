@@ -1,6 +1,6 @@
 <?php
 require_once '../vendor/autoload.php';
-require_once '../connection/db.php'; // adjust path to your DB connection
+require_once '../config/db.php'; // adjust path to your DB connection
 require_once '../php/functions.php'; // contains email_exists(), has_completed_questionnaire()
 $config = include 'config.php';
 
