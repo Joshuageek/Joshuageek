@@ -2,6 +2,7 @@
 session_start();
 require_once __DIR__ . '/../../config/db.php';
 require_once __DIR__ . '/../../php/functions.php';
+require_once __DIR__ . '/../php/data.php';
 
 //available user:: (users - clients), therapists, admin
 $user_id = $_SESSION['user_id'] ?? null;
@@ -27,8 +28,7 @@ $user_id = $_SESSION['user_id'] ?? null;
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/assets/css/styles.css">
-    <link rel="stylesheet" href="/assets/css/dashboard.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
 </head>
 <body class="admin-dashboard">
     <!-- Navigation would go here if needed -->
