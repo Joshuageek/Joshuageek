@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 17, 2025 at 12:42 PM
+-- Generation Time: May 26, 2025 at 09:36 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,13 +38,6 @@ CREATE TABLE `booking_submissions` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `booking_submissions`
---
-
-INSERT INTO `booking_submissions` (`id`, `full_name`, `phone`, `booking_date`, `email`, `number_of_people`, `booking_time`, `created_at`) VALUES
-(1, 'Hello', '12345', '2025-05-14', 'hello@gmail.com', '3 People', 'Evening', '2025-05-13 23:01:15');
-
 -- --------------------------------------------------------
 
 --
@@ -77,10 +70,7 @@ CREATE TABLE `questionnaire_responses` (
 --
 
 INSERT INTO `questionnaire_responses` (`id`, `user_id`, `therapyReasons`, `therapyGoals`, `therapyHistory`, `receivedTherapy`, `therapyInterest`, `communicationMethod`, `sessionFrequency`, `sessionTime`, `therapistQualities`, `therapistGender`, `healthCondition`, `triggers`, `coping`, `source`, `additionalInfo`, `submitted_at`) VALUES
-(5, 1, 'anxiety, depression, stress', 'reduce-symptoms, improve-relationships', 'past', 'couples', 'individual, couples', 'audio', 'monthly', 'afternoon', 'solution, nurturing, specialized', 'female', 'ddd', 'none reported', 'dddd', 'referral', 'dddd', '2025-05-13 01:20:15'),
-(6, 2, 'depression, stress', 'coping-strategies', 'past', 'couples, family', 'couples, family', 'audio', 'biweekly', 'morning', 'solution, nurturing', 'female', 'none reported', 'none reported', 'ffff', 'social-media', 'foood', '2025-05-13 09:14:19'),
-(7, 3, 'depression', 'improve-relationships, coping-strategies', 'current', 'individual, couples', 'couples, family', 'text', 'biweekly', 'afternoon', 'empathy, experience, solution, nurturing', 'female', 'ddd', 'none reported', 'jj', 'internet', 'hoo', '2025-05-13 12:00:55'),
-(8, 4, 'stress', 'improve-relationships, coping-strategies', 'current', 'individual, couples', 'couples', 'audio', 'monthly', 'afternoon', 'solution, nurturing', 'female', 'none reported', 'none reported', 'ddd', 'internet', 'dddd', '2025-05-14 23:00:17');
+(1, 1, 'anxiety, depression, stress', 'reduce-symptoms, improve-relationships', 'current', 'couples', 'family', 'audio', 'biweekly', 'morning', 'experience, solution, nurturing', 'female', 'none reported', 'none reported', 'call', 'internet', 'dddd', '2025-05-26 22:33:57');
 
 -- --------------------------------------------------------
 
@@ -123,18 +113,16 @@ CREATE TABLE `users` (
   `location` varchar(200) DEFAULT NULL,
   `role` varchar(20) DEFAULT NULL,
   `password` varchar(225) DEFAULT NULL,
-  `created_on` datetime NOT NULL DEFAULT current_timestamp()
+  `created_on` datetime NOT NULL DEFAULT current_timestamp(),
+  `google_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `full_name`, `email`, `phone`, `age`, `gender`, `location`, `role`, `password`, `created_on`) VALUES
-(1, 'Don', 'don@gmail.com', NULL, '18-24', 'male', 'Near You', NULL, '$2y$10$zLAEnG7f.dQBFWbJdtKwC.V/whx1T1xtZVvVcG4DVW2o5yJB3ognO', '2025-05-13 01:20:15'),
-(2, 'Don', 'walden@gmail.com', NULL, '25-34', 'male', 'Near You', NULL, '$2y$10$18oGRCkmLg2W8o827KAyYOTqe8/FbZbanMKoTzzgikAlLVCxy4Shy', '2025-05-13 09:14:19'),
-(3, 'Don', 'student@gmail.com', NULL, '25-34', 'male', 'Et in tempora ad iru', NULL, NULL, '2025-05-13 12:00:55'),
-(4, 'Hello', 'do@gmail.com', NULL, '25-34', 'female', 'Et in tempora ad iru', 'client', NULL, '2025-05-14 23:00:17');
+INSERT INTO `users` (`id`, `full_name`, `email`, `phone`, `age`, `gender`, `location`, `role`, `password`, `created_on`, `google_id`) VALUES
+(1, 'Don', 'ddryn970@gmail.com', NULL, '18-24', 'male', 'Near You', 'patient', NULL, '2025-05-26 22:33:57', '111366614388248317425');
 
 --
 -- Indexes for dumped tables
@@ -172,13 +160,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `booking_submissions`
 --
 ALTER TABLE `booking_submissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `questionnaire_responses`
 --
 ALTER TABLE `questionnaire_responses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `therapists`
@@ -190,7 +178,7 @@ ALTER TABLE `therapists`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

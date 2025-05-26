@@ -46,12 +46,21 @@
     }
 
     function get_user_role($user_id) {
-        global $conn;
-        $stmt = $conn->prepare("SELECT role FROM users WHERE id = ?");
-        $stmt->execute([$user_id]);
-        $result = $stmt->fetch(PDO::FETCH_OBJ);
-        return $result->role ?? null;
+    global $conn;
+
+    $stmt = $conn->prepare("SELECT role FROM users WHERE id = ?");
+    $stmt->execute([$user_id]);
+    $result = $stmt->fetch(PDO::FETCH_OBJ);
+
+    $role = $result->role ?? null;
+
+    if ($role !== null) {
+        $_SESSION['user_role'] = $role;
     }
+
+    return $role;
+}
+
 
     function admin_email($email) {
         

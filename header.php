@@ -2,22 +2,34 @@
 session_start();
 require 'config/db.php';
 
-function get_user_role($user_id) {
-  global $conn;
-  $stmt = $conn->prepare("SELECT role FROM users WHERE id = ?");
-  $stmt->execute([$user_id]);
-  $result = $stmt->fetch(PDO::FETCH_OBJ);
-  return $result->role ?? null;
-}
-
-//available user:: (users - clients), therapists, admin
 $user_id = $_SESSION['user_id'] ?? null;
+$user_role = $_SESSION['user_role'] ?? null;
 
 $current_page = basename($_SERVER['PHP_SELF']);
 function isActive($page) {
   global $current_page;
   return $current_page === $page ? 'active' : '';
 }
+
+$menu_items = [
+  ['label' => 'Home', 'url' => 'index.php'],
+  ['label' => 'About Us', 'url' => 'about.php'],
+];
+
+if ($user_role === 'therapist') {
+  $menu_items[] = ['label' => 'For Therapists', 'url' => 'clinic.php'];
+} elseif ($user_role === 'admin') {
+  $menu_items[] = ['label' => 'Dashboard', 'url' => 'admin/dashboard.php'];
+} else {
+  $menu_items[] = ['label' => 'Bookings', 'url' => 'booking.php'];
+}
+
+if ($user_id) {
+  $menu_items[] = ['label' => 'Sign Out', 'url' => 'logout.php', 'class' => 'logout'];
+} else {
+  $menu_items[] = ['label' => 'Sign In', 'url' => 'login.php'];
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -377,21 +389,13 @@ function isActive($page) {
     <div class="container">
       <a href="index.php" class="navbar-brand">LUNA</a>
       <ul class="navbar-nav">
-        <li class="<?= isActive('index.php') ?>"><a href="index.php">Home</a></li>
-        <li class="<?= isActive('about.php') ?>"><a href="about.php">About Us</a></li>
-        <li class="<?= isActive('clinic.php') ?>"><a href="clinic.php">For Therapists</a></li>
-
-        <?php if (get_user_role($user_id) === 'admin'):?>
-          <li class="<?= isActive('dashboard.php') ?>"><a href="admin/dashboard.php">Dashboard</a></li>
-        <?php endif; ?>
-
-        <?php if ($user_id): ?>
-          <li class="<?= isActive('booking.php') ?>"><a href="booking.php">Bookings</a></li>
-          <li class="logout"><a href="logout.php">Sign Out</a></li>
-        <?php else: ?>
-          <li class="<?= isActive('login.php') ?>"><a href="login.php">Sign in</a></li>
-          <!-- <li class="<?= isActive('question.php') ?>"><a href="question.php">Find a Therapist</a></li> -->
-        <?php endif; ?>
+        <?php foreach($menu_items as $item): ?>
+          <li class="<?= isActive($item['url'])?> <?= $item['class'] ?? ''?>">
+            <a href="<?= $item['url']?>" <?= $item['url'] === $current_page ? 'aria-current="page"' : ''?>>
+              <?= htmlspecialchars($item['label'])?>
+            </a>
+          </li>
+        <?php endforeach; ?>
       </ul>
     </div>
   </nav>

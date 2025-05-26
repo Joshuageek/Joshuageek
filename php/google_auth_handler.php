@@ -42,7 +42,7 @@ if ($payload) {
             $_SESSION['success'] = "Welcome back, $name!";
 
             $user_id = $user['id'];
-            $user_role = $user['role'] ?? null;
+            $user_role = get_user_role($user_id);
         } else {
             // New user → Register them
             $stmt = $conn->prepare("INSERT INTO users (email, password, google_id, created_on) VALUES (?, ?, ?, NOW())");
@@ -51,6 +51,7 @@ if ($payload) {
             $user_id = $conn->lastInsertId();
             $_SESSION['user_id'] = $user_id;
             $_SESSION['user_email'] = $email;
+            $_SESSION['user_role'] = $user_role;
             $_SESSION['success'] = "Welcome, $name!";
 
             $user_role = null;
@@ -63,11 +64,12 @@ if ($payload) {
 
         // Redirect based on whether they completed the questionnaire
         $uid = $_SESSION['user_id'];
-        if (!has_completed_questionnaire($uid) && !in_array($user_role, ['admin', 'therapist'])) {
+        if (!has_completed_questionnaire($user['id']) && $user_role == 'patient') {
             header("Location: ../question.php");
         } else {
             header("Location: ../index.php");
         }
+
         exit();
 
     } catch (PDOException $e) {
