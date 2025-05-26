@@ -40,6 +40,9 @@ if ($payload) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_email'] = $user['email'];
             $_SESSION['success'] = "Welcome back, $name!";
+
+            $user_id = $user['id'];
+            $user_role = $user['role'] ?? null;
         } else {
             // New user → Register them
             $stmt = $conn->prepare("INSERT INTO users (email, password, google_id, created_on) VALUES (?, ?, ?, NOW())");
@@ -49,11 +52,18 @@ if ($payload) {
             $_SESSION['user_id'] = $user_id;
             $_SESSION['user_email'] = $email;
             $_SESSION['success'] = "Welcome, $name!";
+
+            $user_role = null;
+        }
+
+        if(empty($user_role)){
+            header('Location: ../choose_role.php');
+            exit();
         }
 
         // Redirect based on whether they completed the questionnaire
         $uid = $_SESSION['user_id'];
-        if (!has_completed_questionnaire($uid) && get_user_role($uid) != 'admin' && get_user_role($uid) != 'therapist') {
+        if (!has_completed_questionnaire($uid) && !in_array($user_role, ['admin', 'therapist'])) {
             header("Location: ../question.php");
         } else {
             header("Location: ../index.php");

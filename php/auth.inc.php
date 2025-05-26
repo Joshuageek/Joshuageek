@@ -118,10 +118,15 @@ require_once '../php/functions.php';
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($user && password_verify($password, $user['password'])) {
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_email'] = $user['email'];
-                $_SESSION['success'] = 'Login successful!';
+                if(empty($user['role'])){
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['user_email'] = $user['email'];
+                    $_SESSION['success'] = 'Please complete your profile.';
 
+                    header('Location: ../choose_role.php');
+                    exit();
+                }
+                
                 // Redirect based on questionnaire completion
                 if (!has_completed_questionnaire($user['id']) && get_user_role($user['id']) != 'admin' && get_user_role($user['id']) != 'therapist') {
                     header("Location: ../question.php");
@@ -339,6 +344,35 @@ require_once '../php/functions.php';
         } catch (PDOException $e) {
             // Error: Redirect with error message
             header("Location: ../booking.php?status=error&message=Database error: " . urlencode($e->getMessage()));
+            exit();
+        }
+    }
+
+    elseif(isset($_POST['choose_role_btn'])){
+        $role = $_POST['role'] ?? '';
+       
+        try {
+            if (empty($role)) {
+            $_SESSION['error'] = 'Please select a role before continuing.';
+            header("Location: ../choose_role.php");
+            exit();
+        }
+
+        $_SESSION['user_role'] = $role;
+
+        if (isset($_SESSION['user_id'])) {
+            $userId = $_SESSION['user_id'];
+            $sql = "UPDATE users SET role = ? WHERE id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$role, $userId]);
+        }
+
+        $_SESSION['success'] = 'Role selected successfully.';
+        header("Location: ../index.php");
+        exit();
+        } catch (PDOException $e) {
+            $_SESSION['error'] = 'Database error. Please try again later.';
+            header("Location: ../choose_role.php");
             exit();
         }
     }

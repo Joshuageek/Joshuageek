@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Update user data
         $stmt = $conn->prepare(
-            "UPDATE users SET full_name = ?, age = ?, gender = ?, location = ?, role = ?, created_on = NOW()
+            "UPDATE users SET full_name = ?, age = ?, gender = ?, location = ?, created_on = NOW()
              WHERE id = ?"
         );
         $success = $stmt->execute([
@@ -102,7 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $postData['age'],
             $postData['gender'],
             $postData['location'],
-            'client',
             $user_id
         ]);
         error_log("Users table update success: " . ($success ? 'true' : 'false'));
