@@ -68,14 +68,17 @@ require_once '../php/functions.php';
             $_SESSION['user_id'] = $user_id;
             $_SESSION['user_email'] = $email;
 
-            $_SESSION['success'] = 'Account created successfully! Please complete the questionnaire.';
+            $_SESSION['success'] = 'Please choose your role.';
 
             if (!admin_email($email)) {
-                header("Location: ../question.php");
+                header("Location: ../choose_role.php");
             } else {
                 $sql = 'UPDATE users SET role = ? WHERE id = ?';
                 $stmt = $conn->prepare($sql);
                 $stmt->execute(['admin', $user_id]);
+
+                $_SESSION['user_role'] = 'admin';
+
                 header("Location: ../index.php");
             }
             exit();
@@ -126,6 +129,11 @@ require_once '../php/functions.php';
                     header('Location: ../choose_role.php');
                     exit();
                 }
+
+                // Set session variables
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_email'] = $user['email'];
+                $_SESSION['user_role'] = $user['role'];
                 
                 // Redirect based on questionnaire completion
                 if (!has_completed_questionnaire($user['id']) && get_user_role($user['id']) != 'admin' && get_user_role($user['id']) != 'therapist') {
@@ -365,6 +373,11 @@ require_once '../php/functions.php';
             $sql = "UPDATE users SET role = ? WHERE id = ?";
             $stmt = $conn->prepare($sql);
             $stmt->execute([$role, $userId]);
+        }
+
+        if ($role === 'patient'){
+            header("Location: ../question.php");
+            exit();
         }
 
         $_SESSION['success'] = 'Role selected successfully.';

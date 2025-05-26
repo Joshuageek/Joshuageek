@@ -8,6 +8,8 @@ include('header.php');
     <div class="row align-items-center">       
       <!-- Content Column -->    
       <div class="col-md-6 content-column">
+        <h1 class="fs-3 fw-bold text-danger">User Role: <?php echo $user_role ?? 'NO ROLE';  ?></h1>
+        <h1 class="fs-3 fw-bold text-danger">User Id: <?php echo $user_id ?? 'NO ID';  ?></h1>
         <h1>Your Mental Wellness Journey Starts Here</h1>         
         <p class="subtitle"><h4>Connect with licensed therapists in minutes. Accessible, confidential support designed for young adults.</h4></p>                  
         <div class="button-group">           
