@@ -18,11 +18,12 @@ $menu_items = [
 
 if ($user_role === 'therapist') {
   $menu_items[] = ['label' => 'For Therapists', 'url' => 'clinic.php'];
-} elseif ($user_role === 'admin') {
+} elseif ($user_role === 'admin' || $user_role === 'patient') {
   $menu_items[] = ['label' => 'Dashboard', 'url' => 'admin/dashboard.php'];
-} else {
   $menu_items[] = ['label' => 'Bookings', 'url' => 'booking.php'];
-}
+} 
+// else {
+// }
 
 if ($user_id) {
   $menu_items[] = ['label' => 'Sign Out', 'url' => 'logout.php', 'class' => 'logout'];
