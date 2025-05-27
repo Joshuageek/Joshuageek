@@ -79,6 +79,7 @@
                                         data-phone="<?= htmlspecialchars($booking['phone']) ?>"
                                         data-date="<?= $booking['booking_date'] ?>"
                                         data-time="<?= $booking['booking_time'] ?>"
+                                        data-persons="<?= $booking['number_of_people'] ?>"
                                         >
                                         <i class="fas fa-edit"></i>
                                     </button>
@@ -172,8 +173,8 @@
 <div class="modal fade" id="editBookingModal" tabindex="-1" aria-labelledby="editBookingModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form action="update_booking.php" method="POST">
-        <input type="hidden" name="id" id="editBookingId">
+      <form action="php/bookings.inc.php" method="POST">
+        <input type="hidden" name="booking_id" id="editBookingId">
         <div class="modal-header bg-primary">
           <h5 class="modal-title text-white" id="editBookingModalLabel">Edit Booking</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -199,9 +200,27 @@
                 <input type="date" class="form-control" name="booking_date" id="editDate" required>
               </div>
           </div>
-          <div class="mb-3">
-            <label for="editTime" class="form-label">Booking Time</label>
-            <input type="time" class="form-control" name="booking_time" id="editTime" required>
+          <div class="row">
+            <div class="mb-3 col-md-6">
+                <label for="editPersons" class="form-label">Number of People</label>
+                <select name="number_of_people" class="form-select" id="editPersons">
+                    <option value="" disabled selected>How many?</option>
+                    <option value="1 Person">1 Person</option>
+                    <option value="2 People">2 People</option>
+                    <option value="3 People">3 People</option>
+                    <option value="4 People">4 People</option>
+                    <option value="5 People">5 People</option>
+                    <option value="6 People">6 People</option>
+                    <option value="7 People">7 People</option>
+                    <option value="8 People">8 People</option>
+                    <option value="9 People">9 People</option>
+                    <option value="10 People">10 People</option>
+                </select>
+              </div>
+            <div class="mb-3 col-md-6">
+                <label for="booking_time" class="form-label">Booking Time</label>
+                <input type="time" class="form-control" name="booking_time" id="editTime" required>
+            </div>
           </div>
         </div>
         <div class="modal-footer">
@@ -305,6 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('editPhone').value = button.getAttribute('data-phone');
         document.getElementById('editDate').value = button.getAttribute('data-date');
         document.getElementById('editTime').value = button.getAttribute('data-time');
+        document.getElementById('editPersons').value = button.getAttribute('data-persons');
     });
 
     // Handle Send Email Modal
