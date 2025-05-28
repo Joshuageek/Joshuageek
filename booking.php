@@ -110,7 +110,7 @@ if(!isset($_SESSION['user_id'])) {
                                 <option value="9 People">9 People</option>
                                 <option value="10 People">10 People</option>
                             </select>
-                            <input class="register-input white-input" required name="register_time" placeholder="Booking Time" type="text">
+                            <input class="register-input white-input" required name="register_time" placeholder="Booking Time" type="time">
                         </div>
                         <div class="col-md-12">
                             <input value="Book Your Session" class="register-submit" name="booking_submittion" type="submit">

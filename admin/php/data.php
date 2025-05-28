@@ -40,7 +40,7 @@ try {
 
     // Fetch bookings
     $stmt = $conn->prepare("
-        SELECT bs.id, bs.full_name as user_name, bs.booking_date, bs.booking_time, 'pending' as status, bs.created_at
+        SELECT *
         FROM booking_submissions bs
         ORDER BY bs.created_at DESC
     ");
@@ -53,7 +53,7 @@ try {
 
     // Fetch recent bookings (limit to 5)
     $stmt = $conn->prepare("
-        SELECT bs.id, bs.full_name as user_name, bs.phone, bs.booking_date, bs.booking_time, 'pending' as status, bs.created_at
+        SELECT bs.id, bs.email, bs.full_name as user_name, bs.phone, bs.booking_date, bs.booking_time, bs.status, bs.created_at
         FROM booking_submissions bs
         ORDER BY bs.created_at DESC
         LIMIT 5
