@@ -3,7 +3,6 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Dotenv\Dotenv;
 
-// Load .env from the root directory
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
@@ -15,6 +14,8 @@ $local_server = [
 ];
 
 return [
-    'google_client_id' => $_ENV['GOGGLE_CLEINT_ID'],
+    'google_client_id' => $_ENV['GOGGLE_CLIENT_ID'],
+    'google_app_username'=> $_ENV['GOOGLE_APP_USERNAME'],
+    'google_app_password'=> $_ENV['GOOG_APP_PASSWORD'],
     'local_server' => $local_server
 ];

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 26, 2025 at 09:36 PM
+-- Generation Time: Jun 04, 2025 at 10:49 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -35,8 +35,16 @@ CREATE TABLE `booking_submissions` (
   `email` varchar(255) NOT NULL,
   `number_of_people` varchar(20) NOT NULL,
   `booking_time` varchar(50) NOT NULL,
+  `status` text NOT NULL DEFAULT '\'pending\'',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `booking_submissions`
+--
+
+INSERT INTO `booking_submissions` (`id`, `full_name`, `phone`, `booking_date`, `email`, `number_of_people`, `booking_time`, `status`, `created_at`) VALUES
+(1, 'Don dada', '079888', '2025-06-03', 'ddryn970@gmail.com', '3 People', '23:03', 'accepted', '2025-06-03 14:57:01');
 
 -- --------------------------------------------------------
 
@@ -122,7 +130,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `full_name`, `email`, `phone`, `age`, `gender`, `location`, `role`, `password`, `created_on`, `google_id`) VALUES
-(1, 'Don', 'ddryn970@gmail.com', NULL, '18-24', 'male', 'Near You', 'patient', NULL, '2025-05-26 22:33:57', '111366614388248317425');
+(1, 'Don', 'ddryn970@gmail.com', NULL, '18-24', 'male', 'Near You', 'patient', NULL, '2025-05-26 22:33:57', '111366614388248317425'),
+(2, NULL, 'admin@gmail.com', NULL, NULL, NULL, NULL, 'admin', '$2y$10$0WnL.uH8a7fbZO5qF8vgbOlmH3.g9aUQ4.vUozZO.v279AO2YJ/Nq', '2025-06-03 16:23:09', NULL);
 
 --
 -- Indexes for dumped tables
@@ -160,7 +169,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `booking_submissions`
 --
 ALTER TABLE `booking_submissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `questionnaire_responses`
@@ -178,7 +187,7 @@ ALTER TABLE `therapists`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

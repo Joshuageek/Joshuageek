@@ -3,7 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 session_start();
-require_once '../config/db.php'; // Make sure your DB connection is valid
+require_once '../config/db.php';
 require_once '../php/functions.php';
 
     // create account
@@ -12,49 +12,48 @@ require_once '../php/functions.php';
         $password = $_POST['password'] ?? '';
         $confirmPassword = $_POST['confirmPassword'] ?? '';
 
-        // Check for empty fields
+       
         if (empty($email) || empty($password) || empty($confirmPassword)) {
             $_SESSION['error'] = 'Please fill in all fields.';
             header("Location: ../signup.php");
             exit();
         }
 
-        // Validate email format
+        
         if (!is_valid_email($email)) {
             $_SESSION['error'] = 'Please enter a valid email address.';
             header("Location: ../signup.php");
             exit();
         }
 
-        // Check if email already exists
+      
         if (email_exists($email)) {
             $_SESSION['error'] = 'Email already exists.';
             header("Location: ../signup.php");
             exit();
         }
 
-        // Password length check
+        
         if (strlen($password) < 8) {
             $_SESSION['error'] = 'Password must be at least 8 characters.';
             header("Location: ../signup.php");
             exit();
         }
 
-        // Password strength check (letters and numbers)
+       
         if (!preg_match('/[A-Za-z]/', $password) || !preg_match('/[0-9]/', $password)) {
             $_SESSION['error'] = 'Password must include both letters and numbers.';
             header("Location: ../signup.php");
             exit();
         }
 
-        // Confirm passwords match
+        
         if ($password !== $confirmPassword) {
             $_SESSION['error'] = 'Passwords do not match.';
             header("Location: ../signup.php");
             exit();
         }
 
-        // Hash the password before storing
         $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
 
         try {
@@ -64,7 +63,6 @@ require_once '../php/functions.php';
 
             $user_id = $conn->lastInsertId();
 
-            // Set session variables
             $_SESSION['user_id'] = $user_id;
             $_SESSION['user_email'] = $email;
 

@@ -52,7 +52,7 @@
                                         $badgeClass = match ($status) {
                                             'Confirmed' => 'bg-primary',
                                             'Pending' => 'bg-warning',
-                                            'accepted' => 'bg-info',
+                                            'Accepted' => 'bg-info',
                                             'Cancelled' => 'bg-danger',
                                             'Completed' => 'bg-success',
                                             default => 'bg-secondary',

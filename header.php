@@ -14,14 +14,17 @@ function isActive($page) {
 $menu_items = [
   ['label' => 'Home', 'url' => 'index.php'],
   ['label' => 'About Us', 'url' => 'about.php'],
+  ['label' => 'For Therapists', 'url' => 'clinic.php'],
+  ['label' => 'Dashboard', 'url' => 'admin/dashboard.php'],
+  ['label' => 'Bookings', 'url' => 'booking.php']
 ];
 
-if ($user_role === 'therapist') {
-  $menu_items[] = ['label' => 'For Therapists', 'url' => 'clinic.php'];
-} elseif ($user_role === 'admin' || $user_role === 'patient') {
-  $menu_items[] = ['label' => 'Dashboard', 'url' => 'admin/dashboard.php'];
-  $menu_items[] = ['label' => 'Bookings', 'url' => 'booking.php'];
-} 
+// if ($user_role === 'therapist') {
+//   $menu_items[] = ['label' => 'For Therapists', 'url' => 'clinic.php'];
+// } elseif ($user_role === 'admin' || $user_role === 'patient') {
+//   $menu_items[] = ['label' => 'Dashboard', 'url' => 'admin/dashboard.php'];
+//   $menu_items[] = ['label' => 'Bookings', 'url' => 'booking.php'];
+// } 
 // else {
 // }
 
