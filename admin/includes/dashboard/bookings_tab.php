@@ -93,12 +93,6 @@
                                 </td>
                             </tr>
                         <?php endforeach; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="8" class="text-center">
-                                <div class="alert alert-warning" role="alert">No recent bookings found.</div>
-                            </td>
-                        </tr>
                     <?php endif; ?>
                 </tbody>
             </table>

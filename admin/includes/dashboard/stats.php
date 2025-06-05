@@ -14,8 +14,8 @@
                 <i class="fas fa-user-check"></i>
             </div>
             <div class="stat-info">
-                <h3><?php echo $userCount ?></h3>
-                <p>Active Users</p>
+                <h3><?php echo $patientsCounts ?></h3>
+                <p>Active Patients</p>
             </div>
         </div>
         <div class="stat-item">

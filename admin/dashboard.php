@@ -10,7 +10,7 @@ include 'includes/header.php';
             <p class="dashboard-date">Saturday, May 24, 2025</p>
         </div>
         <div class="header-right d-flex gap-3">
-            <button class="btn btn-outline-secondary btn-sm">
+            <button class="btn btn-outline-secondary btn-sm" id="refresh-page">
                 <i class="fas fa-sync-alt"></i> Refresh
             </button>
             <a href="../index.php" class="btn btn-outline-primary btn-sm">
@@ -32,7 +32,7 @@ include 'includes/header.php';
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab">
-                        <i class="fas fa-users me-1"></i> Users
+                        <i class="fas fa-users me-1"></i> Patients
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
@@ -93,3 +93,29 @@ include 'includes/header.php';
 </div>
 
 <?php include 'includes/footer.php'; ?>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const tabButtons = document.querySelectorAll('#dashboardTabs .nav-link');
+    const storageKey = 'dashboardActiveTab';
+
+    const lastTab = localStorage.getItem(storageKey);
+    if (lastTab) {
+        const triggerTab = document.querySelector(`#dashboardTabs .nav-link[data-bs-target="${lastTab}"]`);
+        if (triggerTab) {
+            var tab = new bootstrap.Tab(triggerTab);
+            tab.show();
+        }
+    }
+
+    tabButtons.forEach(btn => {
+        btn.addEventListener('shown.bs.tab', function (e) {
+            const target = e.target.getAttribute('data-bs-target');
+            localStorage.setItem(storageKey, target);
+        });
+    });
+    
+    document.getElementById('refresh-page').addEventListener('click', ()=> {
+        location.reload()
+    })
+});
+</script>

@@ -3,34 +3,9 @@
 
   <!-- Main Content -->
   <main>
-    <?php
-      if (session_status() === PHP_SESSION_NONE) session_start();
-      if (isset($_SESSION['form_errors'])) {
-          echo '<div class="alert alert-danger" style="background-color: #ffe6e6; border: 1px solid #ff6b6b; padding: 15px; border-radius: 5px;">';
-          echo '<h4>Please correct the following errors:</h4>';
-          echo '<ul>';
-          foreach ($_SESSION['form_errors'] as $error) {
-              echo '<li>' . htmlspecialchars($error) . '</li>';
-          }
-          echo '</ul>';
-          echo '</div>';
-          
-          // Clear errors after displaying
-          unset($_SESSION['form_errors']);
-      }
-
-      // Repopulate form fields if available
-      if (isset($_SESSION['form_data'])) {
-          foreach ($_SESSION['form_data'] as $key => $value) {
-              if ($key !== 'therapist-signup') {
-                  echo "<script>document.getElementById('$key').value = " . json_encode($value) . ";</script>";
-              }
-          }
-          unset($_SESSION['form_data']);
-      }
-    ?>
+    
     <div class="container">
-      <form action="php/auth.inc.php" method="POST" enctype="multipart/form-data">
+      <form action="php/therasign.inc.php" method="POST" enctype="multipart/form-data">
         <div class="page-title">
           <h1>Therapist Sign-Up Form</h1>
           <p>Please complete the form below to join our network of mental health professionals</p>
@@ -334,7 +309,7 @@
               <label for="consent-data">I understand that my data will be used only for recruitment purposes</label>
             </div>
           </div>
-          <button type="submit" class="btn btn-block" name="therapist-signup" id="submit-btn">Submit Application</button>
+          <button type="submit" class="btn btn-block" id="submit-btn">Submit Application</button>
         </section>
       </form>
     </div>

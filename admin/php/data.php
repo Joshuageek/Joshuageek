@@ -9,7 +9,8 @@ try {
     // Dashboard counts
     $userCount = (int) $conn->query("SELECT COUNT(*) FROM users")->fetchColumn();
     $activeBookings = (int) $conn->query("SELECT COUNT(*) FROM booking_submissions")->fetchColumn();
-    $therapistsCount = (int) $conn->query("SELECT COUNT(*) FROM therapists")->fetchColumn();
+    $patientsCounts = (int) $conn->query("SELECT COUNT(*) FROM users WHERE role = 'patient'")->fetchColumn();
+    $therapistsCount = (int) $conn->query("SELECT COUNT(*) FROM users WHERE role = 'therapist'")->fetchColumn();
     $pendingResponses = (int) $conn->query("SELECT COUNT(*) FROM questionnaire_responses WHERE submitted_at IS NOT NULL")->fetchColumn();
 
     // All bookings (ordered by most recent)
@@ -36,15 +37,33 @@ try {
     $stmt->execute();
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Therapists with joined user name
+    // patients from users
     $stmt = $conn->prepare("
-        SELECT t.id, u.full_name, t.specialization, t.created_at
+        SELECT *
+        FROM users WHERE role = 'patient'
+        ORDER BY created_on DESC
+    ");
+    $stmt->execute();
+    $allPatients = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $stmt = $conn->prepare("
+        SELECT
+            u.id,
+            u.full_name,
+            u.email,
+            u.phone,
+            u.gender,
+            u.age,
+            u.location,
+            t.specialization,
+            t.created_at,
+            t.id as therapist_id
         FROM therapists t
         LEFT JOIN users u ON t.user_id = u.id
         ORDER BY t.created_at DESC
     ");
     $stmt->execute();
-    $therapists = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $allTherapists = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // Questionnaire responses (with user name)
     $stmt = $conn->prepare("
@@ -57,12 +76,12 @@ try {
     $responses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // Top therapists (example: just reuse therapists for now)
-    $topTherapists = $therapists;
+    $topTherapists = $allTherapists;
 
 } catch (PDOException $e) {
     error_log("Database error: " . $e->getMessage());
     // Fallback values if DB errors
-    $userCount = $activeBookings = $therapistsCount = $pendingResponses = 0;
-    $bookings = $recentBookings = $users = $therapists = $responses = $topTherapists = [];
+    $userCount = $patientsCounts =  $activeBookings = $therapistsCount = $pendingResponses = 0;
+    $bookings = $recentBookings = $users = $allPatients = $allTherapists = $responses = $topTherapists = [];
 }
 ?>
