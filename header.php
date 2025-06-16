@@ -15,7 +15,9 @@ $menu_items = [
   ['label' => 'Home', 'url' => 'index.php'],
   ['label' => 'About Us', 'url' => 'about.php'],
   ['label' => 'For Therapists', 'url' => 'clinic.php'],
-  ['label' => 'Dashboard', 'url' => 'admin/dashboard.php'],
+  ['label' => 'Admin Dashboard', 'url' => 'admin/dashboard.php'],
+  ['label' => 'Client Dashboard', 'url' => 'client_dashboard.php'],
+  ['label' => 'Therapist Dashboard', 'url' => 'therapist_dashboard.php'],
   ['label' => 'Bookings', 'url' => 'booking.php']
 ];
 
