@@ -670,7 +670,7 @@
                 </a>
             </li>
             <li class="nav-item mt-auto">
-                <a href="#" class="nav-link">
+                <a href="logout.php" class="nav-link">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span>
                 </a>
@@ -1045,9 +1045,11 @@
         // Navigation
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
+                if(this.getAttribute('href') !== 'logout.php'){
+                    e.preventDefault();
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                }
             });
         });
 
