@@ -223,7 +223,7 @@ $config = include './php/config.php';
 
         
         <div class="login-extras">
-            <a href="forgot_pwd.php"><i class="fas fa-key me-1"></i> Forgot Password?</a>
+            <a href="forgot-pwd.php"><i class="fas fa-key me-1"></i> Forgot Password?</a>
             <a href="signup.php"><i class="fas fa-user-plus me-1"></i> Create Account</a>
         </div>
     </form>
