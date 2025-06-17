@@ -14,26 +14,24 @@ function isActive($page) {
 $menu_items = [
   ['label' => 'Home', 'url' => 'index.php'],
   ['label' => 'About Us', 'url' => 'about.php'],
-  ['label' => 'For Therapists', 'url' => 'clinic.php'],
-  ['label' => 'Admin Dashboard', 'url' => 'admin-dashboard.php'],
-  ['label' => 'Client Dashboard', 'url' => 'client-dashboard.php'],
-  ['label' => 'Therapist Dashboard', 'url' => 'therapist-dashboard.php'],
-  ['label' => 'Bookings', 'url' => 'booking.php']
 ];
 
-// if ($user_role === 'therapist') {
-//   $menu_items[] = ['label' => 'For Therapists', 'url' => 'clinic.php'];
-// } elseif ($user_role === 'admin' || $user_role === 'patient') {
-//   $menu_items[] = ['label' => 'Dashboard', 'url' => 'admin/dashboard.php'];
-//   $menu_items[] = ['label' => 'Bookings', 'url' => 'booking.php'];
-// } 
-// else {
-// }
+if (!empty($user_id)) {
 
-if ($user_id) {
-  $menu_items[] = ['label' => 'Sign Out', 'url' => 'logout.php', 'class' => 'logout'];
+    if ($user_role === 'therapist') {
+        $menu_items[] = ['label' => 'Dashboard', 'url' => 'therapist-dashboard.php'];
+    } elseif ($user_role === 'patient') {
+        $menu_items[] = ['label' => 'Dashboard', 'url' => 'client-dashboard.php'];
+        $menu_items[] = ['label' => 'Bookings', 'url' => 'booking.php'];
+    } elseif ($user_role === 'admin') {
+        $menu_items[] = ['label' => 'Dashboard', 'url' => 'admin-dashboard.php'];
+    }
+
+    $menu_items[] = ['label' => 'Sign Out', 'url' => 'logout.php', 'class' => 'logout'];
+
 } else {
-  $menu_items[] = ['label' => 'Sign In', 'url' => 'login.php'];
+    $menu_items[] = ['label' => 'For Therapists', 'url' => 'clinic.php'];
+    $menu_items[] = ['label' => 'Sign In', 'url' => 'login.php'];
 }
 
 ?>

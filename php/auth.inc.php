@@ -77,7 +77,7 @@ require_once '../php/functions.php';
 
                 $_SESSION['user_role'] = 'admin';
 
-                header("Location: ../index.php");
+                header("Location: ../admin-dashboard.php");
             }
             exit();
         } catch (PDOException $e) {
@@ -137,7 +137,7 @@ require_once '../php/functions.php';
                 if (!has_completed_questionnaire($user['id']) && get_user_role($user['id']) != 'admin' && get_user_role($user['id']) != 'therapist') {
                     header("Location: ../question.php");
                 } else {
-                    header("Location: ../index.php");
+                    header("Location: ../admin-dashboard.php");
                 }
                 exit();
             } else {
