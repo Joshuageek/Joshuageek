@@ -81,7 +81,7 @@
               </li>
               <li><hr class="dropdown-divider" /></li>
               <li>
-                <a class="dropdown-item" href="#"
+                <a class="dropdown-item" href="logout.php"
                   ><i class="fas fa-sign-out-alt me-2"></i>Logout</a
                 >
               </li>
@@ -122,7 +122,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="notes.php">
                   <i class="fas fa-file-medical-alt me-2"></i>
                   Notes
                 </a>
@@ -457,8 +457,8 @@
                     </div>
                     <div class="col-md-3 mb-3">
                       <button class="btn btn-outline-primary w-100 py-3">
-                        <i class="fas fa-file-medical-alt fa-2x mb-2"></i><br />
-                        Write Notes
+                        <i class="fas fa-file-medical-alt fa-2x mb-2"></i><br /><a class="nav-link" href="notes.php">
+                        Write Notes</a>
                       </button>
                     </div>
                     <div class="col-md-3 mb-3">
