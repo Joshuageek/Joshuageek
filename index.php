@@ -373,7 +373,7 @@ include('header.php');
           </div>
           <h2 class="heading-style-h3-2 margin-bottom margin-small">Individual</h2>
           <p class="margin-bottom margin-xsmall">For ages 18+</p>
-          <div class="text-link hero">Select</div>
+          <div class="text-link hero"></div>
         </a>
         <a class="hero_service teens" href="#">
           <div class="hero__service-img-wrap">
@@ -381,7 +381,7 @@ include('header.php');
           </div>
           <h2 class="heading-style-h3-2 margin-bottom margin-small">Teens</h2>
           <p class="margin-bottom margin-xsmall">For ages 13-17</p>
-          <div class="text-link hero">Select</div>
+          <div class="text-link hero"></div>
         </a>
         <a class="hero_service couples" href="#">
           <div class="hero__service-img-wrap">
@@ -389,7 +389,7 @@ include('header.php');
           </div>
           <h2 class="heading-style-h3-2 margin-bottom margin-small">Couples</h2>
           <p class="margin-bottom margin-xsmall">For partnerships</p>
-          <div class="text-link hero">Select</div>
+          <div class="text-link hero"></div>
         </a>
         <a class="hero_service medication" href="#">
           <div class="hero__service-img-wrap">
@@ -397,7 +397,7 @@ include('header.php');
           </div>
           <h2 class="heading-style-h3-2 margin-bottom margin-small">Medication</h2>
           <p class="margin-bottom margin-xsmall">Psychiatry &amp; prescriptions</p>
-          <div class="text-link hero">Select</div>
+          <div class="text-link hero"></div>
         </a>
       </div>
     </div>

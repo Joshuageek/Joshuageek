@@ -506,12 +506,12 @@
                     <span>My Therapist</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <!--li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="fas fa-chart-line"></i>
                     <span>Progress</span>
                 </a>
-            </li>
+            </li-->
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="fas fa-heart"></i>
@@ -524,19 +524,19 @@
                     <span>Messages</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <!--i class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="fas fa-file-medical-alt"></i>
                     <span>Resources</span>
                 </a>
-            </li>
+            </li-->
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="fas fa-credit-card"></i>
                     <span>Billing</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <!--li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="fas fa-cog"></i>
                     <span>Settings</span>
@@ -547,7 +547,7 @@
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span>
                 </a>
-            </li>
+            </li-->
         </ul>
     </nav>
 
@@ -676,7 +676,7 @@
                         </div>
                     </div>
 
-                    <!-- Progress Chart -->
+                    <!-- Progress Chart-->
                     <div class="card mb-4 animate-in" style="animation-delay: 0.5s;">
                         <div class="card-body">
                             <h5 class="card-title mb-3">
@@ -749,7 +749,7 @@
                         </div>
                     </div>
 
-                    <!-- Current Goals -->
+                    <!-- Current Goals -- >
                     <div class="card animate-in" style="animation-delay: 0.8s;">
                         <div class="card-body">
                             <h5 class="card-title mb-3">
@@ -817,36 +817,36 @@
             });
         });
 
-        // Progress Chart
-        // const ctx = document.getElementById('progressChart')?.getContext('2d');
-        // if (ctx) {
-        //     new Chart(ctx, {
-        //         type: 'line',
-        //         data: {
-        //             labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        //             datasets: [{
-        //                 label: 'Mood Score',
-        //                 data: [6, 7, 8, 6, 9, 8, 8],
-        //                 borderColor: '#A8C3A4',
-        //                 backgroundColor: 'rgba(168, 195, 164, 0.1)',
-        //                 borderWidth: 3,
-        //                 fill: true,
-        //                 tension: 0.4,
-        //                 pointBackgroundColor: '#A8C3A4',
-        //                 pointBorderColor: '#fff',
-        //                 pointBorderWidth: 3,
-        //                 pointRadius: 6,
-        //                 pointHoverRadius: 8
-        //             }, {
-        //                 label: 'Anxiety Level',
-        //                 data: [4, 3, 2, 4, 2, 3, 2],
-        //                 borderColor: '#FF9800',
-        //                 backgroundColor: 'rgba(255, 152, 0, 0.1)',
-        //                 borderWidth: 3,
-        //                 fill: true,
-        //                 tension: 0.4,
-        //                 pointBackgroundColor: '#FF9800',
-        //                 pointBorderColor: '#fff',
-        //                 pointBorderWidth: 3,
-        //                 pointRadius: 6,
-        //                 point
+         Progress Chart
+         const ctx = document.getElementById('progressChart')?.getContext('2d');
+         if (ctx) {
+             new Chart(ctx, {
+                 type: 'line',
+                 data: {
+                     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                     datasets: [{
+                         label: 'Mood Score',
+                         data: [6, 7, 8, 6, 9, 8, 8],
+                         borderColor: '#A8C3A4',
+                         backgroundColor: 'rgba(168, 195, 164, 0.1)',
+                         borderWidth: 3,
+                         fill: true,
+                         tension: 0.4,
+                         pointBackgroundColor: '#A8C3A4',
+                         pointBorderColor: '#fff',
+                         pointBorderWidth: 3,
+                         pointRadius: 6,
+                         pointHoverRadius: 8
+                     }, {
+                         label: 'Anxiety Level',
+                         data: [4, 3, 2, 4, 2, 3, 2],
+                         borderColor: '#FF9800',
+                         backgroundColor: 'rgba(255, 152, 0, 0.1)',
+                         borderWidth: 3,
+                         fill: true,
+                         tension: 0.4,
+                         pointBackgroundColor: '#FF9800',
+                         pointBorderColor: '#fff',
+                         pointBorderWidth: 3,
+                         pointRadius: 6,
+                         point
