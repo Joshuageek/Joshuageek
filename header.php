@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'config/db.php';
+require_once 'config/db.php';
 
 $user_id = $_SESSION['user_id'] ?? null;
 $user_role = $_SESSION['user_role'] ?? null;
