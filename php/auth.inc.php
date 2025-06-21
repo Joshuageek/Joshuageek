@@ -134,10 +134,15 @@ require_once '../php/functions.php';
                 $_SESSION['user_role'] = $user['role'];
                 
                 // Redirect based on questionnaire completion
-                if (!has_completed_questionnaire($user['id']) && get_user_role($user['id']) != 'admin' && get_user_role($user['id']) != 'therapist') {
+                if (!has_completed_questionnaire($user['id']) && get_user_role($user['id']) == 'patient') {
                     header("Location: ../question.php");
+                    exit();
+                } elseif(get_user_role($user['id']) == 'therapist'){
+                    header('Location: ../therapist-dashboard.php');
+                    exit();
                 } else {
                     header("Location: ../admin-dashboard.php");
+                    exit();
                 }
                 exit();
             } else {
@@ -376,10 +381,9 @@ require_once '../php/functions.php';
         if ($role === 'patient'){
             header("Location: ../question.php");
             exit();
+        } else {
+            header('Location: ../therapist-dashboard.php');
         }
-
-        $_SESSION['success'] = 'Role selected successfully.';
-        header("Location: ../index.php");
         exit();
         } catch (PDOException $e) {
             $_SESSION['error'] = 'Database error. Please try again later.';
