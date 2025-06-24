@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 ?>
@@ -8,174 +7,167 @@ session_start();
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Luna - Generate Password</title>
+    <title>Luna - Reset Password</title>
     <link rel="shortcut icon" href="images/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --primary-color: #9dc297;
-            --primary-hover: #A8C3A4;
-            --light-gray: #f8f9fa;
-            --border-radius: 8px;
-            --text-color: #333;
-            --text-muted: #6c757d;
-            --link-color: #5a6e5a;
-            --link-hover: #4a5c4a;
+            --primary-color: #4a6fa5;
+            --primary-hover: #3a5a8f;
+            --secondary-color: #6c757d;
+            --light-bg: #f8fafc;
+            --dark-text: #2d3748;
+            --light-text: #718096;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         
         body {
-            background-color: var(--light-gray);
+            background-color: var(--light-bg);
+            font-family: 'Poppins', sans-serif;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             min-height: 100vh;
-            font-family: 'Montserrat', sans-serif;
-            color: var(--text-color);
-            line-height: 1.6;
+            background-image: radial-gradient(circle at 10% 20%, rgba(234, 249, 251, 0.8) 0%, rgba(239, 246, 253, 0.8) 90%);
         }
         
-        .login-container {
+        .reset-container {
             background: #fff;
             padding: 2.5rem;
             border-radius: var(--border-radius);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: var(--box-shadow);
             width: 100%;
             max-width: 420px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
-        .login-container:hover {
-            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        .reset-container:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
         }
         
-        .login-container h5 {
-            font-weight: 700;
-            color: var(--text-color);
+        .reset-header {
+            text-align: center;
             margin-bottom: 1.5rem;
         }
         
-        .btn-login {
-            background-color: var(--primary-color);
-            color: #fff;
-            border: none;
-            padding: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+        .reset-header img {
+            max-width: 150px;
+            height: auto;
+            margin-bottom: 1rem;
         }
         
-        .btn-login:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-2px);
+        .reset-header h3 {
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .reset-header p {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .form-floating {
+            position: relative;
+            margin-bottom: 1.5rem;
         }
         
         .form-control {
             border-radius: var(--border-radius);
             padding: 1rem;
-            border: 1px solid #dee2e6;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e2e8f0;
+            transition: var(--transition);
+            font-size: 0.95rem;
         }
         
         .form-control:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.25rem #9dc297;
+            box-shadow: 0 0 0 0.25rem rgba(74, 111, 165, 0.15);
         }
         
         .form-floating label {
-            color: var(--text-muted);
+            color: var(--light-text);
             padding: 1rem 0.75rem;
-        }
-        
-        .divider {
-            display: flex;
-            align-items: center;
-            margin: 1.5rem 0;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .divider::before,
-        .divider::after {
-            content: "";
-            flex: 1;
-            border-bottom: 1px solid #dee2e6;
-        }
-        
-        .divider::before {
-            margin-right: 0.75rem;
-        }
-        
-        .divider::after {
-            margin-left: 0.75rem;
-        }
-        
-        .login-extras {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            margin-top: 1.5rem;
-            text-align: center;
-        }
-        
-        .login-extras a {
-            color: var(--link-color);
-            text-decoration: none;
-            transition: color 0.3s ease;
             font-size: 0.9rem;
         }
         
-        .login-extras a:hover {
-            color: var(--link-hover);
-            text-decoration: underline;
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.85rem;
+            font-weight: 500;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            box-shadow: 0 4px 6px rgba(74, 111, 165, 0.2);
+            width: 100%;
         }
         
-        .login-extras i {
-            margin-right: 0.5rem;
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(74, 111, 165, 0.3);
+        }
+        
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
         }
         
         .alert {
             border-radius: var(--border-radius);
             margin-bottom: 1.5rem;
-        }
-        .forgot-pwd {
-            text-decoration: none;
-            color: var(--link-color);
-        }
-
-        .forgot-pwd:hover {
-            text-decoration: underline;
+            border: none;
+            font-size: 0.9rem;
         }
         
         @media (max-width: 576px) {
-            .login-container {
+            .reset-container {
                 padding: 1.75rem;
                 margin: 0 1rem;
             }
             
-            body {
-                padding: 1rem;
+            .reset-header img {
+                max-width: 120px;
             }
         }
     </style>
 </head>
 <body>
 
-<div class="login-container">
-    <div class="text-center mb-4">
-        <img src="images/logo.png" alt="Luna Logo" class="img-fluid" style="max-width: 150px;">
-        <h5 class="mt-3 fs-6">Enter email to reset your password</h5>
+<div class="reset-container">
+    <div class="reset-header">
+        <img src="images/logo.png" alt="Luna Logo">
+        <h3>Reset Password</h3>
+        <p>Enter your email to receive a reset link</p>
     </div>
 
-    <!-- Show messages -->
     <?php if (isset($_SESSION['error'])): ?>
-        <div class="alert alert-danger text-center"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></div>
+        <div class="alert alert-danger alert-dismissible fade show">
+            <?php echo $_SESSION['error']; unset($_SESSION['error']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     <?php elseif (isset($_SESSION['success'])): ?>
-        <div class="alert alert-success text-center"><?php echo $_SESSION['success']; unset($_SESSION['success']); ?></div>
+        <div class="alert alert-success alert-dismissible fade show">
+            <?php echo $_SESSION['success']; unset($_SESSION['success']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     <?php endif; ?>
 
     <form action="php/auth.inc.php" method="POST">
@@ -184,8 +176,8 @@ session_start();
             <label for="email">Email Address</label>
         </div>
 
-        <button type="submit" class="btn btn-login w-100" name="check_email">Submit Email</button>
-        <a href="login.php" class="mt-2 d-block forgot-pwd">Back to login</a>
+        <button type="submit" class="btn btn-primary" name="check_email">Send Reset Link</button>
+        <a href="login.php" class="back-link mt-3"><i class="fas fa-arrow-left me-1"></i>Back to login</a>
     </form>
 </div>
 

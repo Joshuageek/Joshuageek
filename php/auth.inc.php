@@ -201,7 +201,7 @@ require_once '../php/functions.php';
             $stmt->execute([$hashedPwd, $userId]);
 
             $_SESSION['success'] = 'Password successfully updated!';
-            header("Location: ../paywall/paywall.php");
+            header("Location: ../paywall.php");
             exit();
         } catch (PDOException $e) {
             $_SESSION['error'] = 'Database error. Please try again later.';
