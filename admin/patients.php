@@ -1,6 +1,7 @@
 <?php
 session_start();
-require_once '../includes/auth.php';
+require_once 'includes/auth.php';
+include 'templates/header.php';
 
 if (!isLoggedIn() || getUserRole() !== 'admin') {
     header('Location: ../index.php');
@@ -110,33 +111,8 @@ $active_patients = count(array_filter($patients, fn($p) => $p['status'] === 'act
 $avg_progress = round(array_sum(array_column($patients, 'progress_score')) / $total_patients);
 $total_sessions = array_sum(array_column($patients, 'total_sessions'));
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<?php include '../templates/header.php'; ?>
-<body>
-    <?php include '../templates/sidebar.php'; ?>
     
-    <div class="main-content">
-        <div class="top-bar">
-            <div class="page-info d-flex align-items-center">
-                <button class="btn me-3" id="sidebarToggle" style="background: var(--luna-primary); color: white; border-radius: 8px;">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div>
-                    <h1 class="page-title">Patient Management</h1>
-                    <p class="page-subtitle">Comprehensive patient records and care coordination</p>
-                </div>
-            </div>
-            <div class="top-bar-actions">
-                <button class="btn btn-outline-secondary me-2" onclick="exportPatients()">
-                    <i class="fas fa-download me-2"></i>Export
-                </button>
-                <button class="btn btn-luna-primary" data-bs-toggle="modal" data-bs-target="#addPatientModal">
-                    <i class="fas fa-user-plus me-2"></i>Add Patient
-                </button>
-            </div>
-        </div>
+    <div class="">
         
         <div class="container-fluid p-4">
             <!-- Statistics Cards -->
@@ -438,8 +414,7 @@ $total_sessions = array_sum(array_column($patients, 'total_sessions'));
         </div>
     </div>
 
-    <?php include '../templates/footer.php'; ?>
-    <script src="../assets/js/simple-luna.js"></script>
+    <?php include 'templates/footer.php'; ?>
     
     <script>
         function viewPatient(id) {
@@ -488,5 +463,3 @@ $total_sessions = array_sum(array_column($patients, 'total_sessions'));
             console.log('Filtering by status:', this.value);
         });
     </script>
-</body>
-</html>

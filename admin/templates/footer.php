@@ -42,6 +42,44 @@
 
 <!-- custome js -->
 <script src="assets/js/admin-script.js"></script>
+    <script>
+        // Avatar upload preview
+        document.getElementById('avatarUpload')?.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    showToast('Avatar uploaded successfully!', 'success');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function showToast(message, type) {
+            let toast = document.createElement('div');
+            toast.className = `simple-toast ${type ? 'toast-' + type : ''} show`;
+            toast.innerHTML = `
+                <i class="fas fa-${type === 'error' ? 'times-circle' : type === 'success' ? 'check-circle' : 'info-circle'} me-2"></i>
+                ${message}
+                <button class="toast-close" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Form submissions
+        document.querySelector('#editProfileForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            showToast('Profile updated successfully!', 'success');
+            bootstrap.Modal.getInstance(document.getElementById('editProfileModal')).hide();
+        });
+        document.querySelector('#changePasswordForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            showToast('Password changed successfully!', 'success');
+            bootstrap.Modal.getInstance(document.getElementById('changePasswordModal')).hide();
+        });
+    </script>
 
 </body>
 </html>

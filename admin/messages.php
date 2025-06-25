@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'includes/auth.php';
+include 'templates/header.php';
 
 if (!isLoggedIn()) {
     header('Location: ../login.php');
@@ -62,19 +63,10 @@ $current_messages = [
     ]
 ];
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<?php include 'templates/header.php'; ?>
-<body>
-    <?php include 'templates/sidebar.php'; ?>
     
-    <div class="main-content">
-        <div class="top-bar">
+    <div class="">
+        <div class="m-5 d-flex justify-content-between">
             <div class="page-info d-flex align-items-center">
-                <button class="btn me-3" id="sidebarToggle" style="background: var(--luna-primary); color: white; border-radius: 8px;">
-                    <i class="fas fa-bars"></i>
-                </button>
                 <div>
                     <h1 class="page-title">Messages</h1>
                     <p class="page-subtitle">Secure communication with your care team</p>
@@ -311,5 +303,3 @@ $current_messages = [
             border-top: 1px solid #e9ecef;
         }
     </style>
-</body>
-</html>

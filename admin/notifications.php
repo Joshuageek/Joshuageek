@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'includes/auth.php';
+include 'templates/header.php';
 
 if (!isLoggedIn()) {
     header('Location: ../login.php');
@@ -145,19 +146,11 @@ if ($user_role === 'admin') {
 
 $unread_count = count(array_filter($notifications, fn($n) => !$n['read']));
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<?php include 'templates/header.php'; ?>
-<body>
-    <?php include 'templates/sidebar.php'; ?>
     
-    <div class="main-content">
-        <div class="top-bar">
+    <div class="">
+        <div class="m-5 d-flex justify-content-between">
             <div class="page-info d-flex align-items-center">
-                <button class="btn me-3" id="sidebarToggle" style="background: var(--luna-primary); color: white; border-radius: 8px;">
-                    <i class="fas fa-bars"></i>
-                </button>
+               
                 <div>
                     <h1 class="page-title">Notifications</h1>
                     <p class="page-subtitle">Stay updated with important alerts and messages</p>
@@ -550,5 +543,3 @@ $unread_count = count(array_filter($notifications, fn($n) => !$n['read']));
             border-radius: 50%;
         }
     </style>
-</body>
-</html>
