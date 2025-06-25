@@ -1,12 +1,16 @@
 /* styles.css */
 :root {
-  --primary-color: #a8c3a4;
-  --secondary-color: #afcbff;
-  --tertiary-color: #f5ebdd;
-  --text-color: #000000;
+  --primary-color: #4a6fa5;
+  --primary-hover: #3a5a8f;
+  --secondary-color: #6c757d;
+  --light-bg: #f8fafc;
+  --dark-text: #2d3748;
+  --light-text: #718096;
   --error-color: #ff6b6b;
   --success-color: #28a745;
-  --border-radius: 8px;
+  --border-radius: 12px;
+  --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 * {
@@ -17,24 +21,36 @@
 
 body {
   font-family: "Inter", sans-serif;
-  background: #f4f4f7;
+  background: var(--light-bg);
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
   line-height: 1.6;
+  background-image: radial-gradient(
+    circle at 10% 20%,
+    rgba(234, 249, 251, 0.8) 0%,
+    rgba(239, 246, 253, 0.8) 90%
+  );
 }
 
 /* Questionnaire Container */
 .questionnaire-container {
   background: white;
-  border-radius: 16px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
   width: 100%;
   max-width: 600px;
   overflow: hidden;
   position: relative;
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.questionnaire-container:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
 }
 
 .progress-bar {
@@ -48,13 +64,13 @@ body {
 }
 
 .form-header {
-  background: var(--tertiary-color);
+  background: #f5ebdd; /* Keeping original as it's part of the design */
   padding: 20px;
   text-align: center;
 }
 
 .form-header h2 {
-  color: var(--text-color);
+  color: var(--dark-text);
   font-weight: 600;
   margin: 0;
 }
@@ -93,7 +109,7 @@ body {
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: var(--text-color);
+  color: var(--dark-text);
 }
 
 input[type="text"],
@@ -105,14 +121,14 @@ textarea {
   border: 1px solid #e0e0e0;
   border-radius: var(--border-radius);
   font-size: 16px;
-  transition: border-color 0.3s;
+  transition: var(--transition);
   font-family: inherit;
 }
 
 textarea {
-  min-height: 100px; /* Added for consistent size */
-  resize: vertical; /* Allow vertical resize only */
-  max-height: 300px; /* Prevent excessive resizing */
+  min-height: 100px;
+  resize: vertical;
+  max-height: 300px;
 }
 
 input[type="text"]:focus,
@@ -121,6 +137,7 @@ select:focus,
 textarea:focus {
   outline: none;
   border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(74, 111, 165, 0.15);
 }
 
 .option-group {
@@ -138,8 +155,8 @@ textarea:focus {
   margin-left: 25px;
   width: calc(100% - 25px);
   margin-top: 5px;
-  display: block; /* Ensure full-width alignment */
-  box-sizing: border-box; /* Prevent overflow */
+  display: block;
+  box-sizing: border-box;
 }
 
 /* Validation */
@@ -191,19 +208,27 @@ textarea:focus {
   border-radius: var(--border-radius);
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--transition);
   flex: 1;
 }
 
 .btn-prev {
-  background: var(--tertiary-color);
-  color: var(--text-color);
+  background: #f5ebdd; /* Keeping original as it's part of the design */
+  color: var(--dark-text);
 }
 
 .btn-next,
 .btn-submit {
   background: var(--primary-color);
   color: white;
+  box-shadow: 0 4px 6px rgba(74, 111, 165, 0.2);
+}
+
+.btn-next:hover,
+.btn-submit:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(74, 111, 165, 0.3);
 }
 
 .btn:hover {
@@ -222,7 +247,7 @@ textarea:focus {
     flex-direction: column;
   }
   .other-input {
-    margin-left: 15px; /* Reduced margin for mobile */
-    width: calc(100% - 15px); /* Adjust width */
+    margin-left: 15px;
+    width: calc(100% - 15px);
   }
 }

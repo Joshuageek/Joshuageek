@@ -19,7 +19,7 @@
     <div class="questionnaire-container">
       <div class="progress-bar" id="progressBar"></div>
       <div class="form-header">
-        <h2>SwiftDoc Health - Teletherapy Questionnaire</h2>
+        <h2>Luna Health - Teletherapy Questionnaire</h2>
       </div>
       <form id="questionnaireForm" action="php/question.inc.php" method="POST">
         <input type="hidden" id="current_page" name="current_page" value="0">

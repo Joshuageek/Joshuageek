@@ -67,7 +67,7 @@ if ($payload) {
         if (!has_completed_questionnaire($user['id']) && $user_role == 'patient') {
             header("Location: ../question.php");
         } else {
-            header("Location: ../index.php");
+            header("Location: ../admin/");
         }
 
         exit();

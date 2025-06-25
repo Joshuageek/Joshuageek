@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 $config = include './php/config.php';
@@ -12,161 +11,246 @@ $config = include './php/config.php';
     <title>Luna - Login</title>
     <link rel="shortcut icon" href="images/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --primary-color: #9dc297;
-            --primary-hover: #A8C3A4;
-            --light-gray: #f8f9fa;
-            --border-radius: 8px;
-            --text-color: #333;
-            --text-muted: #6c757d;
-            --link-color: #5a6e5a;
-            --link-hover: #4a5c4a;
+            --primary-color: #4a6fa5;
+            --primary-hover: #3a5a8f;
+            --secondary-color: #6c757d;
+            --light-bg: #f8fafc;
+            --dark-text: #2d3748;
+            --light-text: #718096;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         
         body {
-            background-color: var(--light-gray);
+            background-color: var(--light-bg);
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            font-family: 'Montserrat', sans-serif;
-            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-text);
             line-height: 1.6;
+            background-image: radial-gradient(circle at 10% 20%, rgba(234, 249, 251, 0.8) 0%, rgba(239, 246, 253, 0.8) 90%);
         }
         
         .login-container {
             background: #fff;
-            padding: 2.5rem;
+            padding: 3rem;
             border-radius: var(--border-radius);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: var(--box-shadow);
             width: 100%;
-            max-width: 420px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-width: 460px;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
         }
         
         .login-container:hover {
-            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px);
         }
         
-        .login-container h5 {
-            font-weight: 700;
-            color: var(--text-color);
+        .login-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        
+        .login-header img {
+            max-width: 180px;
+            height: auto;
             margin-bottom: 1.5rem;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+        
+        .login-header h3 {
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 0.5rem;
+            font-size: 1.75rem;
+        }
+        
+        .login-header p {
+            color: var(--light-text);
+            font-size: 0.95rem;
         }
         
         .btn-login {
             background-color: var(--primary-color);
             color: #fff;
             border: none;
-            padding: 0.75rem;
-            font-weight: 600;
+            padding: 0.85rem;
+            font-weight: 500;
             letter-spacing: 0.5px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            transition: var(--transition);
+            border-radius: var(--border-radius);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 6px rgba(74, 111, 165, 0.2);
         }
         
         .btn-login:hover {
             background-color: var(--primary-hover);
             transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(74, 111, 165, 0.3);
         }
         
         .form-control {
             border-radius: var(--border-radius);
             padding: 1rem;
-            border: 1px solid #dee2e6;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e2e8f0;
+            transition: var(--transition);
+            font-size: 0.95rem;
         }
         
         .form-control:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.25rem rgba(157, 194, 151, 0.25);
+            box-shadow: 0 0 0 0.25rem rgba(74, 111, 165, 0.15);
         }
         
         .form-floating label {
-            color: var(--text-muted);
+            color: var(--light-text);
             padding: 1rem 0.75rem;
+            font-size: 0.9rem;
+        }
+        
+        .form-floating>.form-control:focus~label,
+        .form-floating>.form-control:not(:placeholder-shown)~label {
+            transform: scale(0.85) translateY(-1.5rem) translateX(0.15rem);
+            color: var(--primary-color);
+        }
+        
+        .input-group-text {
+            background-color: transparent;
+            border-right: none;
+            color: var(--light-text);
+        }
+        
+        .input-group .form-control {
+            border-left: none;
         }
         
         .divider {
             display: flex;
             align-items: center;
-            margin: 1.5rem 0;
-            color: var(--text-muted);
+            margin: 2rem 0;
+            color: var(--light-text);
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-weight: 500;
         }
         
         .divider::before,
         .divider::after {
             content: "";
             flex: 1;
-            border-bottom: 1px solid #dee2e6;
+            border-bottom: 1px solid #e2e8f0;
         }
         
         .divider::before {
-            margin-right: 0.75rem;
+            margin-right: 1rem;
         }
         
         .divider::after {
-            margin-left: 0.75rem;
+            margin-left: 1rem;
         }
         
-        .login-extras {
+        .login-footer {
             display: flex;
-            flex-direction: row;
-            gap: 0.75rem;
-            margin-top: 1.5rem;
+            justify-content: space-between;
+            margin-top: 2rem;
             text-align: center;
         }
         
-        .login-extras a {
-            color: var(--link-color);
+        .login-footer a {
+            color: var(--secondary-color);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: var(--transition);
             font-size: 0.9rem;
+            font-weight: 500;
         }
         
-        .login-extras a:hover {
-            color: var(--link-hover);
-            text-decoration: underline;
+        .login-footer a:hover {
+            color: var(--primary-color);
+            text-decoration: none;
         }
         
-        .login-extras i {
+        .login-footer i {
             margin-right: 0.5rem;
+            font-size: 0.8rem;
         }
         
         .alert {
             border-radius: var(--border-radius);
             margin-bottom: 1.5rem;
+            border: none;
+            font-size: 0.9rem;
         }
 
-        .google-btn{
+        .google-btn {
             width: 100%;
-            background-color: #4285F4;
-            color: #fff;
+            background-color: #fff;
+            color: #5f6368;
             padding: 0.75rem;
-            border: none;
+            border: 1px solid #e0e0e0;
             border-radius: var(--border-radius);
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: var(--transition);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .google-btn:hover {
-        background: #f0f0f0;
+            background-color: #f7f7f7;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        .google-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 1rem;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--light-text);
+            z-index: 5;
         }
         
         @media (max-width: 576px) {
             .login-container {
-                padding: 1.75rem;
+                padding: 2rem 1.5rem;
                 margin: 0 1rem;
             }
             
             body {
                 padding: 1rem;
+            }
+            
+            .login-header img {
+                max-width: 140px;
+            }
+            
+            .login-header h3 {
+                font-size: 1.5rem;
+            }
+            
+            .login-footer {
+                flex-direction: column;
+                gap: 1rem;
             }
         }
     </style>
@@ -174,16 +258,23 @@ $config = include './php/config.php';
 <body>
 
 <div class="login-container">
-    <div class="text-center mb-4">
-        <img src="images/logo.png" alt="Luna Logo" class="img-fluid" style="max-width: 150px;">
-        <h5 class="mt-3">LogIn</h5>
+    <div class="login-header">
+        <img src="images/logo.png" alt="Luna Logo">
+        <h3>Welcome Back</h3>
+        <p>Sign in to access your account</p>
     </div>
 
     <!-- Show messages -->
     <?php if (isset($_SESSION['error'])): ?>
-        <div class="alert alert-danger text-center"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></div>
+        <div class="alert alert-danger alert-dismissible fade show">
+            <?php echo $_SESSION['error']; unset($_SESSION['error']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     <?php elseif (isset($_SESSION['success'])): ?>
-        <div class="alert alert-success text-center"><?php echo $_SESSION['success']; unset($_SESSION['success']); ?></div>
+        <div class="alert alert-success alert-dismissible fade show">
+            <?php echo $_SESSION['success']; unset($_SESSION['success']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     <?php endif; ?>
 
     <form action="php/auth.inc.php" method="POST">
@@ -192,39 +283,41 @@ $config = include './php/config.php';
             <label for="email">Email Address</label>
         </div>
 
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-3 position-relative">
             <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
             <label for="password">Password</label>
-            <i class="fa fa-eye toggle-password position-absolute" id="togglePassword" style="top: 50%; right: 1rem; transform: translateY(-50%); cursor: pointer; color: grey;"></i>
+            <i class="fas fa-eye password-toggle" id="togglePassword"></i>
         </div>
 
-        <button type="submit" class="btn btn-login w-100" name="login_btn">Sign In</button>
+        <div class="d-grid mb-3">
+            <button type="submit" class="btn btn-login" name="login_btn">Sign In</button>
+        </div>
 
-        <div class="divider">or</div>
+        <div class="divider">or continue with</div>
 
-       <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
+        <div class="mb-3">
             <div id="g_id_onload"
                 data-client_id="<?php echo htmlspecialchars($config['google_client_id']); ?>"
-                data-context="signup"
+                data-context="signin"
                 data-ux_mode="popup"
                 data-callback="handleCredentialResponse"
                 data-auto_prompt="false">
             </div>
 
-            <div class="g_id_signin"
+            <div class="g_id_signin d-flex justify-content-center"
                 data-type="standard"
                 data-shape="rectangular"
-                data-theme="outline"
-                data-text="signup_with"
+                data-theme="filled_blue"
+                data-text="signin_with"
                 data-size="large"
-                data-logo_alignment="right">
+                data-logo_alignment="left"
+                data-width="300">
             </div>
         </div>
 
-        
-        <div class="login-extras">
-            <a href="forgot-pwd.php"><i class="fas fa-key me-1"></i> Forgot Password?</a>
-            <a href="signup.php"><i class="fas fa-user-plus me-1"></i> Create Account</a>
+        <div class="login-footer">
+            <a href="forgot-pwd.php"><i class="fas fa-key"></i> Forgot Password?</a>
+            <a href="signup.php"><i class="fas fa-user-plus"></i> Create Account</a>
         </div>
     </form>
 </div>
@@ -244,27 +337,24 @@ document.getElementById('togglePassword').addEventListener('click', function () 
 
 function handleCredentialResponse(response) {
     const idToken = response.credential;
-
-    // Send the ID token to your server via POST
+    
     fetch('php/google_auth_handler.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'credential=' + encodeURIComponent(idToken)
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'credential=' + encodeURIComponent(idToken)
     })
-    .then(res => {
-        if (res.redirected) {
-            window.location.href = res.url; // Redirect to question or index page
-        } else {
-            return res.text(); // For debugging or error display
-        }
+    .then(response => {
+      if (response.redirected) {
+        window.location.href = response.url;
+      } else {
+        return response.text();
+      }
     })
-    .catch(err => {
-        console.error('Login error:', err);
-        alert('Login failed. Please try again.');
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Sign up failed. Please try again.');
     });
-}
-</script>
-
+  }
 </script>
 </body>
 </html>

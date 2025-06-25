@@ -208,7 +208,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         sendJsonResponse([
             'success' => true,
-            'redirect' => '../../paywall/paywall.php',
+            'redirect' => './paywall.php',
             'user_id' => $user_id
         ]);
 
