@@ -2,42 +2,61 @@
 session_start();
 require_once '../includes/auth.php';
 
-// Check if user is authenticated and has appropriate permissions
-if (!isLoggedIn() || (!isAdmin() && !isTherapist())) {
+if (!isLoggedIn() || getUserRole() !== 'admin') {
     header('Location: ../index.php');
     exit();
 }
 
-$user_role = getUserRole();
-$user_id = $_SESSION['user_id'];
-
-// Handle therapist actions (admin only)
-if ($_POST && isAdmin()) {
-    $action = $_POST['action'] ?? '';
-    $therapist_id = $_POST['therapist_id'] ?? '';
-    
-    switch ($action) {
-        case 'approve':
-            if (approveTherapist($therapist_id)) {
-                $message = "Therapist approved successfully.";
-                logActivity($user_id, 'therapist_approve', "Approved therapist ID: $therapist_id");
-            } else {
-                $error = "Failed to approve therapist.";
-            }
-            break;
-        case 'reject':
-            if (rejectTherapist($therapist_id)) {
-                $message = "Therapist application rejected.";
-                logActivity($user_id, 'therapist_reject', "Rejected therapist ID: $therapist_id");
-            } else {
-                $error = "Failed to reject therapist.";
-            }
-            break;
-    }
-}
-
-// Get therapists based on role
-$therapists = getTherapistsData($user_role, $user_id);
+$therapists = [
+    [
+        'id' => 1,
+        'name' => 'Dr. Sarah Johnson',
+        'email' => 'sarah.johnson@luna.com',
+        'phone' => '+1 (555) 123-4567',
+        'specialization' => 'Cognitive Behavioral Therapy, Anxiety Disorders',
+        'license' => 'LPC-12345',
+        'experience' => '8 years',
+        'patients_count' => 28,
+        'sessions_count' => 156,
+        'rating' => 4.9,
+        'status' => 'active',
+        'joined_date' => '2023-01-15',
+        'education' => 'PhD Psychology - Stanford University',
+        'certifications' => 'CBT Certified, EMDR Level 2'
+    ],
+    [
+        'id' => 2,
+        'name' => 'Dr. Michael Wilson',
+        'email' => 'michael.wilson@luna.com',
+        'phone' => '+1 (555) 234-5678',
+        'specialization' => 'PTSD, Trauma Therapy, Veterans Care',
+        'license' => 'LPC-23456',
+        'experience' => '12 years',
+        'patients_count' => 32,
+        'sessions_count' => 203,
+        'rating' => 4.8,
+        'status' => 'active',
+        'joined_date' => '2023-02-20',
+        'education' => 'PsyD Clinical Psychology - UCLA',
+        'certifications' => 'PTSD Specialist, Trauma-Informed Care'
+    ],
+    [
+        'id' => 3,
+        'name' => 'Dr. Lisa Anderson',
+        'email' => 'lisa.anderson@luna.com',
+        'phone' => '+1 (555) 345-6789',
+        'specialization' => 'Family Therapy, Couples Counseling',
+        'license' => 'LMFT-34567',
+        'experience' => '10 years',
+        'patients_count' => 24,
+        'sessions_count' => 142,
+        'rating' => 4.7,
+        'status' => 'active',
+        'joined_date' => '2023-03-10',
+        'education' => 'MA Marriage & Family Therapy - USC',
+        'certifications' => 'Gottman Method, EFT Certified'
+    ]
+];
 ?>
 
 <!DOCTYPE html>
@@ -47,210 +66,258 @@ $therapists = getTherapistsData($user_role, $user_id);
     <?php include '../templates/sidebar.php'; ?>
     
     <div class="main-content">
-        <?php include '../templates/toolbar.php'; ?>
-
-        <div class="dashboard-content">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2>
-                    <?php echo isAdmin() ? 'Therapist Management' : 'Therapist Directory'; ?>
-                </h2>
-                <?php if (isAdmin()): ?>
-                    <button class="btn btn-outline-custom" onclick="exportTherapists()">
-                        <i class="fas fa-download me-2"></i>Export Report
-                    </button>
-                <?php endif; ?>
+        <div class="top-bar">
+            <div class="page-info d-flex align-items-center">
+                <button class="btn me-3" id="sidebarToggle" style="background: var(--luna-primary); color: white; border-radius: 8px;">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div>
+                    <h1 class="page-title">Therapist Management</h1>
+                    <p class="page-subtitle">Manage professional staff and credentials</p>
+                </div>
             </div>
-
-            <?php if (isset($message)): ?>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <?php echo $message; ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            <?php endif; ?>
-
-            <?php if (isset($error)): ?>
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <?php echo $error; ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            <?php endif; ?>
-
-            <!-- Therapist Statistics -->
-            <?php if (isAdmin()): ?>
+            <div class="top-bar-actions">
+                <button class="btn btn-luna-primary" data-bs-toggle="modal" data-bs-target="#addTherapistModal">
+                    <i class="fas fa-user-md me-2"></i>Add Therapist
+                </button>
+            </div>
+        </div>
+        
+        <div class="container-fluid p-4">
+            <!-- Statistics -->
             <div class="row mb-4">
-                <div class="col-lg-3 col-md-6 mb-3">
-                    <div class="card stat-card">
-                        <div class="stat-icon" style="background: rgba(76, 175, 80, 0.1); color: #4CAF50;">
-                            <i class="fas fa-user-check"></i>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="stat-card">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p class="stat-label">Total Therapists</p>
+                                <h3 class="stat-number"><?php echo count($therapists); ?></h3>
+                                <span class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i> +2 this month
+                                </span>
+                            </div>
+                            <div class="stat-icon icon-success">
+                                <i class="fas fa-user-md"></i>
+                            </div>
                         </div>
-                        <div class="stat-number"><?php echo count(array_filter($therapists, fn($t) => $t['status'] === 'approved')); ?></div>
-                        <div class="stat-label">Active Therapists</div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 mb-3">
-                    <div class="card stat-card">
-                        <div class="stat-icon" style="background: rgba(255, 152, 0, 0.1); color: #FF9800;">
-                            <i class="fas fa-clock"></i>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="stat-card">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p class="stat-label">Active Therapists</p>
+                                <h3 class="stat-number"><?php echo count(array_filter($therapists, fn($t) => $t['status'] === 'active')); ?></h3>
+                                <span class="stat-change positive">
+                                    <i class="fas fa-check-circle"></i> All active
+                                </span>
+                            </div>
+                            <div class="stat-icon icon-primary">
+                                <i class="fas fa-heartbeat"></i>
+                            </div>
                         </div>
-                        <div class="stat-number"><?php echo count(array_filter($therapists, fn($t) => $t['status'] === 'pending')); ?></div>
-                        <div class="stat-label">Pending Applications</div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 mb-3">
-                    <div class="card stat-card">
-                        <div class="stat-icon" style="background: rgba(33, 150, 243, 0.1); color: #2196F3;">
-                            <i class="fas fa-calendar-check"></i>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="stat-card">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p class="stat-label">Total Patients</p>
+                                <h3 class="stat-number"><?php echo array_sum(array_column($therapists, 'patients_count')); ?></h3>
+                                <span class="stat-change positive">
+                                    <i class="fas fa-users"></i> Under care
+                                </span>
+                            </div>
+                            <div class="stat-icon icon-warning">
+                                <i class="fas fa-users"></i>
+                            </div>
                         </div>
-                        <div class="stat-number">156</div>
-                        <div class="stat-label">Total Sessions</div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 mb-3">
-                    <div class="card stat-card">
-                        <div class="stat-icon" style="background: rgba(168, 195, 164, 0.1); color: #A8C3A4;">
-                            <i class="fas fa-star"></i>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="stat-card">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p class="stat-label">Avg Rating</p>
+                                <h3 class="stat-number"><?php echo round(array_sum(array_column($therapists, 'rating')) / count($therapists), 1); ?></h3>
+                                <span class="stat-change positive">
+                                    <i class="fas fa-star"></i> Excellent
+                                </span>
+                            </div>
+                            <div class="stat-icon icon-warning">
+                                <i class="fas fa-star"></i>
+                            </div>
                         </div>
-                        <div class="stat-number">4.8</div>
-                        <div class="stat-label">Average Rating</div>
                     </div>
                 </div>
             </div>
-            <?php endif; ?>
 
             <!-- Therapists Grid -->
             <div class="row">
-                <?php if (empty($therapists)): ?>
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body text-center">
-                                <i class="fas fa-user-md fa-3x text-muted mb-3"></i>
-                                <h5>No therapists found</h5>
-                                <p class="text-muted">No therapist records are available at this time.</p>
+                <?php foreach ($therapists as $therapist): ?>
+                <div class="col-lg-6 col-xl-4 mb-4">
+                    <div class="stat-card therapist-card">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="user-avatar me-3" style="width: 60px; height: 60px; font-size: 1.5rem;">
+                                    <?php echo strtoupper(substr($therapist['name'], 0, 1)); ?>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0"><?php echo htmlspecialchars($therapist['name']); ?></h6>
+                                    <small class="text-muted"><?php echo $therapist['license']; ?></small>
+                                    <div class="text-warning small">
+                                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                                            <i class="fas fa-star<?php echo $i <= $therapist['rating'] ? '' : '-o'; ?>"></i>
+                                        <?php endfor; ?>
+                                        <span class="ms-1"><?php echo $therapist['rating']; ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="badge bg-success">Active</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="small text-muted mb-1">Specialization</div>
+                            <div class="fw-semibold"><?php echo htmlspecialchars($therapist['specialization']); ?></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="small text-muted mb-1">Education</div>
+                            <div class="small"><?php echo htmlspecialchars($therapist['education']); ?></div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-4">
+                                <div class="small text-muted">Patients</div>
+                                <div class="fw-bold text-primary"><?php echo $therapist['patients_count']; ?></div>
+                            </div>
+                            <div class="col-4">
+                                <div class="small text-muted">Sessions</div>
+                                <div class="fw-bold text-success"><?php echo $therapist['sessions_count']; ?></div>
+                            </div>
+                            <div class="col-4">
+                                <div class="small text-muted">Experience</div>
+                                <div class="fw-bold text-warning"><?php echo $therapist['experience']; ?></div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="small text-muted mb-1">Certifications</div>
+                            <div class="small"><?php echo htmlspecialchars($therapist['certifications']); ?></div>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-primary flex-fill" onclick="viewTherapist(<?php echo $therapist['id']; ?>)">
+                                <i class="fas fa-eye me-1"></i>View
+                            </button>
+                            <button class="btn btn-sm btn-outline-success flex-fill" onclick="editTherapist(<?php echo $therapist['id']; ?>)">
+                                <i class="fas fa-edit me-1"></i>Edit
+                            </button>
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#"><i class="fas fa-users me-2"></i>View Patients</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="fas fa-calendar me-2"></i>Schedule</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="fas fa-chart-bar me-2"></i>Performance</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-warning" href="#"><i class="fas fa-pause me-2"></i>Suspend</a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                <?php else: ?>
-                    <?php foreach ($therapists as $therapist): ?>
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center mb-3">
-                                    <div class="user-avatar-small bg-info text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
-                                        <?php echo strtoupper(substr($therapist['full_name'] ?? 'T', 0, 1)); ?>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <h6 class="mb-1"><?php echo htmlspecialchars($therapist['full_name'] ?? 'No Name'); ?></h6>
-                                        <small class="text-muted"><?php echo htmlspecialchars($therapist['email']); ?></small>
-                                    </div>
-                                    <span class="badge bg-<?php echo $therapist['status'] === 'approved' ? 'success' : ($therapist['status'] === 'pending' ? 'warning' : 'danger'); ?>">
-                                        <?php echo ucfirst($therapist['status'] ?? 'Unknown'); ?>
-                                    </span>
-                                </div>
-                                
-                                <div class="therapist-details">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <small class="text-muted">Specialization</small>
-                                            <p class="mb-2"><?php echo htmlspecialchars($therapist['specialization'] ?? 'Not specified'); ?></p>
-                                        </div>
-                                        <div class="col-6">
-                                            <small class="text-muted">Experience</small>
-                                            <p class="mb-2"><?php echo htmlspecialchars($therapist['experience_years'] ?? 'Not specified'); ?> years</p>
-                                        </div>
-                                        <div class="col-6">
-                                            <small class="text-muted">License</small>
-                                            <p class="mb-2"><?php echo htmlspecialchars($therapist['license_number'] ?? 'Not provided'); ?></p>
-                                        </div>
-                                        <div class="col-6">
-                                            <small class="text-muted">Patients</small>
-                                            <p class="mb-2"><?php echo $therapist['patient_count'] ?? 0; ?></p>
-                                        </div>
-                                    </div>
-                                    
-                                    <?php if (!empty($therapist['bio'])): ?>
-                                    <div class="mt-2">
-                                        <small class="text-muted">Bio</small>
-                                        <p class="small"><?php echo htmlspecialchars(substr($therapist['bio'], 0, 100)) . (strlen($therapist['bio']) > 100 ? '...' : ''); ?></p>
-                                    </div>
-                                    <?php endif; ?>
-                                </div>
-                                
-                                <div class="mt-3">
-                                    <?php if (isAdmin()): ?>
-                                        <?php if ($therapist['status'] === 'pending'): ?>
-                                            <button class="btn btn-sm btn-success-custom me-2" onclick="approveTherapist(<?php echo $therapist['id']; ?>)">
-                                                Approve
-                                            </button>
-                                            <button class="btn btn-sm btn-danger-custom" onclick="rejectTherapist(<?php echo $therapist['id']; ?>)">
-                                                Reject
-                                            </button>
-                                        <?php else: ?>
-                                            <button class="btn btn-sm btn-outline-primary" onclick="viewTherapistDetails(<?php echo $therapist['id']; ?>)">
-                                                View Details
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-secondary ms-2" onclick="contactTherapist('<?php echo $therapist['email']; ?>')">
-                                                Contact
-                                            </button>
-                                        <?php endif; ?>
-                                    <?php else: ?>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="viewTherapistProfile(<?php echo $therapist['id']; ?>)">
-                                            View Profile
-                                        </button>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+                </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
 
+    <!-- Add Therapist Modal -->
+    <div class="modal fade" id="addTherapistModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Therapist</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addTherapistForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Full Name *</label>
+                                <input type="text" class="form-control" name="name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Email *</label>
+                                <input type="email" class="form-control" name="email" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Phone</label>
+                                <input type="tel" class="form-control" name="phone">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">License Number *</label>
+                                <input type="text" class="form-control" name="license" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Specialization *</label>
+                            <textarea class="form-control" name="specialization" rows="2" required></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Education</label>
+                                <input type="text" class="form-control" name="education">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Years of Experience</label>
+                                <input type="number" class="form-control" name="experience" min="0">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Certifications</label>
+                            <textarea class="form-control" name="certifications" rows="2"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-luna-primary" onclick="submitTherapist()">Add Therapist</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <?php include '../templates/footer.php'; ?>
+    <script src="../assets/js/simple-luna.js"></script>
+    
     <script>
-        function approveTherapist(therapistId) {
-            if (confirm('Are you sure you want to approve this therapist?')) {
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.innerHTML = `
-                    <input type="hidden" name="action" value="approve">
-                    <input type="hidden" name="therapist_id" value="${therapistId}">
-                `;
-                document.body.appendChild(form);
-                form.submit();
-            }
+        function viewTherapist(id) {
+            showToast(`Viewing therapist profile ${id}`, 'info');
         }
 
-        function rejectTherapist(therapistId) {
-            if (confirm('Are you sure you want to reject this therapist application?')) {
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.innerHTML = `
-                    <input type="hidden" name="action" value="reject">
-                    <input type="hidden" name="therapist_id" value="${therapistId}">
-                `;
-                document.body.appendChild(form);
-                form.submit();
-            }
+        function editTherapist(id) {
+            showToast(`Editing therapist ${id}`, 'info');
         }
 
-        function viewTherapistDetails(therapistId) {
-            window.location.href = `therapist-details.php?id=${therapistId}`;
-        }
-
-        function viewTherapistProfile(therapistId) {
-            window.location.href = `therapist-profile.php?id=${therapistId}`;
-        }
-
-        function contactTherapist(email) {
-            window.location.href = 'mailto:' + email;
-        }
-
-        function exportTherapists() {
-            window.location.href = 'export-therapists.php';
+        function submitTherapist() {
+            showToast('Therapist added successfully!', 'success');
+            bootstrap.Modal.getInstance(document.getElementById('addTherapistModal')).hide();
         }
     </script>
 
-    <?php include '../templates/footer.php'; ?>
+    <style>
+        .therapist-card {
+            transition: all 0.3s ease;
+        }
+        
+        .therapist-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+    </style>
 </body>
 </html>
