@@ -1,6 +1,6 @@
 <?php
 // Include database connection
-require_once '../config/db.php';
+require_once __DIR__ . '/../../config/db.php';
 
 // Check if user is logged in
 function isLoggedIn() {

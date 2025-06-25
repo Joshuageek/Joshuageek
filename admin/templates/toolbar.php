@@ -8,9 +8,9 @@ $greeting = $hour < 12 ? 'Good morning' : ($hour < 17 ? 'Good afternoon' : 'Good
 
 <!-- Professional Top Bar -->
 <div class="top-bar">
-    <div class="page-info">
-        <!-- Replace the existing mobile button with this -->
-        <button class="btn d-md-none me-3" id="sidebarToggle" style="background: var(--luna-primary); color: white;">
+    <div class="page-info d-flex align-items-center">
+        <!-- Toggle button positioned to the left of greeting -->
+        <button class="btn me-3" id="sidebarToggle" style="background: var(--luna-primary); color: white; border-radius: 8px;">
             <i class="fas fa-bars"></i>
         </button>
         <div>
@@ -30,7 +30,7 @@ $greeting = $hour < 12 ? 'Good morning' : ($hour < 17 ? 'Good afternoon' : 'Good
 
     <div class="top-bar-actions">
         <!-- Search -->
-        <div class="search-box d-none d-lg-block">
+        <div class="search-box d-none d-xl-block">
             <i class="fas fa-search"></i>
             <input type="text" placeholder="Search patients, sessions, notes..." id="globalSearch">
         </div>

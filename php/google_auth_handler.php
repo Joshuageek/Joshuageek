@@ -1,10 +1,10 @@
 <?php
+session_start();
 require_once '../vendor/autoload.php';
 require_once '../config/db.php'; // adjust path to your DB connection
 require_once '../php/functions.php'; // contains email_exists(), has_completed_questionnaire()
 $config = include 'config.php';
 
-session_start();
 
 // Ensure the Google ID token is posted
 if (!isset($_POST['credential'])) {
@@ -64,7 +64,7 @@ if ($payload) {
 
         // Redirect based on whether they completed the questionnaire
         $uid = $_SESSION['user_id'];
-        if (!has_completed_questionnaire($user['id']) && $user_role == 'patient') {
+        if ($user_role == 'patient' && !has_completed_questionnaire($user['id'])) {
             header("Location: ../question.php");
         } else {
             header("Location: ../admin/");

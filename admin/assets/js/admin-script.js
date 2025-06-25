@@ -5,20 +5,75 @@ document.addEventListener("DOMContentLoaded", () => {
   const sidebar = document.getElementById("sidebar");
   const sidebarOverlay = document.getElementById("sidebarOverlay");
 
-  // Toggle sidebar function
+  // Enhanced sidebar toggle for both mobile and desktop
   function toggleSidebar() {
     if (sidebar && sidebarOverlay) {
       const isOpen = sidebar.classList.contains("show");
+      const mainContent = document.querySelector(".main-content");
 
-      if (isOpen) {
-        sidebar.classList.remove("show");
-        sidebarOverlay.classList.remove("show");
-        document.body.style.overflow = "";
+      if (window.innerWidth <= 991) {
+        // Mobile behavior
+        if (isOpen) {
+          sidebar.classList.remove("show");
+          sidebarOverlay.classList.remove("show");
+          document.body.style.overflow = "";
+        } else {
+          sidebar.classList.add("show");
+          sidebarOverlay.classList.add("show");
+          document.body.style.overflow = "hidden";
+        }
       } else {
-        sidebar.classList.add("show");
-        sidebarOverlay.classList.add("show");
-        document.body.style.overflow = "hidden";
+        // Desktop behavior
+        const isDesktopHidden = sidebar.classList.contains("desktop-hidden");
+
+        if (isDesktopHidden) {
+          // Show sidebar
+          sidebar.classList.remove("desktop-hidden");
+          if (mainContent) {
+            mainContent.classList.remove("sidebar-hidden");
+          }
+        } else {
+          // Hide sidebar
+          sidebar.classList.add("desktop-hidden");
+          if (mainContent) {
+            mainContent.classList.add("sidebar-hidden");
+          }
+        }
       }
+    }
+  }
+
+  // ENHANCED resize handler to properly clean up states
+  function handleResize() {
+    const mainContent = document.querySelector(".main-content");
+
+    if (window.innerWidth > 991 && sidebar) {
+      // Desktop: Clean up ALL mobile classes and states
+      sidebar.classList.remove("show");
+      sidebarOverlay.classList.remove("show");
+      document.body.style.overflow = "";
+
+      // Reset to default desktop state (sidebar visible)
+      sidebar.classList.remove("desktop-hidden");
+      if (mainContent) {
+        mainContent.classList.remove("sidebar-hidden");
+        mainContent.style.marginLeft = ""; // Reset inline styles
+      }
+
+      console.log("Switched to desktop mode - sidebar reset");
+    } else if (window.innerWidth <= 991 && sidebar) {
+      // Mobile: Clean up ALL desktop classes and force mobile state
+      sidebar.classList.remove("desktop-hidden");
+      sidebar.classList.remove("show"); // Start hidden on mobile
+      sidebarOverlay.classList.remove("show");
+      document.body.style.overflow = "";
+
+      if (mainContent) {
+        mainContent.classList.remove("sidebar-hidden");
+        mainContent.style.marginLeft = "0"; // Force mobile margin
+      }
+
+      console.log("Switched to mobile mode - sidebar hidden");
     }
   }
 
@@ -32,14 +87,15 @@ document.addEventListener("DOMContentLoaded", () => {
     sidebarOverlay.addEventListener("click", toggleSidebar);
   }
 
-  // Close sidebar on window resize if desktop
+  // Enhanced resize handler with debounce
+  let resizeTimeout;
   window.addEventListener("resize", () => {
-    if (window.innerWidth > 768 && sidebar) {
-      sidebar.classList.remove("show");
-      sidebarOverlay.classList.remove("show");
-      document.body.style.overflow = "";
-    }
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(handleResize, 100); // Debounce resize events
   });
+
+  // Initial setup on page load
+  handleResize();
 
   // Simple search with debounce
   const searchInput = document.getElementById("globalSearch");
@@ -63,6 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const tooltipTriggerList = [].slice.call(
     document.querySelectorAll('[data-bs-toggle="tooltip"]')
   );
+  const bootstrap = window.bootstrap;
   tooltipTriggerList.map(
     (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
   );
@@ -96,7 +153,11 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("keydown", (e) => {
     // Escape to close sidebar
     if (e.key === "Escape") {
-      if (sidebar && sidebar.classList.contains("show")) {
+      if (
+        sidebar &&
+        (sidebar.classList.contains("show") ||
+          !sidebar.classList.contains("desktop-hidden"))
+      ) {
         toggleSidebar();
       }
     }
