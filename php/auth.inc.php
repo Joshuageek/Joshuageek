@@ -77,7 +77,7 @@ require_once '../php/functions.php';
 
                 $_SESSION['user_role'] = 'admin';
 
-                header("Location: ../admin-dashboard.php");
+                header("Location: ../admin/");
             }
             exit();
         } catch (PDOException $e) {
@@ -137,14 +137,10 @@ require_once '../php/functions.php';
                 if (!has_completed_questionnaire($user['id']) && get_user_role($user['id']) == 'patient') {
                     header("Location: ../question.php");
                     exit();
-                } elseif(get_user_role($user['id']) == 'therapist'){
-                    header('Location: ../therapist-dashboard.php');
-                    exit();
                 } else {
-                    header("Location: ../admin-dashboard.php");
+                    header("Location: ../admin/");
                     exit();
                 }
-                exit();
             } else {
                 $_SESSION['error'] = 'Incorrect password.';
                 header("Location: ../login.php");
@@ -382,7 +378,7 @@ require_once '../php/functions.php';
             header("Location: ../question.php");
             exit();
         } else {
-            header('Location: ../therapist-dashboard.php');
+            header('Location: ../admin/');
         }
         exit();
         } catch (PDOException $e) {

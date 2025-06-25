@@ -614,15 +614,15 @@
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header border-0">
-                                        <h5 class="modal-title">Service Selected</h5>
+                                        <h5 class="modal-title fw-bold">Service Selected</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <p>You've selected our ${serviceType} service. You will now be redirected to complete your registration and schedule your first session.</p>
+                                        <p>You've selected our <b class="text-success">${serviceType}</b> service. You will now be redirected to your <b>admin account</b> for your first session.</p>
                                     </div>
                                     <div class="modal-footer border-0">
                                         <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-sm btn-primary">Continue to Registration</button>
+                                        <a href="./admin/" type="button" class="btn btn-sm btn-primary">Continue to Admin Account</a>
                                     </div>
                                 </div>
                             </div>

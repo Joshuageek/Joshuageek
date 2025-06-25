@@ -62,12 +62,13 @@
 }
 
 
-    function admin_email($email) {
-        
-        $admin_email = [
-            'admin@gmail.com',
-            'superadmin@gmail.com'
-        ];
-
-        return in_array($email, $admin_email);
-    }
+    function admin_email(string $email): bool {
+    // Define admin emails (consider moving to config file in production)
+    $admin_emails = [
+        'admin@gmail.com',
+        'superadmin@gmail.com'
+    ];
+    
+    // Case-insensitive comparison
+    return in_array(strtolower($email), array_map('strtolower', $admin_emails));
+}

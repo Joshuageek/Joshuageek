@@ -1,181 +1,203 @@
 <?php
 $current_page = basename($_SERVER['PHP_SELF']);
 $user_role = getUserRole();
+$user_name = $_SESSION['user_name'] ?? 'User';
+$user_email = $_SESSION['user_email'] ?? 'user@example.com';
 ?>
 
-<!-- Sidebar -->
-<nav class="sidebar" id="sidebar">
+<!-- Professional Sidebar -->
+<div class="sidebar" id="sidebar">
+    <!-- Sidebar Header -->
     <div class="sidebar-header">
-        <a href="index.php" class="logo">
+        <div class="logo-container">
             <div class="logo-icon">
-                <i class="fas fa-shield-alt"></i>
+                <i class="fas fa-moon text-white"></i>
             </div>
             <div>
-                <span class="logo-text">Luna</span>
-                <span class="admin-badge"><?php echo strtoupper($user_role); ?></span>
+                <h4 class="logo-text">Luna</h4>
+                <p class="logo-subtitle">Mental Wellness</p>
             </div>
+        </div>
+    </div>
+    
+    <!-- User Profile -->
+    <div class="user-profile">
+        <div class="d-flex align-items-center">
+            <div class="user-avatar">
+                <?php echo strtoupper(substr($user_name, 0, 1)); ?>
+            </div>
+            <div class="user-info flex-grow-1 ms-3">
+                <h6><?php echo htmlspecialchars($user_name); ?></h6>
+                <small><?php echo ucfirst($user_role); ?> Account</small>
+            </div>
+            <div class="status-indicator"></div>
+        </div>
+    </div>
+    
+    <!-- Main Navigation -->
+    <div class="nav-section">
+        <div class="nav-section-title">Main</div>
+        <a href="index.php" class="nav-link <?php echo $current_page === 'index.php' ? 'active' : ''; ?>">
+            <i class="fas fa-chart-pie"></i>
+            Dashboard
+        </a>
+        <a href="calendar.php" class="nav-link <?php echo $current_page === 'calendar.php' ? 'active' : ''; ?>">
+            <i class="fas fa-calendar-alt"></i>
+            Calendar
+        </a>
+        <a href="messages.php" class="nav-link <?php echo $current_page === 'messages.php' ? 'active' : ''; ?>">
+            <i class="fas fa-comments"></i>
+            Messages
+            <span class="nav-badge">3</span>
+        </a>
+        <a href="notifications.php" class="nav-link <?php echo $current_page === 'notifications.php' ? 'active' : ''; ?>">
+            <i class="fas fa-bell"></i>
+            Notifications
+            <span class="nav-badge">5</span>
+        </a>
+    </div>
+
+    <?php if ($user_role === 'admin'): ?>
+    <!-- Admin Section -->
+    <div class="nav-section">
+        <div class="nav-section-title">Administration</div>
+        <a href="sections/users.php" class="nav-link">
+            <i class="fas fa-users"></i>
+            User Management
+        </a>
+        <a href="sections/therapists.php" class="nav-link">
+            <i class="fas fa-user-md"></i>
+            Therapists
+        </a>
+        <a href="sections/patients.php" class="nav-link">
+            <i class="fas fa-user-friends"></i>
+            Patients
+        </a>
+        <a href="sections/reports.php" class="nav-link">
+            <i class="fas fa-chart-bar"></i>
+            Analytics & Reports
+        </a>
+        <a href="sections/billing.php" class="nav-link">
+            <i class="fas fa-credit-card"></i>
+            Billing & Payments
+        </a>
+        <a href="sections/settings.php" class="nav-link">
+            <i class="fas fa-cog"></i>
+            System Settings
         </a>
     </div>
     
-    <ul class="nav-menu">
-        <li class="nav-item">
-            <a href="index.php" class="nav-link <?php echo $current_page === 'index.php' ? 'active' : ''; ?>">
-                <i class="fas fa-tachometer-alt"></i>
-                <span>Dashboard</span>
-            </a>
-        </li>
-        
-        <?php if ($user_role === 'admin'): ?>
-            <!-- User Management Section -->
-            <li class="nav-item">
-                <a href="sections/all-users.php" class="nav-link">
-                    <i class="fas fa-users"></i>
-                    <span>All Users</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="sections/therapists.php" class="nav-link">
-                    <i class="fas fa-user-md"></i>
-                    <span>Therapists</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="sections/patients.php" class="nav-link">
-                    <i class="fas fa-user-injured"></i>
-                    <span>Patients</span>
-                </a>
-            </li>
-            
-            <!-- Booking & Session Management -->
-            <li class="nav-item">
-                <a href="sections/bookings.php" class="nav-link">
-                    <i class="fas fa-calendar"></i>
-                    <span>All Bookings</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="sections/sessions.php" class="nav-link">
-                    <i class="fas fa-video"></i>
-                    <span>Sessions</span>
-                </a>
-            </li>
-            
-            <!-- Assessment & Reports -->
-            <li class="nav-item">
-                <a href="sections/questionnaires.php" class="nav-link">
-                    <i class="fas fa-clipboard-list"></i>
-                    <span>Questionnaires</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="sections/reports.php" class="nav-link">
-                    <i class="fas fa-chart-bar"></i>
-                    <span>Reports & Analytics</span>
-                </a>
-            </li>
-            
-            <!-- System Management -->
-            <li class="nav-item">
-                <a href="sections/activity-logs.php" class="nav-link">
-                    <i class="fas fa-history"></i>
-                    <span>Activity Logs</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="sections/settings.php" class="nav-link">
-                    <i class="fas fa-cog"></i>
-                    <span>System Settings</span>
-                </a>
-            </li>
-            
-        <?php elseif ($user_role === 'therapist'): ?>
-            <li class="nav-item">
-                <a href="sections/my-patients.php" class="nav-link">
-                    <i class="fas fa-users"></i>
-                    <span>My Patients</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="sections/appointments.php" class="nav-link">
-                    <i class="fas fa-calendar"></i>
-                    <span>Appointments</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="sections/sessions.php" class="nav-link">
-                    <i class="fas fa-video"></i>
-                    <span>My Sessions</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="sections/patient-assessments.php" class="nav-link">
-                    <i class="fas fa-clipboard-list"></i>
-                    <span>Patient Assessments</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="sections/treatment-plans.php" class="nav-link">
-                    <i class="fas fa-file-medical"></i>
-                    <span>Treatment Plans</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="sections/notes.php" class="nav-link">
-                    <i class="fas fa-sticky-note"></i>
-                    <span>Session Notes</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="sections/profile.php" class="nav-link">
-                    <i class="fas fa-user"></i>
-                    <span>My Profile</span>
-                </a>
-            </li>
-            
-        <?php else: // patient ?>
-            <li class="nav-item">
-                <a href="sections/my-appointments.php" class="nav-link">
-                    <i class="fas fa-calendar"></i>
-                    <span>My Appointments</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="sections/my-sessions.php" class="nav-link">
-                    <i class="fas fa-video"></i>
-                    <span>My Sessions</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="sections/my-assessments.php" class="nav-link">
-                    <i class="fas fa-clipboard-list"></i>
-                    <span>My Assessments</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="sections/my-progress.php" class="nav-link">
-                    <i class="fas fa-chart-line"></i>
-                    <span>My Progress</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="sections/resources.php" class="nav-link">
-                    <i class="fas fa-book"></i>
-                    <span>Resources</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="sections/profile.php" class="nav-link">
-                    <i class="fas fa-user"></i>
-                    <span>My Profile</span>
-                </a>
-            </li>
-        <?php endif; ?>
-        
-        <li class="nav-item mt-auto">
-            <a href="../logout.php" class="nav-link">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-            </a>
-        </li>
-    </ul>
-</nav>
+    <?php elseif ($user_role === 'therapist'): ?>
+    <!-- Therapist Section -->
+    <div class="nav-section">
+        <div class="nav-section-title">Practice Management</div>
+        <a href="sections/my-patients.php" class="nav-link">
+            <i class="fas fa-user-friends"></i>
+            My Patients
+        </a>
+        <a href="sections/appointments.php" class="nav-link">
+            <i class="fas fa-calendar-check"></i>
+            Appointments
+        </a>
+        <a href="sections/sessions.php" class="nav-link">
+            <i class="fas fa-video"></i>
+            Session Management
+        </a>
+        <a href="sections/notes.php" class="nav-link">
+            <i class="fas fa-sticky-note"></i>
+            Session Notes
+        </a>
+        <a href="sections/assessments.php" class="nav-link">
+            <i class="fas fa-clipboard-check"></i>
+            Assessments
+        </a>
+        <a href="sections/treatment-plans.php" class="nav-link">
+            <i class="fas fa-route"></i>
+            Treatment Plans
+        </a>
+    </div>
+    
+    <div class="nav-section">
+        <div class="nav-section-title">Resources</div>
+        <a href="sections/resources.php" class="nav-link">
+            <i class="fas fa-book-open"></i>
+            Treatment Resources
+        </a>
+        <a href="sections/continuing-education.php" class="nav-link">
+            <i class="fas fa-graduation-cap"></i>
+            Continuing Education
+        </a>
+    </div>
+    
+    <?php else: // patient ?>
+    <!-- Patient Section -->
+    <div class="nav-section">
+        <div class="nav-section-title">My Wellness Journey</div>
+        <a href="sections/my-sessions.php" class="nav-link">
+            <i class="fas fa-heart"></i>
+            My Sessions
+        </a>
+        <a href="sections/progress.php" class="nav-link">
+            <i class="fas fa-chart-line"></i>
+            Progress Tracking
+        </a>
+        <a href="sections/mood-tracker.php" class="nav-link">
+            <i class="fas fa-smile"></i>
+            Mood Tracker
+        </a>
+        <a href="sections/goals.php" class="nav-link">
+            <i class="fas fa-bullseye"></i>
+            My Goals
+        </a>
+        <a href="sections/journal.php" class="nav-link">
+            <i class="fas fa-book"></i>
+            Personal Journal
+        </a>
+    </div>
+    
+    <div class="nav-section">
+        <div class="nav-section-title">Wellness Tools</div>
+        <a href="sections/meditation.php" class="nav-link">
+            <i class="fas fa-spa"></i>
+            Meditation & Mindfulness
+        </a>
+        <a href="sections/exercises.php" class="nav-link">
+            <i class="fas fa-dumbbell"></i>
+            Wellness Exercises
+        </a>
+        <a href="sections/resources.php" class="nav-link">
+            <i class="fas fa-book-open"></i>
+            Educational Resources
+        </a>
+        <a href="sections/crisis-support.php" class="nav-link">
+            <i class="fas fa-phone-alt"></i>
+            Crisis Support
+        </a>
+    </div>
+    <?php endif; ?>
+
+    <!-- Account Section -->
+    <div class="nav-section">
+        <div class="nav-section-title">Account</div>
+        <a href="profile.php" class="nav-link">
+            <i class="fas fa-user"></i>
+            My Profile
+        </a>
+        <a href="settings.php" class="nav-link">
+            <i class="fas fa-cog"></i>
+            Settings
+        </a>
+        <a href="help.php" class="nav-link">
+            <i class="fas fa-question-circle"></i>
+            Help & Support
+        </a>
+        <a href="../logout.php" class="nav-link" style="color: #ef4444;">
+            <i class="fas fa-sign-out-alt"></i>
+            Sign Out
+        </a>
+    </div>
+</div>
+
+<!-- Mobile Overlay -->
+<div class="sidebar-overlay d-md-none" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>

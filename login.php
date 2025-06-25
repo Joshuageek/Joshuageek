@@ -336,43 +336,25 @@ document.getElementById('togglePassword').addEventListener('click', function () 
 });
 
 function handleCredentialResponse(response) {
-    console.log("Google auth response received", response);
-    
-    if (!response.credential) {
-        console.error("No credential received from Google");
-        return;
-    }
-
     const idToken = response.credential;
     
     fetch('php/google_auth_handler.php', {
-        method: 'POST',
-        headers: { 
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: 'credential=' + encodeURIComponent(idToken)
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'credential=' + encodeURIComponent(idToken)
     })
     .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.redirect) {
-            window.location.href = data.redirect;
-        } else {
-            console.log("Login successful", data);
-            // Handle successful login without redirect
-            window.location.reload();
-        }
+      if (response.redirected) {
+        window.location.href = response.url;
+      } else {
+        return response.text();
+      }
     })
     .catch(error => {
-        console.error('Login error:', error);
-        alert('Login failed. Please try again.');
+      console.error('Error:', error);
+      alert('Sign up failed. Please try again.');
     });
-}
+  }
 </script>
 </body>
 </html>
