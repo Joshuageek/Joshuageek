@@ -1,9 +1,10 @@
 <?php
 session_start();
-// require_once 'config/database.php';
+// require_once '../config/database.php';
 require_once 'includes/auth.php';
 
-// Check if user is logged in
+include 'templates/header.php';
+
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
@@ -14,7 +15,7 @@ $user_id = $_SESSION['user_id'];
 $user_name = $_SESSION['user_name'] ?? 'User';
 $user_email = $_SESSION['user_email'] ?? 'user@example.com';
 
-// Sample user data (replace with database queries)
+// Sample user data
 $user_data = [
     'id' => $user_id,
     'name' => $user_name,
@@ -34,583 +35,256 @@ $user_data = [
 ];
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile - Luna Mental Wellness</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="assets/css/luna-style.css" rel="stylesheet">
-<style>
-    .profile-header {
-        background: linear-gradient(135deg, var(--luna-primary-dark) 0%, var(--luna-primary) 100%);
-        color: white;
-        padding: 2rem 0;
-        margin-bottom: 2rem;
-    }
+<!-- Profile Header -->
+<div class="profile-header text-center mb-4">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-3">
+                <div class="profile-avatar mx-auto" onclick="document.getElementById('avatarUpload').click()">
+                    <?= strtoupper(substr($user_data['name'], 0, 1)); ?>
+                    <div class="avatar-upload">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                </div>
+                <input type="file" id="avatarUpload" style="display: none;" accept="image/*">
+            </div>
+            <div class="col-md-6 text-white text-start">
+                <h2><?= htmlspecialchars($user_data['name']) ?></h2>
+                <p><i class="fas fa-user-tag me-2"></i> <?= ucfirst($user_data['role']) ?> Account</p>
+                <p><i class="fas fa-envelope me-2"></i> <?= htmlspecialchars($user_data['email']) ?></p>
+                <p><i class="fas fa-calendar me-2"></i> Member since <?= date('F Y', strtotime($user_data['joined_date'])) ?></p>
+            </div>
+            <div class="col-md-3 text-center">
+                <button class="btn btn-luna-edit" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                    <i class="fas fa-edit me-2"></i>Edit Profile
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
-    .profile-avatar {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        background: rgba(255,255,255,0.2);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 3rem;
-        font-weight: bold;
-        margin: 0 auto 1rem;
-        border: 4px solid rgba(255,255,255,0.3);
-        position: relative;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
+<!-- Main Content -->
+<div class="container-fluid">
+    <div class="row">
+        <!-- Personal Information -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white fw-bold text-<?= $user_role === 'therapist' ? 'success' : 'primary' ?>">
+                    <i class="fas fa-user me-2"></i>Personal Information
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-user me-2 text-primary"></i>Full Name</span>
+                        <span><?= htmlspecialchars($user_data['name']) ?></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-envelope me-2 text-primary"></i>Email Address</span>
+                        <span><?= htmlspecialchars($user_data['email']) ?></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-phone me-2 text-primary"></i>Phone Number</span>
+                        <span><?= htmlspecialchars($user_data['phone']) ?></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-building me-2 text-primary"></i>Department</span>
+                        <span><?= htmlspecialchars($user_data['department']) ?></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-globe me-2 text-primary"></i>Timezone</span>
+                        <span><?= htmlspecialchars($user_data['timezone']) ?></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-language me-2 text-primary"></i>Language</span>
+                        <span><?= htmlspecialchars($user_data['language']) ?></span>
+                    </li>
+                </ul>
+            </div>
 
-    .profile-avatar:hover {
-        transform: scale(1.05);
-        border-color: rgba(255,255,255,0.5);
-    }
-
-    .avatar-upload {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        background: var(--luna-secondary);
-        border-radius: 50%;
-        width: 35px;
-        height: 35px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 0.9rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-    }
-
-    .avatar-upload:hover {
-        background: var(--luna-accent);
-        transform: scale(1.1);
-    }
-
-    .profile-card {
-        background: white;
-        border-radius: 16px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        border: none;
-        margin-bottom: 1.5rem;
-        overflow: hidden;
-        position: relative;
-        transition: all 0.3s ease;
-    }
-
-    .profile-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, var(--luna-primary), var(--luna-secondary));
-    }
-
-    .profile-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-    }
-
-    .profile-card .card-header {
-        background: linear-gradient(45deg, var(--luna-light), #e9ecef);
-        border-bottom: 1px solid var(--luna-gray-light);
-        padding: 1.25rem;
-        font-weight: 600;
-        color: var(--luna-dark);
-    }
-
-    .info-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0.75rem 0;
-        border-bottom: 1px solid var(--luna-gray-light);
-    }
-
-    .info-item:last-child {
-        border-bottom: none;
-    }
-
-    .info-label {
-        font-weight: 500;
-        color: var(--luna-gray);
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .info-label i {
-        color: var(--luna-primary);
-        width: 20px;
-    }
-
-    .info-value {
-        color: var(--luna-dark);
-        font-weight: 500;
-    }
-
-    .specialization-tag {
-        background: linear-gradient(45deg, var(--luna-primary), var(--luna-secondary));
-        color: white;
-        padding: 0.25rem 0.75rem;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        margin: 0.25rem;
-        display: inline-block;
-        box-shadow: 0 2px 8px rgba(6, 95, 70, 0.2);
-    }
-
-    .edit-btn {
-        background: linear-gradient(45deg, var(--luna-primary), var(--luna-secondary));
-        border: none;
-        border-radius: 25px;
-        padding: 0.75rem 1.5rem;
-        color: white;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(6, 95, 70, 0.3);
-    }
-
-    .edit-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(6, 95, 70, 0.4);
-        color: white;
-        background: linear-gradient(45deg, var(--luna-primary-light), var(--luna-accent));
-    }
-
-    .activity-item {
-        display: flex;
-        align-items: center;
-        padding: 1rem;
-        border-bottom: 1px solid var(--luna-gray-light);
-        transition: all 0.3s ease;
-    }
-
-    .activity-item:hover {
-        background: var(--luna-light);
-    }
-
-    .activity-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 1rem;
-        font-size: 0.9rem;
-    }
-
-    .activity-success { 
-        background: rgba(16, 185, 129, 0.1); 
-        color: var(--luna-success); 
-    }
-    .activity-info { 
-        background: rgba(6, 95, 70, 0.1); 
-        color: var(--luna-primary); 
-    }
-    .activity-warning { 
-        background: rgba(245, 158, 11, 0.1); 
-        color: var(--luna-warning); 
-    }
-
-    .btn-outline-primary {
-        border-color: var(--luna-primary);
-        color: var(--luna-primary);
-    }
-
-    .btn-outline-primary:hover {
-        background: var(--luna-primary);
-        border-color: var(--luna-primary);
-        color: white;
-    }
-
-    .btn-outline-info {
-        border-color: var(--luna-secondary);
-        color: var(--luna-secondary);
-    }
-
-    .btn-outline-info:hover {
-        background: var(--luna-secondary);
-        border-color: var(--luna-secondary);
-        color: white;
-    }
-
-    .btn-outline-warning {
-        border-color: var(--luna-warning);
-        color: var(--luna-warning);
-    }
-
-    .btn-outline-warning:hover {
-        background: var(--luna-warning);
-        border-color: var(--luna-warning);
-        color: white;
-    }
-
-    .btn-outline-danger {
-        border-color: var(--luna-danger);
-        color: var(--luna-danger);
-    }
-
-    .btn-outline-danger:hover {
-        background: var(--luna-danger);
-        border-color: var(--luna-danger);
-        color: white;
-    }
-
-    .modal-header {
-        background: linear-gradient(45deg, var(--luna-light), #e9ecef);
-        border-bottom: 1px solid var(--luna-gray-light);
-    }
-
-    .btn-primary {
-        background: var(--luna-primary);
-        border-color: var(--luna-primary);
-    }
-
-    .btn-primary:hover {
-        background: var(--luna-primary-light);
-        border-color: var(--luna-primary-light);
-    }
-
-    .form-control:focus {
-        border-color: var(--luna-primary);
-        box-shadow: 0 0 0 0.2rem rgba(6, 95, 70, 0.25);
-    }
-
-    .form-select:focus {
-        border-color: var(--luna-primary);
-        box-shadow: 0 0 0 0.2rem rgba(6, 95, 70, 0.25);
-    }
-</style>
-</head>
-<body>
-    <?php include 'templates/header.php'; ?>
-    
-    <div class="main-wrapper">
-        <?php include 'templates/sidebar.php'; ?>
-        
-        <div class="main-content">
-            <!-- Profile Header -->
-            <div class="profile-header">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-md-3 text-center">
-                            <div class="profile-avatar" onclick="document.getElementById('avatarUpload').click()">
-                                <?php echo strtoupper(substr($user_data['name'], 0, 1)); ?>
-                                <div class="avatar-upload">
-                                    <i class="fas fa-camera"></i>
-                                </div>
-                            </div>
-                            <input type="file" id="avatarUpload" style="display: none;" accept="image/*">
+            <?php if ($user_role === 'therapist'): ?>
+            <!-- Professional Information -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white fw-bold text-success">
+                    <i class="fas fa-user-md me-2"></i>Professional Information
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-certificate me-2 text-success"></i>License Number</span>
+                        <span><?= htmlspecialchars($user_data['license_number']) ?></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-graduation-cap me-2 text-success"></i>Education</span>
+                        <span><?= htmlspecialchars($user_data['education']) ?></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-stethoscope me-2 text-success"></i>Specializations</span>
+                        <div>
+                            <?php foreach ($user_data['specializations'] as $spec): ?>
+                                <span class="specialization-tag"><?= htmlspecialchars($spec) ?></span>
+                            <?php endforeach; ?>
                         </div>
-                        <div class="col-md-6">
-                            <h2 class="mb-2"><?php echo htmlspecialchars($user_data['name']); ?></h2>
-                            <p class="mb-1 opacity-75">
-                                <i class="fas fa-user-tag me-2"></i>
-                                <?php echo ucfirst($user_data['role']); ?> Account
-                            </p>
-                            <p class="mb-1 opacity-75">
-                                <i class="fas fa-envelope me-2"></i>
-                                <?php echo htmlspecialchars($user_data['email']); ?>
-                            </p>
-                            <p class="mb-0 opacity-75">
-                                <i class="fas fa-calendar me-2"></i>
-                                Member since <?php echo date('F Y', strtotime($user_data['joined_date'])); ?>
-                            </p>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-info-circle me-2 text-success"></i>Bio</span>
+                        <span><?= htmlspecialchars($user_data['bio']) ?></span>
+                    </li>
+                </ul>
+            </div>
+            <?php endif; ?>
+        </div>
+
+        <!-- Sidebar - Account Activity & Quick Actions -->
+        <div class="col-lg-4">
+            <!-- Account Activity -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white fw-bold text-primary">
+                    <i class="fas fa-clock me-2"></i>Account Activity
+                </div>
+                <div class="card-body p-0">
+                    <div class="activity-item">
+                        <div class="activity-icon activity-success me-3">
+                            <i class="fas fa-sign-in-alt"></i>
                         </div>
-                        <div class="col-md-3 text-center">
-                            <button class="btn edit-btn" data-bs-toggle="modal" data-bs-target="#editProfileModal">
-                                <i class="fas fa-edit me-2"></i>Edit Profile
-                            </button>
+                        <div>
+                            <div class="fw-bold">Last Login</div>
+                            <small class="text-muted"><?= date('M j, Y g:i A', strtotime($user_data['last_login'])) ?></small>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon activity-info me-3">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <div>
+                            <div class="fw-bold">Account Created</div>
+                            <small class="text-muted"><?= date('M j, Y', strtotime($user_data['joined_date'])) ?></small>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon activity-warning me-3">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div>
+                            <div class="fw-bold">Security Status</div>
+                            <small class="text-success">All security checks passed</small>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="container-fluid">
-                <div class="row">
-                    <!-- Personal Information -->
-                    <div class="col-lg-8">
-                        <div class="profile-card">
-                            <div class="card-header">
-                                <i class="fas fa-user me-2"></i>Personal Information
-                            </div>
-                            <div class="card-body">
-                                <div class="info-item">
-                                    <div class="info-label">
-                                        <i class="fas fa-user"></i>Full Name
-                                    </div>
-                                    <div class="info-value"><?php echo htmlspecialchars($user_data['name']); ?></div>
-                                </div>
-                                <div class="info-item">
-                                    <div class="info-label">
-                                        <i class="fas fa-envelope"></i>Email Address
-                                    </div>
-                                    <div class="info-value"><?php echo htmlspecialchars($user_data['email']); ?></div>
-                                </div>
-                                <div class="info-item">
-                                    <div class="info-label">
-                                        <i class="fas fa-phone"></i>Phone Number
-                                    </div>
-                                    <div class="info-value"><?php echo htmlspecialchars($user_data['phone']); ?></div>
-                                </div>
-                                <div class="info-item">
-                                    <div class="info-label">
-                                        <i class="fas fa-building"></i>Department
-                                    </div>
-                                    <div class="info-value"><?php echo htmlspecialchars($user_data['department']); ?></div>
-                                </div>
-                                <div class="info-item">
-                                    <div class="info-label">
-                                        <i class="fas fa-globe"></i>Timezone
-                                    </div>
-                                    <div class="info-value"><?php echo htmlspecialchars($user_data['timezone']); ?></div>
-                                </div>
-                                <div class="info-item">
-                                    <div class="info-label">
-                                        <i class="fas fa-language"></i>Language
-                                    </div>
-                                    <div class="info-value"><?php echo htmlspecialchars($user_data['language']); ?></div>
-                                </div>
+
+            <!-- Quick Actions -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white fw-bold text-primary">
+                    <i class="fas fa-bolt me-2"></i>Quick Actions
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                            <i class="fas fa-key me-2"></i>Change Password
+                        </button>
+                        <button class="btn btn-outline-info">
+                            <i class="fas fa-download me-2"></i>Download My Data
+                        </button>
+                        <button class="btn btn-outline-warning">
+                            <i class="fas fa-shield-alt me-2"></i>Security Settings
+                        </button>
+                        <button class="btn btn-outline-danger">
+                            <i class="fas fa-user-times me-2"></i>Deactivate Account
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Profile Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editProfileForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-control" value="<?= htmlspecialchars($user_data['name']) ?>" required>
                             </div>
                         </div>
-                        
-                        <?php if ($user_role === 'therapist'): ?>
-                        <!-- Professional Information -->
-                        <div class="profile-card">
-                            <div class="card-header">
-                                <i class="fas fa-user-md me-2"></i>Professional Information
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-control" value="<?= htmlspecialchars($user_data['email']) ?>" required>
                             </div>
-                            <div class="card-body">
-                                <div class="info-item">
-                                    <div class="info-label">
-                                        <i class="fas fa-certificate"></i>License Number
-                                    </div>
-                                    <div class="info-value"><?php echo htmlspecialchars($user_data['license_number']); ?></div>
-                                </div>
-                                <div class="info-item">
-                                    <div class="info-label">
-                                        <i class="fas fa-graduation-cap"></i>Education
-                                    </div>
-                                    <div class="info-value"><?php echo htmlspecialchars($user_data['education']); ?></div>
-                                </div>
-                                <div class="info-item">
-                                    <div class="info-label">
-                                        <i class="fas fa-stethoscope"></i>Specializations
-                                    </div>
-                                    <div class="info-value">
-                                        <?php foreach ($user_data['specializations'] as $spec): ?>
-                                            <span class="specialization-tag"><?php echo htmlspecialchars($spec); ?></span>
-                                        <?php endforeach; ?>
-                                    </div>
-                                </div>
-                                <div class="info-item">
-                                    <div class="info-label">
-                                        <i class="fas fa-info-circle"></i>Bio
-                                    </div>
-                                    <div class="info-value"><?php echo htmlspecialchars($user_data['bio']); ?></div>
-                                </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" value="<?= htmlspecialchars($user_data['phone']) ?>">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Timezone</label>
+                                <select class="form-select">
+                                    <option selected>America/New_York</option>
+                                    <option>America/Los_Angeles</option>
+                                    <option>America/Chicago</option>
+                                    <option>Europe/London</option>
+                                </select>
+                            </div>
+                        </div>
+                        <?php if ($user_role === 'therapist'): ?>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label class="form-label">Professional Bio</label>
+                                <textarea class="form-control" rows="3"><?= htmlspecialchars($user_data['bio']) ?></textarea>
                             </div>
                         </div>
                         <?php endif; ?>
                     </div>
-                    
-                    <!-- Account Activity -->
-                    <div class="col-lg-4">
-                        <div class="profile-card">
-                            <div class="card-header">
-                                <i class="fas fa-clock me-2"></i>Account Activity
-                            </div>
-                            <div class="card-body p-0">
-                                <div class="activity-item">
-                                    <div class="activity-icon activity-success">
-                                        <i class="fas fa-sign-in-alt"></i>
-                                    </div>
-                                    <div>
-                                        <div class="fw-bold">Last Login</div>
-                                        <small class="text-muted"><?php echo date('M j, Y g:i A', strtotime($user_data['last_login'])); ?></small>
-                                    </div>
-                                </div>
-                                <div class="activity-item">
-                                    <div class="activity-icon activity-info">
-                                        <i class="fas fa-user-plus"></i>
-                                    </div>
-                                    <div>
-                                        <div class="fw-bold">Account Created</div>
-                                        <small class="text-muted"><?php echo date('M j, Y', strtotime($user_data['joined_date'])); ?></small>
-                                    </div>
-                                </div>
-                                <div class="activity-item">
-                                    <div class="activity-icon activity-warning">
-                                        <i class="fas fa-shield-alt"></i>
-                                    </div>
-                                    <div>
-                                        <div class="fw-bold">Security Status</div>
-                                        <small class="text-success">All security checks passed</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Quick Actions -->
-                        <div class="profile-card">
-                            <div class="card-header">
-                                <i class="fas fa-bolt me-2"></i>Quick Actions
-                            </div>
-                            <div class="card-body">
-                                <div class="d-grid gap-2">
-                                    <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
-                                        <i class="fas fa-key me-2"></i>Change Password
-                                    </button>
-                                    <button class="btn btn-outline-info">
-                                        <i class="fas fa-download me-2"></i>Download My Data
-                                    </button>
-                                    <button class="btn btn-outline-warning">
-                                        <i class="fas fa-shield-alt me-2"></i>Security Settings
-                                    </button>
-                                    <button class="btn btn-outline-danger">
-                                        <i class="fas fa-user-times me-2"></i>Deactivate Account
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="changePasswordForm">
+                    <div class="mb-3">
+                        <label class="form-label">Current Password</label>
+                        <input type="password" class="form-control" required>
                     </div>
-                </div>
+                    <div class="mb-3">
+                        <label class="form-label">New Password</label>
+                        <input type="password" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Confirm New Password</label>
+                        <input type="password" class="form-control" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Update Password</button>
             </div>
         </div>
     </div>
-    
-    <!-- Edit Profile Modal -->
-    <div class="modal fade" id="editProfileModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Profile</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="editProfileForm">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Full Name</label>
-                                    <input type="text" class="form-control" value="<?php echo htmlspecialchars($user_data['name']); ?>">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Email Address</label>
-                                    <input type="email" class="form-control" value="<?php echo htmlspecialchars($user_data['email']); ?>">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Phone Number</label>
-                                    <input type="tel" class="form-control" value="<?php echo htmlspecialchars($user_data['phone']); ?>">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Timezone</label>
-                                    <select class="form-select">
-                                        <option selected>America/New_York</option>
-                                        <option>America/Los_Angeles</option>
-                                        <option>America/Chicago</option>
-                                        <option>Europe/London</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <?php if ($user_role === 'therapist'): ?>
-                            <div class="col-12">
-                                <div class="mb-3">
-                                    <label class="form-label">Professional Bio</label>
-                                    <textarea class="form-control" rows="3"><?php echo htmlspecialchars($user_data['bio']); ?></textarea>
-                                </div>
-                            </div>
-                            <?php endif; ?>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Save Changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Change Password Modal -->
-    <div class="modal fade" id="changePasswordModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Change Password</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="changePasswordForm">
-                        <div class="mb-3">
-                            <label class="form-label">Current Password</label>
-                            <input type="password" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">New Password</label>
-                            <input type="password" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Confirm New Password</label>
-                            <input type="password" class="form-control" required>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Update Password</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/simple-luna.js"></script>
-    <script>
-        // Avatar upload preview
-        document.getElementById('avatarUpload').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    // Here you would typically upload the file and update the avatar
-                    showToast('Avatar uploaded successfully!', 'success');
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-        
-        // Form submissions
-        document.querySelector('#editProfileForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            showToast('Profile updated successfully!', 'success');
-            bootstrap.Modal.getInstance(document.getElementById('editProfileModal')).hide();
-        });
-        
-        document.querySelector('#changePasswordForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            showToast('Password changed successfully!', 'success');
-            bootstrap.Modal.getInstance(document.getElementById('changePasswordModal')).hide();
-        });
-    </script>
-</body>
-</html>
+</div>
+
+<?php include 'templates/footer.php'; ?>

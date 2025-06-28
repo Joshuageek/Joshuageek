@@ -1,103 +1,161 @@
-// Simple Luna System - No Flickering, No Conflicts
+// Fixed Luna System - Sidebar Toggle
 document.addEventListener("DOMContentLoaded", () => {
-  // Simple sidebar toggle
+  console.log("Luna System initializing...");
+
+  // Get elements
   const sidebarToggle = document.getElementById("sidebarToggle");
   const sidebar = document.getElementById("sidebar");
   const sidebarOverlay = document.getElementById("sidebarOverlay");
+  const mainContent = document.querySelector(".main-content");
 
-  // Enhanced sidebar toggle for both mobile and desktop
+  // Check if elements exist
+  if (!sidebarToggle || !sidebar) {
+    console.error("Sidebar elements not found!");
+    return;
+  }
+
+  console.log("Sidebar elements found:", {
+    toggle: !!sidebarToggle,
+    sidebar: !!sidebar,
+    overlay: !!sidebarOverlay,
+    mainContent: !!mainContent,
+  });
+
+  // Enhanced sidebar toggle function
   function toggleSidebar() {
-    if (sidebar && sidebarOverlay) {
+    console.log("Toggle sidebar called");
+
+    const isMobile = window.innerWidth <= 991;
+    console.log("Is mobile:", isMobile);
+
+    if (isMobile) {
+      // Mobile behavior
       const isOpen = sidebar.classList.contains("show");
-      const mainContent = document.querySelector(".main-content");
+      console.log("Mobile - sidebar is open:", isOpen);
 
-      if (window.innerWidth <= 991) {
-        // Mobile behavior
-        if (isOpen) {
-          sidebar.classList.remove("show");
+      if (isOpen) {
+        // Close sidebar
+        sidebar.classList.remove("show");
+        if (sidebarOverlay) {
           sidebarOverlay.classList.remove("show");
-          document.body.style.overflow = "";
-        } else {
-          sidebar.classList.add("show");
-          sidebarOverlay.classList.add("show");
-          document.body.style.overflow = "hidden";
         }
+        document.body.style.overflow = "";
+        console.log("Mobile - sidebar closed");
       } else {
-        // Desktop behavior
-        const isDesktopHidden = sidebar.classList.contains("desktop-hidden");
-
-        if (isDesktopHidden) {
-          // Show sidebar
-          sidebar.classList.remove("desktop-hidden");
-          if (mainContent) {
-            mainContent.classList.remove("sidebar-hidden");
-          }
-        } else {
-          // Hide sidebar
-          sidebar.classList.add("desktop-hidden");
-          if (mainContent) {
-            mainContent.classList.add("sidebar-hidden");
-          }
+        // Open sidebar
+        sidebar.classList.add("show");
+        if (sidebarOverlay) {
+          sidebarOverlay.classList.add("show");
         }
+        document.body.style.overflow = "hidden";
+        console.log("Mobile - sidebar opened");
+      }
+    } else {
+      // Desktop behavior
+      const isHidden = sidebar.classList.contains("desktop-hidden");
+      console.log("Desktop - sidebar is hidden:", isHidden);
+
+      if (isHidden) {
+        // Show sidebar
+        sidebar.classList.remove("desktop-hidden");
+        if (mainContent) {
+          mainContent.classList.remove("sidebar-hidden");
+        }
+        console.log("Desktop - sidebar shown");
+      } else {
+        // Hide sidebar
+        sidebar.classList.add("desktop-hidden");
+        if (mainContent) {
+          mainContent.classList.add("sidebar-hidden");
+        }
+        console.log("Desktop - sidebar hidden");
       }
     }
   }
 
-  // ENHANCED resize handler to properly clean up states
-  function handleResize() {
-    const mainContent = document.querySelector(".main-content");
+  // Bind toggle button click
+  sidebarToggle.addEventListener("click", (e) => {
+    e.preventDefault();
+    console.log("Toggle button clicked");
+    toggleSidebar();
+  });
 
-    if (window.innerWidth > 991 && sidebar) {
-      // Desktop: Clean up ALL mobile classes and states
-      sidebar.classList.remove("show");
-      sidebarOverlay.classList.remove("show");
-      document.body.style.overflow = "";
-
-      // Reset to default desktop state (sidebar visible)
-      sidebar.classList.remove("desktop-hidden");
-      if (mainContent) {
-        mainContent.classList.remove("sidebar-hidden");
-        mainContent.style.marginLeft = ""; // Reset inline styles
+  // Close sidebar when clicking overlay (mobile only)
+  if (sidebarOverlay) {
+    sidebarOverlay.addEventListener("click", () => {
+      console.log("Overlay clicked");
+      if (window.innerWidth <= 991) {
+        toggleSidebar();
       }
+    });
+  }
 
-      console.log("Switched to desktop mode - sidebar reset");
-    } else if (window.innerWidth <= 991 && sidebar) {
-      // Mobile: Clean up ALL desktop classes and force mobile state
+  // Handle window resize
+  function handleResize() {
+    const isMobile = window.innerWidth <= 991;
+    console.log("Window resized - is mobile:", isMobile);
+
+    if (isMobile) {
+      // Switch to mobile mode
       sidebar.classList.remove("desktop-hidden");
       sidebar.classList.remove("show"); // Start hidden on mobile
-      sidebarOverlay.classList.remove("show");
-      document.body.style.overflow = "";
-
+      if (sidebarOverlay) {
+        sidebarOverlay.classList.remove("show");
+      }
       if (mainContent) {
         mainContent.classList.remove("sidebar-hidden");
-        mainContent.style.marginLeft = "0"; // Force mobile margin
       }
-
-      console.log("Switched to mobile mode - sidebar hidden");
+      document.body.style.overflow = "";
+      console.log("Switched to mobile mode");
+    } else {
+      // Switch to desktop mode
+      sidebar.classList.remove("show");
+      if (sidebarOverlay) {
+        sidebarOverlay.classList.remove("show");
+      }
+      document.body.style.overflow = "";
+      // Keep current desktop state (hidden or visible)
+      console.log("Switched to desktop mode");
     }
   }
 
-  // Bind toggle button
-  if (sidebarToggle) {
-    sidebarToggle.addEventListener("click", toggleSidebar);
-  }
-
-  // Close sidebar when clicking overlay
-  if (sidebarOverlay) {
-    sidebarOverlay.addEventListener("click", toggleSidebar);
-  }
-
-  // Enhanced resize handler with debounce
+  // Debounced resize handler
   let resizeTimeout;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(handleResize, 100); // Debounce resize events
+    resizeTimeout = setTimeout(handleResize, 150);
   });
 
-  // Initial setup on page load
+  // Initial setup
   handleResize();
 
-  // Simple search with debounce
+  // Keyboard shortcuts
+  document.addEventListener("keydown", (e) => {
+    // Escape to close sidebar on mobile
+    if (e.key === "Escape" && window.innerWidth <= 991) {
+      if (sidebar.classList.contains("show")) {
+        toggleSidebar();
+      }
+    }
+
+    // Ctrl/Cmd + B to toggle sidebar
+    if ((e.ctrlKey || e.metaKey) && e.key === "b") {
+      e.preventDefault();
+      toggleSidebar();
+    }
+
+    // Ctrl/Cmd + K for search
+    if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+      e.preventDefault();
+      const searchInput = document.getElementById("globalSearch");
+      if (searchInput) {
+        searchInput.focus();
+        searchInput.select();
+      }
+    }
+  });
+
+  // Search functionality with debounce
   const searchInput = document.getElementById("globalSearch");
   let searchTimeout;
 
@@ -110,69 +168,51 @@ document.addEventListener("DOMContentLoaded", () => {
         searchTimeout = setTimeout(() => {
           console.log("Searching for:", query);
           // Add your search logic here
+          window.showToast(`Searching for: ${query}`, "info");
         }, 500);
       }
     });
   }
 
   // Initialize Bootstrap tooltips
-  const tooltipTriggerList = [].slice.call(
-    document.querySelectorAll('[data-bs-toggle="tooltip"]')
-  );
-  const bootstrap = window.bootstrap;
-  tooltipTriggerList.map(
-    (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
-  );
+  const bootstrap = window.bootstrap; // Declare bootstrap variable
+  if (bootstrap) {
+    const tooltipTriggerList = [].slice.call(
+      document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    );
+    tooltipTriggerList.map(
+      (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+    );
+  }
 
-  // Animate Cards on Scroll
+  // Animate cards on scroll
   const cards = document.querySelectorAll(".stat-card, .welcome-card");
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = "1";
-          entry.target.style.transform = "translateY(0)";
-        }
-      });
-    },
-    {
-      threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px",
-    }
-  );
-
-  cards.forEach((card) => {
-    card.style.opacity = "0";
-    card.style.transform = "translateY(20px)";
-    card.style.transition = "all 0.6s ease";
-    observer.observe(card);
-  });
-
-  // Simple keyboard shortcuts
-  document.addEventListener("keydown", (e) => {
-    // Escape to close sidebar
-    if (e.key === "Escape") {
-      if (
-        sidebar &&
-        (sidebar.classList.contains("show") ||
-          !sidebar.classList.contains("desktop-hidden"))
-      ) {
-        toggleSidebar();
+  if (cards.length > 0) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
       }
-    }
+    );
 
-    // Ctrl/Cmd + K for search
-    if ((e.ctrlKey || e.metaKey) && e.key === "k") {
-      e.preventDefault();
-      if (searchInput) {
-        searchInput.focus();
-        searchInput.select();
-      }
-    }
-  });
+    cards.forEach((card) => {
+      card.style.opacity = "0";
+      card.style.transform = "translateY(20px)";
+      card.style.transition = "all 0.6s ease";
+      observer.observe(card);
+    });
+  }
 
-  // Simple toast notification function
+  // Toast notification function
   window.showToast = (message, type = "info") => {
     // Remove existing toasts
     const existingToasts = document.querySelectorAll(".simple-toast");
@@ -181,25 +221,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const toast = document.createElement("div");
     toast.className = `simple-toast toast-${type}`;
     toast.innerHTML = `
-            <div class="toast-content">
-                <i class="fas ${getToastIcon(type)} me-2"></i>
-                ${message}
-            </div>
-            <button onclick="this.parentElement.remove()" class="toast-close">
-                <i class="fas fa-times"></i>
-            </button>
-        `;
+      <div class="toast-content">
+        <i class="fas ${getToastIcon(type)} me-2"></i>
+        ${message}
+      </div>
+      <button onclick="this.parentElement.remove()" class="toast-close">
+        <i class="fas fa-times"></i>
+      </button>
+    `;
 
     document.body.appendChild(toast);
 
     // Show toast
     setTimeout(() => toast.classList.add("show"), 100);
 
-    // Auto remove after 3 seconds
+    // Auto remove after 4 seconds
     setTimeout(() => {
       toast.classList.remove("show");
       setTimeout(() => toast.remove(), 300);
-    }, 3000);
+    }, 4000);
   };
 
   function getToastIcon(type) {
@@ -212,9 +252,9 @@ document.addEventListener("DOMContentLoaded", () => {
     return icons[type] || "fa-info-circle";
   }
 
-  // Simple Notifications
+  // Notification badge handler
   const notificationDropdown = document.querySelector(
-    '[data-bs-toggle="dropdown"]'
+    '.notification-btn[data-bs-toggle="dropdown"]'
   );
   if (notificationDropdown) {
     notificationDropdown.addEventListener("click", () => {
@@ -227,40 +267,31 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Utility Functions
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  }
-
-  function formatTime(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  }
-
-  // Add loading state to buttons
+  // Add loading state to navigation links
   document.addEventListener("click", (e) => {
-    if (e.target.matches('.btn[href]:not([href^="#"])')) {
-      const btn = e.target;
-      const originalText = btn.innerHTML;
+    if (
+      e.target.matches('.btn[href]:not([href^="#"])') ||
+      e.target.matches('.nav-link[href]:not([href^="#"])')
+    ) {
+      const element = e.target;
+      const originalText = element.innerHTML;
 
-      btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Loading...';
-      btn.disabled = true;
+      element.innerHTML =
+        '<i class="fas fa-spinner fa-spin me-2"></i>Loading...';
+      element.style.pointerEvents = "none";
 
       // Reset after 2 seconds if still on page
       setTimeout(() => {
-        btn.innerHTML = originalText;
-        btn.disabled = false;
+        element.innerHTML = originalText;
+        element.style.pointerEvents = "";
       }, 2000);
     }
   });
 
-  console.log("Simple Luna System initialized successfully");
+  console.log("Luna System initialized successfully!");
+
+  // Show initialization toast
+  setTimeout(() => {
+    window.showToast("Dashboard loaded successfully!", "success");
+  }, 500);
 });

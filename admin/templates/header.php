@@ -14,6 +14,7 @@
     
      <!-- Professional Dark Green Theme -->
     <link rel="stylesheet" href="assets/css/admin-styles.css">
+    <link rel="stylesheet" href="assets/css/profile.css">
 </head>
 <body>
     <!-- sidebar -->

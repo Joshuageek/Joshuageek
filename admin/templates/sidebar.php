@@ -63,57 +63,57 @@ $base_path = '/luna/admin/';
     <!-- Admin Section -->
     <div class="nav-section">
         <div class="nav-section-title">Administration</div>
-        <a href="<?= $base_path; ?>sections/users.php" class="nav-link">
+        <a href="<?= $base_path; ?>users.php" class="nav-link">
             <i class="fas fa-users"></i>
             User Management
         </a>
-        <a href="<?= $base_path; ?>sections/therapists.php" class="nav-link">
+        <a href="<?= $base_path; ?>therapists.php" class="nav-link">
             <i class="fas fa-user-md"></i>
             Therapists
         </a>
-        <a href="<?= $base_path; ?>sections/patients.php" class="nav-link">
+        <a href="<?= $base_path; ?>patients.php" class="nav-link">
             <i class="fas fa-user-friends"></i>
             Patients
         </a>
-        <a href="<?= $base_path; ?>sections/reports.php" class="nav-link">
+        <!-- <a href="<?= $base_path; ?>reports.php" class="nav-link">
             <i class="fas fa-chart-bar"></i>
             Analytics & Reports
-        </a>
-        <a href="<?= $base_path; ?>sections/billing.php" class="nav-link">
+        </a> -->
+        <!-- <a href="<?= $base_path; ?>billing.php" class="nav-link">
             <i class="fas fa-credit-card"></i>
             Billing & Payments
         </a>
-        <a href="<?= $base_path; ?>sections/settings.php" class="nav-link">
+        <a href="<?= $base_path; ?>settings.php" class="nav-link">
             <i class="fas fa-cog"></i>
             System Settings
-        </a>
+        </a> -->
     </div>
     
     <?php elseif ($user_role === 'therapist'): ?>
     <!-- Therapist Section -->
-    <div class="nav-section">
+    <!-- <div class="nav-section">
         <div class="nav-section-title">Practice Management</div>
-        <a href="<?= $base_path; ?>sections/my-patients.php" class="nav-link">
+        <a href="<?= $base_path; ?>my-patients.php" class="nav-link">
             <i class="fas fa-user-friends"></i>
             My Patients
         </a>
-        <a href="<?= $base_path; ?>sections/appointments.php" class="nav-link">
+        <a href="<?= $base_path; ?>appointments.php" class="nav-link">
             <i class="fas fa-calendar-check"></i>
             Appointments
         </a>
-        <a href="<?= $base_path; ?>sections/sessions.php" class="nav-link">
+        <a href="<?= $base_path; ?>sessions.php" class="nav-link">
             <i class="fas fa-video"></i>
             Session Management
         </a>
-        <a href="<?= $base_path; ?>sections/notes.php" class="nav-link">
+        <a href="<?= $base_path; ?>notes.php" class="nav-link">
             <i class="fas fa-sticky-note"></i>
             Session Notes
         </a>
-        <a href="<?= $base_path; ?>sections/assessments.php" class="nav-link">
+        <a href="<?= $base_path; ?>assessments.php" class="nav-link">
             <i class="fas fa-clipboard-check"></i>
             Assessments
         </a>
-        <a href="<?= $base_path; ?>sections/treatment-plans.php" class="nav-link">
+        <a href="<?= $base_path; ?>treatment-plans.php" class="nav-link">
             <i class="fas fa-route"></i>
             Treatment Plans
         </a>
@@ -121,37 +121,37 @@ $base_path = '/luna/admin/';
     
     <div class="nav-section">
         <div class="nav-section-title">Resources</div>
-        <a href="<?= $base_path; ?>sections/resources.php" class="nav-link">
+        <a href="<?= $base_path; ?>resources.php" class="nav-link">
             <i class="fas fa-book-open"></i>
             Treatment Resources
         </a>
-        <a href="<?= $base_path; ?>sections/continuing-education.php" class="nav-link">
+        <a href="<?= $base_path; ?>continuing-education.php" class="nav-link">
             <i class="fas fa-graduation-cap"></i>
             Continuing Education
         </a>
-    </div>
+    </div> -->
     
     <?php else: // patient ?>
     <!-- Patient Section -->
-    <div class="nav-section">
+    <!-- <div class="nav-section">
         <div class="nav-section-title">My Wellness Journey</div>
-        <a href="<?= $base_path; ?>sections/my-sessions.php" class="nav-link">
+        <a href="<?= $base_path; ?>my-sessions.php" class="nav-link">
             <i class="fas fa-heart"></i>
             My Sessions
         </a>
-        <a href="<?= $base_path; ?>sections/progress.php" class="nav-link">
+        <a href="<?= $base_path; ?>progress.php" class="nav-link">
             <i class="fas fa-chart-line"></i>
             Progress Tracking
         </a>
-        <a href="<?= $base_path; ?>sections/mood-tracker.php" class="nav-link">
+        <a href="<?= $base_path; ?>mood-tracker.php" class="nav-link">
             <i class="fas fa-smile"></i>
             Mood Tracker
         </a>
-        <a href="<?= $base_path; ?>sections/goals.php" class="nav-link">
+        <a href="<?= $base_path; ?>goals.php" class="nav-link">
             <i class="fas fa-bullseye"></i>
             My Goals
         </a>
-        <a href="<?= $base_path; ?>sections/journal.php" class="nav-link">
+        <a href="<?= $base_path; ?>journal.php" class="nav-link">
             <i class="fas fa-book"></i>
             Personal Journal
         </a>
@@ -159,23 +159,23 @@ $base_path = '/luna/admin/';
     
     <div class="nav-section">
         <div class="nav-section-title">Wellness Tools</div>
-        <a href="<?= $base_path; ?>sections/meditation.php" class="nav-link">
+        <a href="<?= $base_path; ?>meditation.php" class="nav-link">
             <i class="fas fa-spa"></i>
             Meditation & Mindfulness
         </a>
-        <a href="sections/exercises.php" class="nav-link">
+        <a href="exercises.php" class="nav-link">
             <i class="fas fa-dumbbell"></i>
             Wellness Exercises
         </a>
-        <a href="<?= $base_path; ?>sections/resources.php" class="nav-link">
+        <a href="<?= $base_path; ?>resources.php" class="nav-link">
             <i class="fas fa-book-open"></i>
             Educational Resources
         </a>
-        <a href="<?= $base_path; ?>sections/crisis-support.php" class="nav-link">
+        <a href="<?= $base_path; ?>crisis-support.php" class="nav-link">
             <i class="fas fa-phone-alt"></i>
             Crisis Support
         </a>
-    </div>
+    </div> -->
     <?php endif; ?>
 
     <!-- Account Section -->
@@ -189,10 +189,10 @@ $base_path = '/luna/admin/';
             <i class="fas fa-cog"></i>
             Settings
         </a> -->
-        <a href="<?= $base_path; ?>help.php" class="nav-link">
+        <!-- <a href="<?= $base_path; ?>help.php" class="nav-link">
             <i class="fas fa-question-circle"></i>
             Help & Support
-        </a>
+        </a> -->
         <a href="../logout.php" class="nav-link" style="color: #ef4444;">
             <i class="fas fa-sign-out-alt"></i>
             Sign Out
