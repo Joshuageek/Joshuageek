@@ -19,7 +19,7 @@ $menu_items = [
   ['label' => 'Home', 'url' => 'index.php'],
   ['label' => 'About Us', 'url' => 'about.php'],
   ['label' => 'For Therapists', 'url' => 'clinic.php'],
-  ['label' => 'Contact Us', 'url' => 'booking.php'],
+  ['label' => 'Contact Us', 'url' => 'contact.php'],
   ['label' => 'Sign In', 'url' => 'login.php'],
 ];
 

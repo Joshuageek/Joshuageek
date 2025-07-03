@@ -1,400 +1,219 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+include('header.php');
+?>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="">
-    <meta name="description" content="">
+    <style>
+        /* Improved Contact Page Styles */
+        .contact-hero-section {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('images/1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+        }
 
-    <title>Fable - Restaurant Site Template</title>
-    
-    <!-- Loading Bootstrap -->
-    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-    <!-- Loading Template CSS -->
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/animate.css" rel="stylesheet">
-    <link href="css/style-magnific-popup.css" rel="stylesheet">
-    
-    <!-- Fonts -->
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/icons-main.css" rel="stylesheet">
-    <link href="css/icons-helper.css" rel="stylesheet">
-    
-    <!-- RS5.0 Main Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="revolution/css/settings.css">
-     
-    <!-- RS5.0 Layers and Navigation Styles -->
-    <link rel="stylesheet" type="text/css" href="revolution/css/layers.css">
-    <link rel="stylesheet" type="text/css" href="revolution/css/navigation.css">	
-    
-    <!-- Google Fonts -->
-    <link href='https://fonts.googleapis.com/css?family=Tangerine:400,700' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Lora:400,400italic,700' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: -80px;
+            position: relative;
+            z-index: 2;
+        }
 
-    <!-- Font Favicon -->
-    <link rel="shortcut icon" href="images/favicon.ico">
+        .contact-card {
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
 
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
-    <!--[if lt IE 9]>
-      <script src="js/html5shiv.js"></script>
-      <script src="js/respond.min.js"></script>
-    <![endif]-->
-    
-    <!--headerIncludes-->
-    
-</head>
-<body>
-    
-    <!--begin header -->
-    <header class="header">
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
 
-        <!--begin nav -->
-        <nav class="navbar navbar-default navbar-fixed-top">
-            
-            <!--begin container -->
-            <div class="container">
-        
-                <!--begin navbar -->
-                <div class="navbar-header">
-                    <button data-target="#navbar-collapse-02" data-toggle="collapse" class="navbar-toggle" type="button">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                                                                        
-                    <a href="index.html" class="navbar-brand brand scrool"><img src="images/logo.png" alt="logo"></a>
-                </div>
-                        
-                <div id="navbar-collapse-02" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">			      
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="menu.html">Menu</a></li>
-                        <li><a href="reservations.html">Reservations</a></li>
-                        <li><a href="gallery.html">Gallery</a></li>
-                        <li class="selected"><a href="contact.html">Contact</a></li>
-                        
-                        <li class="social"><a href="#" class="first"><i class="fa fa-twitter"></i></a></li>
-                        <li class="social"><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li class="social"><a href="#" class="last"><i class="fa fa-instagram"></i></a></li>
-                        
-                        <li><a href="#" class="purchase">Purchase</a></li>
-                    </ul>
-                </div>
-                <!--end navbar -->
-                                    
-            </div>
-    		<!--end container -->
-            
-        </nav>
-    	<!--end nav -->
-        
-    </header>
-    <!--end header -->
-        
-    <!--begin contact-hero-section -->
-    <section id="hero-section" class="contact-hero-section">
-    
-        <!--begin image-overlay -->
-        <div class="image-overlay"></div>
-        <!--end image-overlay -->
-            
-        <!--begin container-->
-        <div class="container image-section-inside">
+        .contact-info-card {
+            background: #f8f9fa;
+        }
 
-            <!--begin row-->
-            <div class="row">
-            
-                <!--begin col-md-10-->
-                <div class="col-md-10 col-md-offset-1 text-center">
-                
-                    <span class="comic-text wow fadeIn" data-wow-delay="0.5s">La Cuisine</span>
-                    
-                    <h2 class="section-title white wow bounceIn" data-wow-delay="1s">Get In Touch</h2>
-                    
-                    <p class="hero-text wow fadeInUp" data-wow-delay="2s">For any enquiries you can give us a call at <strong>+44 123 45 67 890</strong><br>Alternatively we can get in touch using the form bellow.</p>
-                    
-                </div>
-                <!--end col-md-10-->
-            
-            </div>
-            <!--end row-->
-            
+        .contact-icon {
+            font-size: 2.5rem;
+            color: #42b983;
+            margin-bottom: 20px;
+        }
+
+        .contact-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            transition: border 0.3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: #42b983;
+            outline: none;
+        }
+
+        .contact-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: #42b983;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: #3aa876;
+        }
+
+        .map-container {
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        .hours-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .hours-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                margin-top: 30px;
+            }
+
+            .contact-hero-section {
+                min-height: 40vh;
+                background-attachment: scroll;
+            }
+        }
+    </style>
+
+    <!-- Hero Section -->
+    <section class="contact-hero-section">
+        <div class="container text-center">
+            <h1 class="section-title white wow fadeInDown">Get In Touch</h1>
+            <p class="hero-text wow fadeInUp" data-wow-delay="0.3s">We'd love to hear from you. Reach out for questions, support, or just to say hello!</p>
         </div>
-        <!--end container-->    
-        
     </section>
-    <!--end contact-hero-section -->
-    
-    <!--begin contact2-hero-section-->
-    <div class="contact2-hero-section"> 
-        
-        <!--begin image-overlay -->
-        <div class="image-overlay"></div>
-        <!--end image-overlay -->
-        
-        <!--begin container-->
-        <div class="container image-section-inside"> 
 
-            <!--begin row-->
-            <div class="row">
-            
-                <!--begin col-md-10-->
-                <div class="col-md-10 col-md-offset-1 text-center">
-                
-                	<h3 class="section-title small-margin wow fadeIn" data-wow-delay="0.5s">CONTACT FORM</h3>
-                    
-                    <p class="wow fadeInUp" data-wow-delay="1s">There are many variations of passages of Lorem Ipsum available, but the majority have suffered<br>
-alteration, by injected humour, or new randomised words which don't look believable.</p>
-                    
-                    <!--begin contact-wrapper-->
-                    <div class="contact-wrapper">
-                
-                        <!--begin success message -->
-                        <p class="contact_success_box" style="display:none;">We received your message and you'll hear from us soon. Thank You!</p>
-                        <!--end success message -->
-                        
-                        <!--begin contact form -->
-                        <form id="contact-form" class="contact" action="php/contact.php" method="post">
-                            
-                            <!--begin col-md-6-->
-                            <div class="col-md-6 wow slideInLeft" data-wow-delay="0.5s">
-                                <input class="contact-input white-input" required name="contact_names" placeholder="Full Name*" type="text">
-                                <input class="contact-input white-input" required name="contact_email" placeholder="Email Adress*" type="email">
-                                <input class="contact-input white-input" required name="contact_phone" placeholder="Phone Number*" type="text">
-                            </div>
-                            <!--end col-md-6-->
-                            
-                            <!--begin col-md-6-->
-                            <div class="col-md-6 wow slideInRight" data-wow-delay="0.5s">
-                                <textarea class="contact-commnent white-input" rows="2" cols="20" name="contact_message" placeholder="Your Message..."></textarea>
-                            </div>
-                            <!--end col-md-6-->
-                            
-                            <input value="Send Message" id="submit-button" class="contact-submit wow fadeInUp" data-wow-delay="1s" type="submit">
-                            
-                        </form>
-                        <!--end contact form -->
-                    
-                    </div>
-                    <!--end contact-wrapper-->
-                    
+    <!-- Main Contact Content -->
+    <div class="contact-container">
+        <div class="contact-grid">
+            <!-- Contact Information Card -->
+            <div class="contact-card contact-info-card wow fadeInLeft">
+                <div class="contact-icon">
+                    <i class="fa fa-info-circle"></i>
                 </div>
-                <!--end col-md-10-->
-                
+                <h3>Contact Information</h3>
+                <div class="contact-details">
+                    <p><i class="fa fa-map-marker"></i> 123 Wellness Way, Suite 200<br>San Francisco, CA 94107</p>
+                    <p><i class="fa fa-phone"></i> (415) 555-0199</p>
+                    <p><i class="fa fa-envelope"></i> support@yourtherapy.com</p>
+                </div>
+
+                <h4 class="mt-4">Business Hours</h4>
+                <ul class="hours-list">
+                    <li><span>Monday - Friday</span> <span>9:00 AM - 6:00 PM</span></li>
+                    <li><span>Saturday</span> <span>10:00 AM - 4:00 PM</span></li>
+                    <li><span>Sunday</span> <span>Closed</span></li>
+                </ul>
+
+                <div class="social-links mt-4">
+                    <a href="#" class="social-icon"><i class="fa fa-facebook"></i></a>
+                    <a href="#" class="social-icon"><i class="fa fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fa fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fa fa-linkedin"></i></a>
+                </div>
             </div>
-            <!--end row-->
-            
+
+            <!-- Contact Form Card -->
+            <div class="contact-card wow fadeInRight">
+                <h3>Send Us a Message</h3>
+                <p>Fill out the form below and we'll respond within 24 hours</p>
+
+                <!-- Success Message (hidden by default) -->
+                <div class="alert alert-success contact_success_box" style="display:none;">
+                    Thank you! Your message has been sent successfully.
+                </div>
+
+                <form id="contact-form" class="contact-form" action="php/contact.php" method="post">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Your Name*" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Your Email*" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="tel" name="phone" placeholder="Phone Number">
+                    </div>
+
+                    <div class="form-group">
+                        <select name="subject" class="form-control" required>
+                            <option value="" disabled selected>Select Subject*</option>
+                            <option value="General Inquiry">General Inquiry</option>
+                            <option value="Appointment">Appointment Request</option>
+                            <option value="Support">Technical Support</option>
+                            <option value="Feedback">Feedback</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <textarea name="message" placeholder="Your Message*" required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
         </div>
-        <!--end container-->
-            
-    </div>
-    <!--end contact2-hero-section-->
 
-    <!--begin footer -->
-    <div class="footer">
-            
-        <!--begin container -->
-        <div class="container">
-        
-            <!--begin row -->
-            <div class="row footer-top">
-            
-                <!--begin col-md-3 -->
-                <div class="col-md-3 padding-bottom-50">
-                
-                	<h4>ABOUT US</h4>
-                    
-                    <p>Quis autem velis et reprehender etims quiste voluptate velit esse quam nihil etsa illum sedit consequatur quias.</p>
-                    
-                    <a href="about.html" class="btn btn-lg btn-yellow-x-small scrool">OUR STORY</a>
-                    
-                </div>
-                <!--end col-md-3 -->
-                
-                <!--begin col-md-3 -->
-                <div class="col-md-3 padding-bottom-50">
-                
-                	<h4>LATEST RECIPES</h4>
-                    
-                    <ul class="footer-list">
-                        
-                        <li class="first"><a href="#" target="blank">Cheddar Cheese Cauliflower Tots</a></li>
-                        
-                        <li><a href="#" target="blank">Garlic Chicken &amp; White Wine Sauce</a></li>
-                        
-                        <li><a href="#" target="blank">Spinach Mozzarella Grilled Cheese</a></li>
-                        
-                        <li><a href="#" target="blank">Mini Chicken Roasted Cups</a></li>
-                        
-					</ul>
-                    
-                </div>
-                <!--end col-md-3 -->
-                
-                <!--begin col-md-3 -->
-                <div class="col-md-3 padding-bottom-50">
-                
-                	<h4>FEATURED PLATES</h4>
-                    
-                    <ul class="footer-gallery">
-                        
-                        <li class="popup-gallery">
-                            <a class="popup2" href="http://placehold.it/800x600">
-                            	<img src="http://placehold.it/100x100" alt="instagram" />
-                            </a>
-                        </li>
-                        
-                        <li class="popup-gallery">
-                            <a class="popup2" href="http://placehold.it/800x600">
-                            	<img src="http://placehold.it/100x100" alt="instagram" />
-                            </a>
-                        </li>
-                        
-                        <li class="popup-gallery">
-                            <a class="popup2" href="http://placehold.it/800x600">
-                            	<img src="http://placehold.it/100x100" alt="instagram" />
-                            </a>
-                        </li>
-                        
-                        <li class="popup-gallery">
-                            <a class="popup2" href="http://placehold.it/800x600">
-                            	<img src="http://placehold.it/100x100" alt="instagram" />
-                            </a>
-                        </li>
-                        
-                        <li class="popup-gallery">
-                            <a class="popup2" href="http://placehold.it/800x600">
-                            	<img src="http://placehold.it/100x100" alt="instagram" />
-                            </a>
-                        </li>
-                        
-                        <li class="popup-gallery">
-                            <a class="popup2" href="http://placehold.it/800x600">
-                            	<img src="http://placehold.it/100x100" alt="instagram" />
-                            </a>
-                        </li>
-                        
-					</ul>
-                    
-                </div>
-                <!--end col-md-3 -->
-                
-                <!--begin col-md-3 -->
-                <div class="col-md-3 padding-bottom-50">
-                
-                	<h4>CONTACT DETAILS</h4>
-                    
-                    <p>Quis autem velis eti reprehender etimes quiste volupta velit esse quam nihil.</p>
-                    
-                    <p class="contact_info"><i class="fa fa-map-marker"></i> Oxford Street, London, UK, N1 1ED</p>
-                    
-                    <p class="contact_info"><i class="fa fa-phone"></i> +44 987 654 321 / +44 123 456 789</p>
-                
-                    <p class="contact_info"><i class="fa fa-envelope-square"></i> <a href="mailto:contact@restaurant.com">contact@restaurant.com</a></p>
-                    
-                </div>
-                <!--end col-md-3 -->
-                
-            </div>
-            <!--end row -->
-            
-            <!--begin row -->
-            <div class="row">
-                
-                <!--begin footer-bottom -->
-                <div class="footer-bottom">
-                
-                    <!--begin col-md-5 -->
-                    <div class="col-md-5">
-                        
-                        <!--begin copyright -->
-                        <div class="copyright ">
-                            <p>© 2016 Cuisine. Designed by <a href="http://themeforest.net/user/bogdan_09/portfolio?ref=bogdan_09" target="_blank">Bogdan Preda</a></p>
-                            
-                        </div>
-                        <!--end copyright -->
-                       
-                    </div>
-                    <!--end col-md-5 -->
-                    
-                    <!--begin col-md-2 -->
-                    <div class="col-md-2 text-center">
-                    
-                    	<a href="#hero-section" class="scrool top-scroll"><i class="fa fa-angle-double-up"></i></a>
-                        
-                    </div>
-                    <!--end col-md-2 -->
-                    
-                    <!--begin col-md-5 -->
-                    <div class="col-md-5">
-                                                        
-                        <!--begin footer_social -->
-                        <ul class="footer_social">
-                            <li>
-                                Follow Us:
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-twitter"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-pinterest"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-facebook"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-instagram"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-youtube"></i>
-                                </a>
-                            </li>
-                        </ul>
-                        <!--end footer_social -->
-                        
-                    </div>
-                    <!--end col-md-5 -->
-                        
-                </div>
-                <!--end footer-bottom -->
-                        
-            </div>
-            <!--end row -->
-            
+        <!-- Map Section -->
+        <div class="map-container wow fadeInUp" data-wow-delay="0.3s">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.234814298456!2d-122.4194156846822!3d37.77492997975922!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80859a6d00690021%3A0x4a501367f076adff!2sSan+Francisco%2C+CA%2C+USA!5e0!3m2!1sen!2sng!4v1561592631815!5m2!1sen!2sng"
+                    width="100%"
+                    height="100%"
+                    frameborder="0"
+                    style="border:0"
+                    allowfullscreen>
+            </iframe>
         </div>
-        <!--end container -->
-                
     </div>
-    <!--end footer -->
-    
 
-    <!-- Load JS here for greater good =============================-->
-    <script src="js/jquery-1.11.3.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/bootstrap-select.js"></script>
-    <script src="js/bootstrap-switch.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/jquery.nav.js"></script>
-    <script src="js/jquery.scrollTo-min.js"></script>
-    <script src="js/SmoothScroll.js"></script>
-    <script src="js/wow.js"></script>
-    
-    <!-- begin custom script-->
-    <script src="js/custom.js"></script>
-    <script src="js/plugins.js"></script>
-    
-</body></html>
+<?php include('footer.php'); ?>

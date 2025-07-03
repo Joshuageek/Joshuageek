@@ -308,7 +308,7 @@ require_once '../php/functions.php';
             // unset($_SESSION['email']);
 
             $_SESSION['success'] = 'Password successfully updated!';
-            header("Location: ../index.php");
+            header("Location: ../login.php");
             exit();
         } catch (PDOException $e) {
             $_SESSION['error'] = 'Database error. Please try again later.';
