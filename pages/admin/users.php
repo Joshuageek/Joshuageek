@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/includes/auth.php';
+require_once __DIR__ . '/includes/helpers/functions.php';
 include 'templates/header.php';
 
 // Check if user is authenticated and is admin
@@ -101,7 +102,8 @@ $patients = count(array_filter($users, fn($u) => $u['role'] === 'patient'));
                         <p class="stat-label">Active Users</p>
                         <h3 class="stat-number"><?php echo $active_users; ?></h3>
                         <span class="stat-change positive">
-                            <i class="fas fa-check-circle"></i> <?php echo round(($active_users/$total_users)*100); ?>% active
+                            <i class="fas fa-check-circle"></i> <?php echo round(($active_users/$total_users)*100); ?>%
+                            active
                         </span>
                     </div>
                     <div class="stat-icon icon-success">
@@ -205,59 +207,69 @@ $patients = count(array_filter($users, fn($u) => $u['role'] === 'patient'));
                             </span>
                         </td>
                         <td>
-                            <span class="badge <?php echo $user['status'] === 'active' ? 'bg-success' : 'bg-secondary'; ?>">
+                            <span
+                                class="badge <?php echo $user['status'] === 'active' ? 'bg-success' : 'bg-secondary'; ?>">
                                 <?php echo ucfirst($user['status']); ?>
                             </span>
                         </td>
                         <td>
                             <?php if ($user['role'] === 'therapist'): ?>
-                                <div class="small">
-                                    <div><strong><?php echo $user['patients_count']; ?></strong> patients</div>
-                                    <div><strong><?php echo $user['sessions_count']; ?></strong> sessions</div>
-                                    <div class="text-warning">
-                                        <i class="fas fa-star"></i> <?php echo $user['rating']; ?>
-                                    </div>
+                            <div class="small">
+                                <div><strong><?php echo $user['patients_count']; ?></strong> patients</div>
+                                <div><strong><?php echo $user['sessions_count']; ?></strong> sessions</div>
+                                <div class="text-warning">
+                                    <i class="fas fa-star"></i> <?php echo $user['rating']; ?>
                                 </div>
+                            </div>
                             <?php elseif ($user['role'] === 'patient'): ?>
-                                <div class="small">
-                                    <div><strong><?php echo $user['sessions_count']; ?></strong> sessions</div>
-                                    <div class="text-muted">with <?php echo $user['therapist']; ?></div>
-                                </div>
+                            <div class="small">
+                                <div><strong><?php echo $user['sessions_count']; ?></strong> sessions</div>
+                                <div class="text-muted">with <?php echo $user['therapist']; ?></div>
+                            </div>
                             <?php else: ?>
-                                <span class="text-muted">System Admin</span>
+                            <span class="text-muted">System Admin</span>
                             <?php endif; ?>
                         </td>
                         <td>
                             <div class="small">
                                 <?php echo date('M j, Y', strtotime($user['last_login'])); ?>
-                                <div class="text-muted"><?php echo date('g:i A', strtotime($user['last_login'])); ?></div>
+                                <div class="text-muted"><?php echo date('g:i A', strtotime($user['last_login'])); ?>
+                                </div>
                             </div>
                         </td>
                         <td>
                             <div class="dropdown">
-                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle"
+                                    data-bs-toggle="dropdown">
                                     Actions
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#" onclick="viewUser(<?php echo $user['id']; ?>)">
-                                        <i class="fas fa-eye me-2"></i>View Details
-                                    </a></li>
-                                    <li><a class="dropdown-item" href="#" onclick="editUser(<?php echo $user['id']; ?>)">
-                                        <i class="fas fa-edit me-2"></i>Edit User
-                                    </a></li>
+                                    <li><a class="dropdown-item" href="#"
+                                            onclick="viewUser(<?php echo $user['id']; ?>)">
+                                            <i class="fas fa-eye me-2"></i>View Details
+                                        </a></li>
+                                    <li><a class="dropdown-item" href="#"
+                                            onclick="editUser(<?php echo $user['id']; ?>)">
+                                            <i class="fas fa-edit me-2"></i>Edit User
+                                        </a></li>
                                     <?php if ($user['status'] === 'active'): ?>
-                                    <li><a class="dropdown-item text-warning" href="#" onclick="suspendUser(<?php echo $user['id']; ?>)">
-                                        <i class="fas fa-pause me-2"></i>Suspend
-                                    </a></li>
+                                    <li><a class="dropdown-item text-warning" href="#"
+                                            onclick="suspendUser(<?php echo $user['id']; ?>)">
+                                            <i class="fas fa-pause me-2"></i>Suspend
+                                        </a></li>
                                     <?php else: ?>
-                                    <li><a class="dropdown-item text-success" href="#" onclick="activateUser(<?php echo $user['id']; ?>)">
-                                        <i class="fas fa-play me-2"></i>Activate
-                                    </a></li>
+                                    <li><a class="dropdown-item text-success" href="#"
+                                            onclick="activateUser(<?php echo $user['id']; ?>)">
+                                            <i class="fas fa-play me-2"></i>Activate
+                                        </a></li>
                                     <?php endif; ?>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item text-danger" href="#" onclick="deleteUser(<?php echo $user['id']; ?>)">
-                                        <i class="fas fa-trash me-2"></i>Delete User
-                                    </a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item text-danger" href="#"
+                                            onclick="deleteUser(<?php echo $user['id']; ?>)">
+                                            <i class="fas fa-trash me-2"></i>Delete User
+                                        </a></li>
                                 </ul>
                             </div>
                         </td>
@@ -344,7 +356,8 @@ $patients = count(array_filter($users, fn($u) => $u['role'] === 'patient'));
                     </div>
                     <div class="mb-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="send_welcome" id="sendWelcome" checked>
+                            <input class="form-check-input" type="checkbox" name="send_welcome" id="sendWelcome"
+                                checked>
                             <label class="form-check-label" for="sendWelcome">
                                 Send welcome email with login instructions
                             </label>

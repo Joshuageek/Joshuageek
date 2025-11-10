@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mobile Menu Test</title>
+    <link href="/css/header.css" rel="stylesheet" />
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+      .test-content {
+        padding: 120px 20px 40px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .test-section {
+        background: #f5f5f5;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+      }
+      .test-section h3 {
+        margin-top: 0;
+        color: #a8c3a4;
+      }
+      .status {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-weight: bold;
+        margin-left: 10px;
+      }
+      .status.pass {
+        background: #d4edda;
+        color: #155724;
+      }
+      .status.fail {
+        background: #f8d7da;
+        color: #721c24;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+
+    <!-- Header Navigation -->
+    <header class="header">
+      <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="container">
+          <!-- Logo/Brand -->
+          <a href="/index.php" class="navbar-brand" aria-label="Luna Home">
+            LUNA
+          </a>
+
+          <!-- Hamburger Menu Button (Mobile) -->
+          <button
+            class="hamburger"
+            id="hamburger"
+            aria-label="Toggle navigation menu"
+            aria-expanded="false"
+          >
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+          </button>
+
+          <!-- Desktop Navigation -->
+          <ul class="navbar-nav" id="desktop-menu" role="menubar">
+            <li role="none"><a href="/index.php" role="menuitem">Home</a></li>
+            <li role="none"><a href="/about.php" role="menuitem">About</a></li>
+            <li role="none">
+              <a href="/contact.php" role="menuitem">Contact</a>
+            </li>
+            <li role="none">
+              <a href="/login.php" role="menuitem">Sign In</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Mobile Sidebar Menu -->
+        <div
+          class="mobile-menu"
+          id="mobile-menu"
+          role="dialog"
+          aria-label="Mobile navigation"
+        >
+          <div class="mobile-menu-header">
+            <a href="/index.php" class="navbar-brand" aria-label="Luna Home">
+              LUNA
+            </a>
+            <button
+              class="close-btn"
+              id="close-btn"
+              aria-label="Close navigation menu"
+            >
+              &times;
+            </button>
+          </div>
+
+          <ul class="mobile-menu-list" role="menu">
+            <li role="none"><a href="/index.php" role="menuitem">Home</a></li>
+            <li role="none"><a href="/about.php" role="menuitem">About</a></li>
+            <li role="none">
+              <a href="/contact.php" role="menuitem">Contact</a>
+            </li>
+            <li role="none">
+              <a href="/login.php" role="menuitem">Sign In</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Test Content -->
+    <main class="test-content">
+      <h1>🧪 Mobile Menu Test Page</h1>
+
+      <div class="test-section">
+        <h3>✅ Test Instructions:</h3>
+        <ol>
+          <li>
+            <strong>Desktop View:</strong> Resize browser to wide (>768px) -
+            Should see horizontal menu
+          </li>
+          <li>
+            <strong>Mobile View:</strong> Resize browser to narrow (<768px) -
+            Should see hamburger icon (☰)
+          </li>
+          <li>
+            <strong>Click Hamburger:</strong> Menu should slide in from left
+          </li>
+          <li><strong>Click Overlay:</strong> Menu should close</li>
+          <li><strong>Click ×:</strong> Menu should close</li>
+          <li><strong>Press ESC:</strong> Menu should close</li>
+        </ol>
+      </div>
+
+      <div class="test-section">
+        <h3>📱 Current Viewport:</h3>
+        <p id="viewport-width">Width: <strong>0px</strong></p>
+        <p id="viewport-status">Status: <strong>-</strong></p>
+      </div>
+
+      <div class="test-section">
+        <h3>🔍 Element Visibility:</h3>
+        <p id="hamburger-status">
+          Hamburger Menu: <span class="status">Checking...</span>
+        </p>
+        <p id="desktop-menu-status">
+          Desktop Menu: <span class="status">Checking...</span>
+        </p>
+        <p id="mobile-menu-status">
+          Mobile Sidebar: <span class="status">Checking...</span>
+        </p>
+      </div>
+
+      <div class="test-section">
+        <h3>📝 Test Results:</h3>
+        <ul id="test-results">
+          <li>Waiting for user interaction...</li>
+        </ul>
+      </div>
+    </main>
+
+    <script>
+      // Mobile menu toggle script (same as in header.php)
+      const hamburger = document.getElementById("hamburger");
+      const closeBtn = document.getElementById("close-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const mobileOverlay = document.getElementById("mobile-overlay");
+      const body = document.body;
+      const testResults = document.getElementById("test-results");
+
+      function addTestResult(message, type = "info") {
+        const li = document.createElement("li");
+        li.textContent = message;
+        li.style.color =
+          type === "success" ? "green" : type === "error" ? "red" : "black";
+        testResults.appendChild(li);
+      }
+
+      function openMobileMenu() {
+        mobileMenu.classList.add("active");
+        mobileOverlay.classList.add("active");
+        hamburger.classList.add("active");
+        hamburger.setAttribute("aria-expanded", "true");
+        body.style.overflow = "hidden";
+        addTestResult("✅ Mobile menu opened", "success");
+      }
+
+      function closeMobileMenu() {
+        mobileMenu.classList.remove("active");
+        mobileOverlay.classList.remove("active");
+        hamburger.classList.remove("active");
+        hamburger.setAttribute("aria-expanded", "false");
+        body.style.overflow = "";
+        addTestResult("✅ Mobile menu closed", "success");
+      }
+
+      // Event listeners
+      hamburger.addEventListener("click", () => {
+        openMobileMenu();
+      });
+
+      closeBtn.addEventListener("click", () => {
+        closeMobileMenu();
+      });
+
+      mobileOverlay.addEventListener("click", () => {
+        closeMobileMenu();
+      });
+
+      const mobileMenuLinks = document.querySelectorAll(".mobile-menu-list a");
+      mobileMenuLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          addTestResult("Menu link clicked: " + link.textContent, "info");
+          closeMobileMenu();
+        });
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && mobileMenu.classList.contains("active")) {
+          closeMobileMenu();
+          addTestResult("✅ ESC key closed menu", "success");
+        }
+      });
+
+      // Monitor viewport and element visibility
+      function updateStatus() {
+        const width = window.innerWidth;
+        const viewportWidth = document.getElementById("viewport-width");
+        const viewportStatus = document.getElementById("viewport-status");
+        const hamburgerStatus = document.getElementById("hamburger-status");
+        const desktopMenuStatus = document.getElementById(
+          "desktop-menu-status"
+        );
+        const mobileMenuStatus = document.getElementById("mobile-menu-status");
+
+        viewportWidth.querySelector("strong").textContent = width + "px";
+
+        if (width <= 768) {
+          viewportStatus.querySelector("strong").textContent = "📱 Mobile View";
+          viewportStatus.querySelector("strong").style.color = "#A8C3A4";
+        } else {
+          viewportStatus.querySelector("strong").textContent =
+            "🖥️ Desktop View";
+          viewportStatus.querySelector("strong").style.color = "#333";
+        }
+
+        // Check element visibility
+        const hamburgerDisplay = window.getComputedStyle(hamburger).display;
+        const desktopDisplay = window.getComputedStyle(
+          document.getElementById("desktop-menu")
+        ).display;
+
+        hamburgerStatus.querySelector(".status").textContent =
+          hamburgerDisplay !== "none" ? "✅ Visible" : "❌ Hidden";
+        hamburgerStatus.querySelector(".status").className =
+          "status " + (hamburgerDisplay !== "none" ? "pass" : "fail");
+
+        desktopMenuStatus.querySelector(".status").textContent =
+          desktopDisplay !== "none" ? "✅ Visible" : "❌ Hidden";
+        desktopMenuStatus.querySelector(".status").className =
+          "status " + (desktopDisplay !== "none" ? "pass" : "fail");
+
+        const mobileActive = mobileMenu.classList.contains("active");
+        mobileMenuStatus.querySelector(".status").textContent = mobileActive
+          ? "✅ Open"
+          : "⚪ Closed";
+        mobileMenuStatus.querySelector(".status").className =
+          "status " + (mobileActive ? "pass" : "");
+      }
+
+      updateStatus();
+      window.addEventListener("resize", updateStatus);
+      setInterval(updateStatus, 500);
+
+      // Initial test result
+      testResults.innerHTML =
+        '<li style="color: green;">🎉 Test page loaded successfully!</li>';
+    </script>
+  </body>
+</html>

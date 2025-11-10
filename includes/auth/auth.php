@@ -18,7 +18,6 @@ require_once '../php/functions.php';
             header("Location: ../signup.php");
             exit();
         }
-
         
         if (!is_valid_email($email)) {
             $_SESSION['error'] = 'Please enter a valid email address.';

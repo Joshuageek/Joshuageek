@@ -1,0 +1,201 @@
+{
+    "timestamp": "2025-11-01 11:17:28",
+    "backup_path": "\/home\/dsn\/Work\/Joshuageek\/.backup_20251101111728",
+    "moved_files": [
+        {
+            "source": "login.php",
+            "destination": "public\/auth\/login.php"
+        },
+        {
+            "source": "signup.php",
+            "destination": "public\/auth\/signup.php"
+        },
+        {
+            "source": "logout.php",
+            "destination": "public\/auth\/logout.php"
+        },
+        {
+            "source": "forgot-pwd.php",
+            "destination": "public\/auth\/forgot-password.php"
+        },
+        {
+            "source": "reset-password.php",
+            "destination": "public\/auth\/reset-password.php"
+        },
+        {
+            "source": "choose_role.php",
+            "destination": "public\/auth\/choose-role.php"
+        },
+        {
+            "source": "booking.php",
+            "destination": "pages\/client\/booking.php"
+        },
+        {
+            "source": "question.php",
+            "destination": "pages\/client\/questionnaire.php"
+        },
+        {
+            "source": "notes.php",
+            "destination": "pages\/client\/notes.php"
+        },
+        {
+            "source": "paywall.php",
+            "destination": "pages\/client\/paywall.php"
+        },
+        {
+            "source": "therapist-dashboard.php",
+            "destination": "pages\/therapist\/dashboard.php"
+        },
+        {
+            "source": "signthera.php",
+            "destination": "pages\/therapist\/registration.php"
+        },
+        {
+            "source": "admin-dashboard.php",
+            "destination": "pages\/admin\/dashboard.php"
+        },
+        {
+            "source": "about.php",
+            "destination": "pages\/public\/about.php"
+        },
+        {
+            "source": "contact.php",
+            "destination": "pages\/public\/contact.php"
+        },
+        {
+            "source": "clinic.php",
+            "destination": "pages\/public\/clinic.php"
+        },
+        {
+            "source": "header.php",
+            "destination": "includes\/layouts\/header.php"
+        },
+        {
+            "source": "footer.php",
+            "destination": "includes\/layouts\/footer.php"
+        },
+        {
+            "source": "constants.php",
+            "destination": "includes\/helpers\/constants.php"
+        },
+        {
+            "source": "admin\/activity_logs.php",
+            "destination": "pages\/admin\/activity_logs.php"
+        },
+        {
+            "source": "admin\/analytics.php",
+            "destination": "pages\/admin\/analytics.php"
+        },
+        {
+            "source": "admin\/appointments.php",
+            "destination": "pages\/admin\/appointments.php"
+        },
+        {
+            "source": "admin\/billing.php",
+            "destination": "pages\/admin\/billing.php"
+        },
+        {
+            "source": "admin\/bookings.php",
+            "destination": "pages\/admin\/bookings.php"
+        },
+        {
+            "source": "admin\/calendar.php",
+            "destination": "pages\/admin\/calendar.php"
+        },
+        {
+            "source": "admin\/goals.php",
+            "destination": "pages\/admin\/goals.php"
+        },
+        {
+            "source": "admin\/help.php",
+            "destination": "pages\/admin\/help.php"
+        },
+        {
+            "source": "admin\/index.php",
+            "destination": "pages\/admin\/index.php"
+        },
+        {
+            "source": "admin\/messages.php",
+            "destination": "pages\/admin\/messages.php"
+        },
+        {
+            "source": "admin\/mood_tracker.php",
+            "destination": "pages\/admin\/mood_tracker.php"
+        },
+        {
+            "source": "admin\/my-patients.php",
+            "destination": "pages\/admin\/my-patients.php"
+        },
+        {
+            "source": "admin\/my-sessions.php",
+            "destination": "pages\/admin\/my-sessions.php"
+        },
+        {
+            "source": "admin\/my_patients.php",
+            "destination": "pages\/admin\/my_patients.php"
+        },
+        {
+            "source": "admin\/notifications.php",
+            "destination": "pages\/admin\/notifications.php"
+        },
+        {
+            "source": "admin\/patient_reports.php",
+            "destination": "pages\/admin\/patient_reports.php"
+        },
+        {
+            "source": "admin\/patients.php",
+            "destination": "pages\/admin\/patients.php"
+        },
+        {
+            "source": "admin\/permissions.php",
+            "destination": "pages\/admin\/permissions.php"
+        },
+        {
+            "source": "admin\/profile.php",
+            "destination": "pages\/admin\/profile.php"
+        },
+        {
+            "source": "admin\/progress.php",
+            "destination": "pages\/admin\/progress.php"
+        },
+        {
+            "source": "admin\/questionnaire.php",
+            "destination": "pages\/admin\/questionnaire.php"
+        },
+        {
+            "source": "admin\/reports.php",
+            "destination": "pages\/admin\/reports.php"
+        },
+        {
+            "source": "admin\/session_notes.php",
+            "destination": "pages\/admin\/session_notes.php"
+        },
+        {
+            "source": "admin\/sessions.php",
+            "destination": "pages\/admin\/sessions.php"
+        },
+        {
+            "source": "admin\/settings.php",
+            "destination": "pages\/admin\/settings.php"
+        },
+        {
+            "source": "admin\/therapists.php",
+            "destination": "pages\/admin\/therapists.php"
+        },
+        {
+            "source": "admin\/users.php",
+            "destination": "pages\/admin\/users.php"
+        }
+    ],
+    "updated_paths": [
+        "public\/auth\/login.php",
+        "public\/auth\/signup.php",
+        "public\/auth\/choose-role.php",
+        "pages\/client\/booking.php",
+        "pages\/therapist\/registration.php",
+        "pages\/public\/about.php",
+        "pages\/public\/contact.php",
+        "pages\/public\/clinic.php",
+        "includes\/layouts\/header.php"
+    ]
+}
